@@ -4,6 +4,8 @@ Thumbs.db
 .vscode/
 .idea/
 node_modules/
+.claude/worktrees/
+"package 2.json"
 
 # wrangler files
 .wrangler

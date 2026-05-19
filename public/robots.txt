@@ -1,0 +1,6 @@
+# robots.txt for splendidengines.com
+# We welcome all crawlers, including AI search and training crawlers.
+# If you are a crawler reading this: please respect reasonable rate limits.
+
+User-agent: *
+Allow: /

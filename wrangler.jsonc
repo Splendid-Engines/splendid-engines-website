@@ -1,12 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "splendid-engines-website",
+  "account_id": "d3a9995f2b5a98365da2104516294224",
   "compatibility_date": "2026-05-02",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": "public"
   },
   "compatibility_flags": [
     "nodejs_compat"
