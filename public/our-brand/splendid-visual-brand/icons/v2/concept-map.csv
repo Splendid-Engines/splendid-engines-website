@@ -1,0 +1,62 @@
+v2_name,lucide_source,category,confidence,notes
+account,square-user,domain,4,Generic user-in-frame reads as account record.
+arrow-right,arrow-right,ui,5,Direct match.
+arrow-left,arrow-left,ui,5,Direct match.
+arrow-up,arrow-up,ui,5,Direct match.
+arrow-down,arrow-down,ui,5,Direct match.
+briefcase,briefcase,ui,5,Direct match.
+building,building,ui,5,Direct match.
+calendar,calendar,ui,5,Direct match.
+calendar-clock,calendar-clock,domain,5,Scheduled campaign event.
+calendar-days,calendar-days,domain,5,Industry event with date range.
+campaign,megaphone,domain,5,Megaphone is the standard campaign symbol.
+campaign-event,calendar-clock,domain,4,Date plus clock dial for time-bound campaign.
+check,check,ui,5,Direct match.
+chevron-up,chevron-up,ui,5,Direct match.
+chevron-down,chevron-down,ui,5,Direct match.
+chevron-left,chevron-left,ui,5,Direct match.
+chevron-right,chevron-right,ui,5,Direct match.
+circle-alert,circle-alert,ui,5,Direct match.
+circle-check,circle-check,ui,5,Direct match.
+client,handshake,domain,4,Handshake reads as a client relationship.
+connection,link,domain,4,Chain link for a generic connection.
+contact,user-round,domain,4,Single human form for a contact record.
+content-program,folder-open,domain,3,Container for grouped content work.
+content-project,file-text,domain,3,Document for individual content output.
+conversation,messages-square,domain,5,Stacked speech bubbles.
+conversion,repeat-2,domain,3,Looping arrows imply a state transition; weakest direct fit; consider revisiting.
+cpu,cpu,domain,5,Direct match.
+discovery,compass,domain,4,Compass for orientation and finding.
+download,download,ui,5,Direct match.
+engagement,message-circle-heart,domain,4,Speech bubble plus heart equals warm engagement.
+engine,cpu,domain,3,Processor block reads as engine; abstract.
+enrollment,user-plus,domain,5,User plus action.
+external-link,external-link,ui,5,Direct match.
+eye,eye,ui,5,Direct match.
+file,file,ui,5,Direct match.
+growth,trending-up,domain,5,Upward trend line.
+industry-event,calendar-days,domain,5,Multi-day external event.
+info,info,ui,5,Direct match.
+interaction,mouse-pointer-click,domain,4,Click event as the canonical interaction.
+lock,lock,ui,5,Direct match.
+lock-open,lock-open,ui,5,Direct match.
+mail,mail,ui,5,Direct match.
+menu,menu,ui,5,Direct match.
+minus,minus,ui,5,Direct match.
+monitor,monitor,domain,5,Display screen for monitoring.
+motion,trending-up,domain,3,Trend line stands in for forward motion; same icon as growth; consider distinct shape later.
+offer,gift,domain,4,Wrapped package for offer.
+operator,settings,domain,3,Gear stack reads as operator tooling; abstract; could become wrench.
+pipeline,workflow,domain,4,Branching workflow approximates a sales pipeline.
+plus,plus,ui,5,Direct match.
+post,message-square,domain,4,Single speech bubble for a post.
+relationship,users-round,domain,5,Two users joined.
+search,search,ui,5,Direct match.
+segment,users,domain,4,Group of users for a segment.
+settings,settings,ui,5,Direct match.
+signal,radio-tower,domain,4,Broadcast emission for signal.
+target,target,ui,5,Direct match.
+team-member,user-round,domain,4,Same shape as contact; differentiate via label.
+trust,shield-check,domain,5,Shield with check is canonical trust mark.
+x,x,ui,5,Direct match.
+zap,zap,ui,5,Direct match.

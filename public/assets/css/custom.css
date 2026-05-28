@@ -1089,3 +1089,27 @@ hr.section-divider {
   stroke-linejoin: miter;
   fill: none;
 }
+
+/* Splendid icon utility (v2). Forces brand spec on any inline SVG it wraps.
+   Use for inline icons outside the principle-icon / move-icon contexts.
+   Default tone is Lagoon; modifiers switch to Poppy or white. */
+.splendid-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  color: var(--lagoon);
+  vertical-align: middle;
+}
+.splendid-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  fill: none;
+}
+.splendid-icon--lg { width: 48px; height: 48px; }
+.splendid-icon--xl { width: 96px; height: 96px; }
+.splendid-icon--poppy { color: var(--poppy); }
+.splendid-icon--white { color: #FFFFFF; }

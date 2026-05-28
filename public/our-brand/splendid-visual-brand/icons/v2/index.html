@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Splendid Engines Iconography v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700&family=Mulish:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lagoon: #153047;
+    --poppy: #DB4937;
+    --lake: #377BDB;
+    --daffodil: #F2ED44;
+    --mate: #575C45;
+    --snow: #FFFFFF;
+    --ash: #EBF4F7;
+    --ash-warm: #F4ECDF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--snow);
+    color: var(--lagoon);
+    line-height: 1.6;
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--poppy);
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 44px;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 1.05;
+    margin: 60px 0 16px;
+  }
+  h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--poppy);
+    margin: 32px 0 12px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--lagoon);
+  }
+  p, li { font-size: 16px; }
+  .lede {
+    font-size: 18px;
+    color: var(--lagoon);
+    opacity: 0.85;
+    max-width: 760px;
+    margin-bottom: 8px;
+  }
+  .meta { font-size: 13px; color: var(--mate); margin-top: 8px; }
+  .spec-band {
+    background: var(--ash);
+    padding: 20px 24px;
+    margin: 32px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    font-size: 13px;
+  }
+  .spec-band strong {
+    display: block;
+    font-family: 'Big Shoulders Display', sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--poppy);
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .hero-row {
+    border: 1px solid var(--ash);
+    padding: 32px;
+    margin: 32px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .hero-row.dark { background: var(--lagoon); border-color: var(--lagoon); }
+  .hero-row.poppy { background: var(--snow); border-color: var(--ash); }
+  .hero-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-cell .sizes {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+  }
+  .hero-cell .name {
+    font-family: 'Big Shoulders Display', sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .hero-row.dark .name { color: var(--snow); }
+  .hero-row .name { color: var(--lagoon); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cell {
+    border: 1px solid var(--ash);
+    padding: 16px 8px;
+    text-align: center;
+    background: var(--snow);
+  }
+  .cell img { display: block; margin: 0 auto 10px; }
+  .cell .cell-name {
+    font-size: 12px;
+    color: var(--lagoon);
+    word-break: break-word;
+  }
+  .cell .cell-src {
+    font-size: 10px;
+    color: var(--mate);
+    margin-top: 2px;
+    font-family: 'Courier New', monospace;
+  }
+  .grid.dark { background: var(--lagoon); padding: 24px; border-radius: 0; }
+  .grid.dark .cell { background: var(--lagoon); border-color: rgba(255,255,255,0.15); }
+  .grid.dark .cell-name { color: var(--snow); }
+  .grid.dark .cell-src { color: rgba(255,255,255,0.55); }
+  .toggle-row {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .toggle-row a {
+    font-family: 'Big Shoulders Display', sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--lagoon);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid var(--lagoon);
+  }
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background: var(--ash);
+    padding: 2px 6px;
+  }
+  pre {
+    background: var(--ash);
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    margin: 12px 0;
+  }
+  .footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ash);
+    font-size: 13px;
+    color: var(--mate);
+  }
+  .footer a { color: var(--lake); }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">Iconography</div>
+<h1>Splendid Engines Icons<br>v2 &middot; Lucide-Sourced</h1>
+<p class="lede">Fifty-eight icons covering Splendid's domain vocabulary plus the generic UI primitives the product, the website, and decks need. Sourced from Lucide (ISC license, ~1,500 icons), coerced to the Splendid spec: 2.5px stroke, square caps, miter joins. Three color variants pre-baked: Lagoon for light surfaces, Poppy for methodology accents, white for dark surfaces.</p>
+<p class="meta">v2.0 &middot; Built from <code>lucide-static@0.469.0</code>. Run <code>npm run icons:build</code> from the repo root to regenerate. Concept-to-icon mapping at <a href="concept-map.csv">concept-map.csv</a>.</p>
+
+<div class="spec-band">
+  <div><strong>Stroke</strong>2.5px @ 24px viewBox</div>
+  <div><strong>Caps</strong>Square</div>
+  <div><strong>Joins</strong>Miter</div>
+  <div><strong>Fill</strong>None</div>
+</div>
+
+<h2>Hero Examples</h2>
+<p class="meta">Same four icons at 24, 48, 96 in each of the three color variants. Verify the blur test by squinting.</p>
+
+<div class="hero-row">
+  <div class="hero-cell"><div class="sizes"><img src="lagoon/check.svg" width="24" height="24" alt=""><img src="lagoon/check.svg" width="48" height="48" alt=""><img src="lagoon/check.svg" width="96" height="96" alt=""></div><div class="name">check</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="lagoon/signal.svg" width="24" height="24" alt=""><img src="lagoon/signal.svg" width="48" height="48" alt=""><img src="lagoon/signal.svg" width="96" height="96" alt=""></div><div class="name">signal</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="lagoon/trust.svg" width="24" height="24" alt=""><img src="lagoon/trust.svg" width="48" height="48" alt=""><img src="lagoon/trust.svg" width="96" height="96" alt=""></div><div class="name">trust</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="lagoon/relationship.svg" width="24" height="24" alt=""><img src="lagoon/relationship.svg" width="48" height="48" alt=""><img src="lagoon/relationship.svg" width="96" height="96" alt=""></div><div class="name">relationship</div></div>
+</div>
+
+<div class="hero-row dark">
+  <div class="hero-cell"><div class="sizes"><img src="white/check.svg" width="24" height="24" alt=""><img src="white/check.svg" width="48" height="48" alt=""><img src="white/check.svg" width="96" height="96" alt=""></div><div class="name">check</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="white/signal.svg" width="24" height="24" alt=""><img src="white/signal.svg" width="48" height="48" alt=""><img src="white/signal.svg" width="96" height="96" alt=""></div><div class="name">signal</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="white/trust.svg" width="24" height="24" alt=""><img src="white/trust.svg" width="48" height="48" alt=""><img src="white/trust.svg" width="96" height="96" alt=""></div><div class="name">trust</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="white/relationship.svg" width="24" height="24" alt=""><img src="white/relationship.svg" width="48" height="48" alt=""><img src="white/relationship.svg" width="96" height="96" alt=""></div><div class="name">relationship</div></div>
+</div>
+
+<div class="hero-row poppy">
+  <div class="hero-cell"><div class="sizes"><img src="poppy/check.svg" width="24" height="24" alt=""><img src="poppy/check.svg" width="48" height="48" alt=""><img src="poppy/check.svg" width="96" height="96" alt=""></div><div class="name">check</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="poppy/signal.svg" width="24" height="24" alt=""><img src="poppy/signal.svg" width="48" height="48" alt=""><img src="poppy/signal.svg" width="96" height="96" alt=""></div><div class="name">signal</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="poppy/trust.svg" width="24" height="24" alt=""><img src="poppy/trust.svg" width="48" height="48" alt=""><img src="poppy/trust.svg" width="96" height="96" alt=""></div><div class="name">trust</div></div>
+  <div class="hero-cell"><div class="sizes"><img src="poppy/relationship.svg" width="24" height="24" alt=""><img src="poppy/relationship.svg" width="48" height="48" alt=""><img src="poppy/relationship.svg" width="96" height="96" alt=""></div><div class="name">relationship</div></div>
+</div>
+
+<h2>Splendid Domain Concepts</h2>
+<p class="meta">Remapped from the v1 set. Each icon below sources from Lucide; see <code>concept-map.csv</code> for confidence notes. Concepts with confidence 3 or lower are candidates for review (conversion, motion, engine, operator, content-program, content-project).</p>
+
+<div class="grid">
+  <div class="cell"><img src="lagoon/account.svg" width="48" height="48" alt=""><div class="cell-name">account</div><div class="cell-src">square-user</div></div>
+  <div class="cell"><img src="lagoon/campaign.svg" width="48" height="48" alt=""><div class="cell-name">campaign</div><div class="cell-src">megaphone</div></div>
+  <div class="cell"><img src="lagoon/campaign-event.svg" width="48" height="48" alt=""><div class="cell-name">campaign-event</div><div class="cell-src">calendar-clock</div></div>
+  <div class="cell"><img src="lagoon/client.svg" width="48" height="48" alt=""><div class="cell-name">client</div><div class="cell-src">handshake</div></div>
+  <div class="cell"><img src="lagoon/connection.svg" width="48" height="48" alt=""><div class="cell-name">connection</div><div class="cell-src">link</div></div>
+  <div class="cell"><img src="lagoon/contact.svg" width="48" height="48" alt=""><div class="cell-name">contact</div><div class="cell-src">user-round</div></div>
+  <div class="cell"><img src="lagoon/content-program.svg" width="48" height="48" alt=""><div class="cell-name">content-program</div><div class="cell-src">folder-open</div></div>
+  <div class="cell"><img src="lagoon/content-project.svg" width="48" height="48" alt=""><div class="cell-name">content-project</div><div class="cell-src">file-text</div></div>
+  <div class="cell"><img src="lagoon/conversation.svg" width="48" height="48" alt=""><div class="cell-name">conversation</div><div class="cell-src">messages-square</div></div>
+  <div class="cell"><img src="lagoon/conversion.svg" width="48" height="48" alt=""><div class="cell-name">conversion</div><div class="cell-src">repeat-2</div></div>
+  <div class="cell"><img src="lagoon/discovery.svg" width="48" height="48" alt=""><div class="cell-name">discovery</div><div class="cell-src">compass</div></div>
+  <div class="cell"><img src="lagoon/engagement.svg" width="48" height="48" alt=""><div class="cell-name">engagement</div><div class="cell-src">message-circle-heart</div></div>
+  <div class="cell"><img src="lagoon/engine.svg" width="48" height="48" alt=""><div class="cell-name">engine</div><div class="cell-src">cpu</div></div>
+  <div class="cell"><img src="lagoon/enrollment.svg" width="48" height="48" alt=""><div class="cell-name">enrollment</div><div class="cell-src">user-plus</div></div>
+  <div class="cell"><img src="lagoon/growth.svg" width="48" height="48" alt=""><div class="cell-name">growth</div><div class="cell-src">trending-up</div></div>
+  <div class="cell"><img src="lagoon/industry-event.svg" width="48" height="48" alt=""><div class="cell-name">industry-event</div><div class="cell-src">calendar-days</div></div>
+  <div class="cell"><img src="lagoon/interaction.svg" width="48" height="48" alt=""><div class="cell-name">interaction</div><div class="cell-src">mouse-pointer-click</div></div>
+  <div class="cell"><img src="lagoon/monitor.svg" width="48" height="48" alt=""><div class="cell-name">monitor</div><div class="cell-src">monitor</div></div>
+  <div class="cell"><img src="lagoon/motion.svg" width="48" height="48" alt=""><div class="cell-name">motion</div><div class="cell-src">trending-up</div></div>
+  <div class="cell"><img src="lagoon/offer.svg" width="48" height="48" alt=""><div class="cell-name">offer</div><div class="cell-src">gift</div></div>
+  <div class="cell"><img src="lagoon/operator.svg" width="48" height="48" alt=""><div class="cell-name">operator</div><div class="cell-src">settings</div></div>
+  <div class="cell"><img src="lagoon/pipeline.svg" width="48" height="48" alt=""><div class="cell-name">pipeline</div><div class="cell-src">workflow</div></div>
+  <div class="cell"><img src="lagoon/post.svg" width="48" height="48" alt=""><div class="cell-name">post</div><div class="cell-src">message-square</div></div>
+  <div class="cell"><img src="lagoon/relationship.svg" width="48" height="48" alt=""><div class="cell-name">relationship</div><div class="cell-src">users-round</div></div>
+  <div class="cell"><img src="lagoon/segment.svg" width="48" height="48" alt=""><div class="cell-name">segment</div><div class="cell-src">users</div></div>
+  <div class="cell"><img src="lagoon/signal.svg" width="48" height="48" alt=""><div class="cell-name">signal</div><div class="cell-src">radio-tower</div></div>
+  <div class="cell"><img src="lagoon/team-member.svg" width="48" height="48" alt=""><div class="cell-name">team-member</div><div class="cell-src">user-round</div></div>
+  <div class="cell"><img src="lagoon/trust.svg" width="48" height="48" alt=""><div class="cell-name">trust</div><div class="cell-src">shield-check</div></div>
+</div>
+
+<h2>UI Primitives</h2>
+<p class="meta">Standard library names. Use for product UI chrome (navigation, status, controls).</p>
+
+<div class="grid">
+  <div class="cell"><img src="lagoon/arrow-down.svg" width="48" height="48" alt=""><div class="cell-name">arrow-down</div></div>
+  <div class="cell"><img src="lagoon/arrow-left.svg" width="48" height="48" alt=""><div class="cell-name">arrow-left</div></div>
+  <div class="cell"><img src="lagoon/arrow-right.svg" width="48" height="48" alt=""><div class="cell-name">arrow-right</div></div>
+  <div class="cell"><img src="lagoon/arrow-up.svg" width="48" height="48" alt=""><div class="cell-name">arrow-up</div></div>
+  <div class="cell"><img src="lagoon/briefcase.svg" width="48" height="48" alt=""><div class="cell-name">briefcase</div></div>
+  <div class="cell"><img src="lagoon/building.svg" width="48" height="48" alt=""><div class="cell-name">building</div></div>
+  <div class="cell"><img src="lagoon/calendar.svg" width="48" height="48" alt=""><div class="cell-name">calendar</div></div>
+  <div class="cell"><img src="lagoon/check.svg" width="48" height="48" alt=""><div class="cell-name">check</div></div>
+  <div class="cell"><img src="lagoon/chevron-down.svg" width="48" height="48" alt=""><div class="cell-name">chevron-down</div></div>
+  <div class="cell"><img src="lagoon/chevron-left.svg" width="48" height="48" alt=""><div class="cell-name">chevron-left</div></div>
+  <div class="cell"><img src="lagoon/chevron-right.svg" width="48" height="48" alt=""><div class="cell-name">chevron-right</div></div>
+  <div class="cell"><img src="lagoon/chevron-up.svg" width="48" height="48" alt=""><div class="cell-name">chevron-up</div></div>
+  <div class="cell"><img src="lagoon/circle-alert.svg" width="48" height="48" alt=""><div class="cell-name">circle-alert</div></div>
+  <div class="cell"><img src="lagoon/circle-check.svg" width="48" height="48" alt=""><div class="cell-name">circle-check</div></div>
+  <div class="cell"><img src="lagoon/download.svg" width="48" height="48" alt=""><div class="cell-name">download</div></div>
+  <div class="cell"><img src="lagoon/external-link.svg" width="48" height="48" alt=""><div class="cell-name">external-link</div></div>
+  <div class="cell"><img src="lagoon/eye.svg" width="48" height="48" alt=""><div class="cell-name">eye</div></div>
+  <div class="cell"><img src="lagoon/file.svg" width="48" height="48" alt=""><div class="cell-name">file</div></div>
+  <div class="cell"><img src="lagoon/info.svg" width="48" height="48" alt=""><div class="cell-name">info</div></div>
+  <div class="cell"><img src="lagoon/lock.svg" width="48" height="48" alt=""><div class="cell-name">lock</div></div>
+  <div class="cell"><img src="lagoon/lock-open.svg" width="48" height="48" alt=""><div class="cell-name">lock-open</div></div>
+  <div class="cell"><img src="lagoon/mail.svg" width="48" height="48" alt=""><div class="cell-name">mail</div></div>
+  <div class="cell"><img src="lagoon/menu.svg" width="48" height="48" alt=""><div class="cell-name">menu</div></div>
+  <div class="cell"><img src="lagoon/minus.svg" width="48" height="48" alt=""><div class="cell-name">minus</div></div>
+  <div class="cell"><img src="lagoon/plus.svg" width="48" height="48" alt=""><div class="cell-name">plus</div></div>
+  <div class="cell"><img src="lagoon/search.svg" width="48" height="48" alt=""><div class="cell-name">search</div></div>
+  <div class="cell"><img src="lagoon/settings.svg" width="48" height="48" alt=""><div class="cell-name">settings</div></div>
+  <div class="cell"><img src="lagoon/target.svg" width="48" height="48" alt=""><div class="cell-name">target</div></div>
+  <div class="cell"><img src="lagoon/x.svg" width="48" height="48" alt=""><div class="cell-name">x</div></div>
+  <div class="cell"><img src="lagoon/zap.svg" width="48" height="48" alt=""><div class="cell-name">zap</div></div>
+</div>
+
+<h2>Usage</h2>
+
+<h3>Website (static HTML)</h3>
+<p>Reference the pre-baked SVG file directly via <code>img</code> tag, or inline the SVG and apply the <code>.splendid-icon</code> utility class for color cascade. For methodology accents, use the Poppy variant.</p>
+<pre>&lt;img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/signal.svg" width="24" height="24" alt=""&gt;</pre>
+
+<h3>Product app (Next.js)</h3>
+<p>Use the <code>Icon</code> wrapper at <code>src/components/Icon.tsx</code> with a Lucide React component. Wrapper applies brand defaults (2.5 stroke, square caps, miter joins, Lagoon stroke).</p>
+<pre>import { Icon } from '@/components/Icon';
+import { Signal } from 'lucide-react';
+
+&lt;Icon as={Signal} tone="lagoon" size={24} /&gt;</pre>
+
+<h3>Decks (Google Slides)</h3>
+<p>Download the spec-coerced SVG in the color you need (Lagoon, Poppy, or white) from this directory. In Slides, use <code>Insert &gt; Image &gt; Upload from computer</code>. Never paste raster PNG.</p>
+
+<div class="footer">
+  <p>Concept mapping: <a href="concept-map.csv">concept-map.csv</a> &middot; License: <a href="LICENSE-third-party.txt">LICENSE-third-party.txt</a> &middot; Source: <a href="https://lucide.dev">lucide.dev</a></p>
+  <p>v1 archive: <a href="../v1/">v1 set</a> (deprecated, kept for reference)</p>
+</div>
+
+</body>
+</html>
