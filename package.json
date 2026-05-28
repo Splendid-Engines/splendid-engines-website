@@ -1,0 +1,12 @@
+{
+  "name": "splendid-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Splendid Engines static marketing site. No build step at deploy time; this package.json exists only for local tooling (icon baking).",
+  "scripts": {
+    "icons:build": "node public/our-brand/splendid-visual-brand/icons/v2/_build.mjs"
+  },
+  "devDependencies": {
+    "lucide-static": "^0.469.0"
+  }
+}
