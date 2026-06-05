@@ -8,7 +8,7 @@ Static site for [splendidengines.com](https://splendidengines.com). Hosted on Cl
 - Vanilla JavaScript where needed
 - No build step. No CMS. No static site generator.
 - Plausible for analytics
-- Calendly for booking (added in Phase 2)
+- Calendly for booking
 
 ## Editing the site
 
@@ -16,48 +16,61 @@ Every change happens by talking to Claude Code. You ask, Claude edits, commits, 
 
 ## Repo layout
 
+All public-facing files live under `public/`.
+
 ```
-/
-├── index.html                 # homepage
+public/
+├── index.html                        # homepage
 ├── about/index.html
 ├── case-study/index.html
 ├── contact/index.html
+├── sales/index.html                  # for sales leaders
+├── marketing/index.html              # for marketing leaders
+├── experts/index.html                # for subject matter experts
+├── expert-application/index.html     # expert signup form
+├── offers/
+│   └── share-your-take/index.html    # Calendly booking page
+├── our-brand/
+│   ├── index.html                    # brand guidelines (noindex)
+│   └── splendid-visual-brand/
+│       ├── SKILL.md                  # machine-readable brand skill
+│       └── icons/v2/                 # icon gallery
 ├── writing/
-│   ├── index.html             # list of all pieces
-│   ├── _template/index.html   # reference template for new pieces
-│   └── [slug]/index.html      # each piece, hand-built
+│   ├── index.html                    # list of all pieces
+│   ├── _template/index.html          # reference template for new pieces
+│   └── [slug]/index.html             # each piece, hand-built
 ├── assets/
-│   ├── css/                   # bootstrap.min.css + custom.css
-│   ├── js/                    # bootstrap.bundle.min.js
+│   ├── css/                          # bootstrap.min.css + custom.css
+│   ├── js/                           # bootstrap.bundle.min.js + nav.js
 │   └── img/
 └── _includes/
-    ├── header.html            # canonical header
-    └── footer.html            # canonical footer
+    ├── header.html                   # canonical header (copy into each page)
+    └── footer.html                   # canonical footer (copy into each page)
 ```
 
 ## Header and footer
 
-There is no build step, so the header and footer are duplicated into every page. The canonical versions live in `_includes/`. When changing them, update every page that uses them. The list of pages is in the comment at the top of each include.
+There is no build step, so the header and footer are duplicated into every page. The canonical versions live in `_includes/`. When changing them, update every page that uses them.
 
 This is a deliberate tradeoff: a tiny bit of duplication maintenance in exchange for zero build complexity.
 
 ## Adding a writing piece
 
-1. Copy `writing/_template/` to `writing/[your-slug]/`
+1. Copy `public/writing/_template/` to `public/writing/[your-slug]/`
 2. Fill in the title, date, summary, and body
-3. Add a link to it in `writing/index.html`
+3. Add a link to it in `public/writing/index.html`
 
-Each piece can have its own bespoke layout, typography, or embedded media. The template is a starting point, not a straitjacket. For quick text-only pieces, the template is enough as-is.
+Each piece can have its own bespoke layout. The template is a starting point, not a straitjacket.
 
 ## Local preview
 
-There is no build step, so any static file server works. From the project root:
+No build step - any static file server works. Serve from inside `public/`:
 
 ```
-python3 -m http.server 8000
+cd public && python3 -m http.server 8001
 ```
 
-Then open `http://localhost:8000`. Opening the HTML files directly with `file://` mostly works, but absolute paths like `/assets/...` will not resolve, so use a local server.
+Then open `http://localhost:8001`. Opening HTML files directly with `file://` mostly works, but absolute asset paths (`/assets/...`) will not resolve, so use a local server.
 
 ## Deploying
 
