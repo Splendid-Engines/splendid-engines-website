@@ -169,20 +169,27 @@
         (navigator.userActivation && navigator.userActivation.hasBeenActive);
     }
 
-    // ---- a11y: the media region is a button -----------------------------------
+    // ---- a11y: the portrait is the focusable button; the WHOLE figure is the
+    //      pointer hit area, so hovering/clicking anywhere on the module plays it. --
     media.setAttribute('role', 'button');
     media.setAttribute('tabindex', '0');
     media.setAttribute('aria-pressed', 'false');
     if (!media.getAttribute('aria-label')) {
-      media.setAttribute('aria-label', 'Play clip with sound');
+      media.setAttribute('aria-label',
+        fig.getAttribute('aria-label') || video.getAttribute('aria-label') || 'Play clip with sound');
     }
 
-    // Gesture paths (click / Enter / Space / tap) reliably unlock sound.
-    media.addEventListener('click', function () {
+    // A click anywhere on the module toggles play-with-sound (a real gesture).
+    fig.addEventListener('click', function () {
+      // don't hijack a click that's finishing a text selection inside the quote
+      var sel = window.getSelection && window.getSelection();
+      if (sel && sel.toString() && fig.contains(sel.anchorNode)) return;
       hasGesture = true;
       if (fig.classList.contains('is-playing') && noHover) stop();  // tap again to stop
       else play(true);
     });
+
+    // Keyboard activation lives on the focusable portrait.
     media.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
@@ -194,7 +201,7 @@
     });
     if (chip) {
       chip.addEventListener('click', function (e) {
-        e.stopPropagation();            // don't also trigger the media click (which restarts)
+        e.stopPropagation();            // don't also trigger the figure click (which restarts)
         hasGesture = true;
         video.muted = false;
         hideChip();
@@ -211,11 +218,12 @@
       return;
     }
 
-    // Desktop only: hover previews the clip. Sound rides along once the page has
-    // been interacted with; before that it previews muted with a "tap for sound" chip.
+    // Desktop: hovering anywhere on the module previews the clip. Sound rides along
+    // once the page has been interacted with; before that it previews muted with a
+    // "tap for sound" chip.
     if (!noHover) {
-      media.addEventListener('mouseenter', function () { play(pageActivated()); });
-      media.addEventListener('mouseleave', stop);
+      fig.addEventListener('mouseenter', function () { play(pageActivated()); });
+      fig.addEventListener('mouseleave', stop);
     }
   }
 
