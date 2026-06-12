@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talking-head quote — demo - Splendid Engines</title>
+  <meta name="description" content="Internal demo of the talking-head quote module." />
+  <!-- Internal demo page: not linked from /writing/ and kept out of search. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Mulish:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+</head>
+<body>
+
+<!-- HEADER (canonical: _includes/header.html) -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/img/favicon-splendid.svg" alt="" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Who we help</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sales/">Sales</a></li>
+            <li><a class="dropdown-item" href="/marketing/">Marketing</a></li>
+            <li><a class="dropdown-item" href="/experts/">Experts</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/case-study/">Case study</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/writing/">Writing</a></li>
+        <li class="nav-item ms-lg-3"><a class="btn-se-primary" href="/contact/">Book a call</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="longform">
+
+  <!-- HEADER -->
+  <section class="hero text-center bg-snow">
+    <div class="container container-narrow">
+      <span class="eyebrow">Internal demo</span>
+      <h1 class="hero-headline">Talking-head quote</h1>
+      <p class="hero-body">A quote that comes to life. Hover (or tap) the portrait: the clip plays and each word lights up as it is spoken.</p>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="section bg-snow">
+    <div class="container container-narrow">
+
+      <p class="thesis mb-4">This is a level up from a static pull-quote: the words are tied to the real person saying them. Move your pointer over a portrait below to see it.</p>
+
+      <p style="background: var(--ash); border-radius: 4px; padding: 1rem 1.25rem; font-size: 1rem;">
+        <strong>Heads up:</strong> the two clips below are placeholders so the mechanic is visible end to end. The face is a simple animation and the audio is a soft tone per word, both synced to the timings. To ship a real one, drop a short interview clip (an MP4) plus its word timings in place of these. The full how-to is in the writing template.
+      </p>
+
+      <h2>One sentence, one speaker</h2>
+      <p>Hover the portrait. Before you click anything, it previews muted with a <strong>tap for sound</strong> chip; after one click, sound rides along on hover. Keyboard: Tab to it and press Enter.</p>
+
+      <figure class="talking-head" data-th
+              data-timings="/assets/video/_demo/a/clip.timings.json">
+        <div class="th-media">
+          <video class="th-video" preload="metadata" playsinline muted
+                 poster="/assets/video/_demo/a/poster.jpg"
+                 src="/assets/video/_demo/a/clip.mp4"
+                 aria-label="Play clip: Jamie Chen quote"></video>
+          <span class="th-affordance" aria-hidden="true">Tap for sound</span>
+        </div>
+        <blockquote class="th-quote">
+          <p class="th-text">Authenticity beats perfection. You don't need a big budget to make the message land.</p>
+          <figcaption class="testimonial-attr d-flex align-items-center th-attr">
+            <img src="/assets/video/_demo/a/poster.jpg" alt="Jamie Chen" loading="lazy" />
+            <div>
+              <div class="testimonial-attr-name">Jamie Chen</div>
+              <div class="testimonial-attr-role">VP of Marketing (placeholder)</div>
+            </div>
+          </figcaption>
+        </blockquote>
+      </figure>
+
+      <h2>Two on a page</h2>
+      <p>Each block is independent, and only one ever plays at a time: start the second and the first resets on its own.</p>
+
+      <figure class="talking-head" data-th
+              data-timings="/assets/video/_demo/b/clip.timings.json">
+        <div class="th-media">
+          <video class="th-video" preload="metadata" playsinline muted
+                 poster="/assets/video/_demo/b/poster.jpg"
+                 src="/assets/video/_demo/b/clip.mp4"
+                 aria-label="Play clip: Riley Okafor quote"></video>
+          <span class="th-affordance" aria-hidden="true">Tap for sound</span>
+        </div>
+        <blockquote class="th-quote">
+          <p class="th-text">The sooner you start building community, the better. Your customers become your best marketers.</p>
+          <figcaption class="testimonial-attr d-flex align-items-center th-attr">
+            <img src="/assets/video/_demo/b/poster.jpg" alt="Riley Okafor" loading="lazy" />
+            <div>
+              <div class="testimonial-attr-name">Riley Okafor</div>
+              <div class="testimonial-attr-role">Head of Community (placeholder)</div>
+            </div>
+          </figcaption>
+        </blockquote>
+      </figure>
+
+      <h2>What is going on under the hood</h2>
+      <p>The quote text is plain prose in the markup, so it reads fine with no JavaScript and doubles as the transcript. The script splits it into words, then a small loop reads the video's playback time and lights the matching word. If the timings ever disagree with the text, the clip still plays and the highlight simply stays off. Reduced-motion visitors get a still portrait they can click to play, with sound but no flashing.</p>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (canonical: _includes/footer.html) -->
+<footer class="site-footer py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-4 text-center text-md-start">
+        <img src="/assets/img/logo-splendid.png" alt="Splendid Engines" class="footer-logo mb-2" />
+        <div>
+          <span class="footer-tagline-script">Nice day, isn't it?</span>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <ul class="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/case-study/">Case study</a></li>
+          <li><a href="/writing/">Writing</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/our-brand/">Brand</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 text-center text-md-end footer-meta">
+        &copy; <span id="footer-year">2026</span> Splendid Engines. Operating in Canada and the USA.
+      </div>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/talking-head.js" defer></script>
+</body>
+</html>

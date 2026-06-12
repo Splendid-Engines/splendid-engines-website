@@ -1,0 +1,72 @@
+[
+  {
+    "w": "The",
+    "start": 0.45,
+    "end": 0.78
+  },
+  {
+    "w": "sooner",
+    "start": 0.86,
+    "end": 1.34
+  },
+  {
+    "w": "you",
+    "start": 1.42,
+    "end": 1.75
+  },
+  {
+    "w": "start",
+    "start": 1.83,
+    "end": 2.26
+  },
+  {
+    "w": "building",
+    "start": 2.34,
+    "end": 2.92
+  },
+  {
+    "w": "community,",
+    "start": 3.0,
+    "end": 3.62
+  },
+  {
+    "w": "the",
+    "start": 3.82,
+    "end": 4.15
+  },
+  {
+    "w": "better.",
+    "start": 4.23,
+    "end": 4.71
+  },
+  {
+    "w": "Your",
+    "start": 5.05,
+    "end": 5.43
+  },
+  {
+    "w": "customers",
+    "start": 5.51,
+    "end": 6.13
+  },
+  {
+    "w": "become",
+    "start": 6.21,
+    "end": 6.69
+  },
+  {
+    "w": "your",
+    "start": 6.77,
+    "end": 7.15
+  },
+  {
+    "w": "best",
+    "start": 7.23,
+    "end": 7.61
+  },
+  {
+    "w": "marketers.",
+    "start": 7.69,
+    "end": 8.31
+  }
+]

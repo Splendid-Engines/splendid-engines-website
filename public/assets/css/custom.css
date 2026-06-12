@@ -1113,3 +1113,109 @@ hr.section-divider {
 .splendid-icon--xl { width: 96px; height: 96px; }
 .splendid-icon--poppy { color: var(--poppy); }
 .splendid-icon--white { color: #FFFFFF; }
+
+/* ---------- Talking-head quote (talking-head.js) ----------
+   A short self-hosted clip of a person in a narrow left column; their quote in a
+   wide right column. On hover (desktop) or tap (mobile) the clip plays and the
+   quote lights up word-by-word in sync with the audio. Visually a sibling of
+   .pull-quote / .testimonial-attr. Native <video> only (a YouTube iframe can't
+   drive word-sync). Opt in with [data-th] on the figure; behaviour is in
+   talking-head.js. */
+.talking-head {
+  display: grid;
+  grid-template-columns: 1fr 3fr;     /* ~1/4 + 3/4 */
+  gap: 1.75rem;
+  align-items: center;
+  margin: 2.5rem 0;                   /* also zeroes the browser default figure margin */
+}
+.th-media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;                 /* echo the circular headshot treatment */
+  overflow: hidden;
+  background: var(--ash);             /* no flash of empty before the poster paints */
+  box-shadow: 0 0 0 1px var(--line);
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.th-media:hover { transform: translateY(-2px); }
+.th-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                  /* same as .testimonial-attr img */
+}
+.th-media:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--lake);
+}
+.talking-head.is-playing .th-media { box-shadow: 0 0 0 3px var(--poppy); }
+
+/* "Tap for sound" chip — shown only while a clip plays muted (.needs-sound). */
+.th-affordance {
+  position: absolute;
+  left: 50%;
+  bottom: 0.5rem;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(21, 48, 71, 0.82);
+  color: #fff;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.th-affordance::before { content: "\1F50A"; }   /* speaker emoji */
+.talking-head.needs-sound .th-affordance { display: flex; }
+
+/* Right column: the quote. A sibling of .pull-quote, between blockquote and
+   pull-quote in scale. Beat the .longform blockquote / p rules with .longform. */
+.th-quote { margin: 0; }
+.longform .th-quote { border-left: 0; padding: 0; margin: 0; color: var(--lagoon); }
+.longform .th-text {
+  font-family: 'Mulish', sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lagoon);
+  margin: 0;
+}
+.th-attr { margin-top: 1rem; }
+
+/* The karaoke words. Idle = normal text; active = the Daffodil highlighter
+   (mirrors .hl) so a lit word still wraps cleanly across lines. Paint-only:
+   lighting a word never changes its box, so the paragraph never reflows. */
+.th-word {
+  border-radius: 2px;
+  transition: background-color .12s ease, color .12s ease;
+}
+.th-word.is-active {
+  background: linear-gradient(to top, var(--daffodil) 10%, var(--daffodil) 72%, transparent 72%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@media (max-width: 767.98px) {
+  .talking-head {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+  .th-media { max-width: 160px; }
+}
+
+/* Reduced motion: the clip is click-to-play with sound, but the per-word
+   highlight (the motion) is suppressed here and in talking-head.js. */
+@media (prefers-reduced-motion: reduce) {
+  .th-media:hover { transform: none; }
+  .th-word { transition: none; }
+  .th-word.is-active { background: none; }
+}

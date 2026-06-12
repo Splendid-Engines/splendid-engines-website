@@ -101,6 +101,47 @@
   </section>
   -->
 
+  <!-- Optional talking-head quote (needs talking-head.js + a self-hosted clip).
+       A short MP4 of the person plays on hover/tap while the quote lights up
+       word-by-word in sync. Uncomment, then:
+         1. Put a short, compressed MP4 at /assets/video/[slug]/clip.mp4 and a
+            still at /assets/video/[slug]/poster.jpg. Keep clips small (square,
+            a few seconds, well under Cloudflare Pages' 25 MB per-file limit).
+         2. Put word timings at /assets/video/[slug]/clip.timings.json, one entry
+            per whitespace-separated word of the quote, in order:
+            [ { "w": "First", "start": 0.00, "end": 0.31 }, ... ]  (seconds)
+         3. Write the quote as plain text in .th-text (it is the source of truth
+            and the transcript). If the timings ever disagree, the clip still
+            plays with no highlight.
+         4. Uncomment the talking-head.js include near the end of this file.
+  -->
+  <!--
+  <section class="section bg-snow">
+    <div class="container container-narrow">
+      <figure class="talking-head" data-th
+              data-timings="/assets/video/[slug]/clip.timings.json">
+        <div class="th-media">
+          <video class="th-video" preload="metadata" playsinline muted
+                 poster="/assets/video/[slug]/poster.jpg"
+                 src="/assets/video/[slug]/clip.mp4"
+                 aria-label="Play clip: [Name] quote"></video>
+          <span class="th-affordance" aria-hidden="true">Tap for sound</span>
+        </div>
+        <blockquote class="th-quote">
+          <p class="th-text">[The exact quote, as plain readable prose.]</p>
+          <figcaption class="testimonial-attr d-flex align-items-center th-attr">
+            <img src="/assets/img/[slug]/[name].png" alt="[Name]" loading="lazy" />
+            <div>
+              <div class="testimonial-attr-name">[Name]</div>
+              <div class="testimonial-attr-role">[Title, Company]</div>
+            </div>
+          </figcaption>
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+  -->
+
   <!-- CTA -->
   <section class="section bg-snow text-center">
     <div class="container container-narrow">
@@ -143,5 +184,7 @@
 
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/nav.js" defer></script>
+<!-- Uncomment if this piece uses a talking-head quote (see the figure above): -->
+<!-- <script src="/assets/js/talking-head.js" defer></script> -->
 </body>
 </html>
