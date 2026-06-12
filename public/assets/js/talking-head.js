@@ -39,6 +39,9 @@
 
   // Only one clip plays at a time across the whole page.
   var current = null;
+  // Shared sound on/off preference, toggled via the chip (or the "m" key). Later
+  // hovers and the other clips on the page honour it.
+  var soundPref = true;
 
   figures.forEach(function (fig) {
     try { initFigure(fig); } catch (e) { /* never break the page over one block */ }
@@ -120,13 +123,15 @@
       fig.classList.add('is-playing');
       media.setAttribute('aria-pressed', 'true');
 
-      // Already playing this clip? Just upgrade to sound if a gesture allows it.
+      // Already playing this clip? Just sync the sound to the request.
       if (!video.paused) {
-        if (withSound && video.muted) { video.muted = false; hideChip(); }
+        video.muted = !withSound;
+        updateChip();
         return;
       }
 
       video.muted = !withSound;
+      updateChip();
       try { video.currentTime = 0; } catch (e) {}   // replay from the top each time
       if (!rafId) rafId = window.requestAnimationFrame(tick);
 
@@ -134,14 +139,14 @@
       if (p && typeof p.then === 'function') {
         p.then(function () {
           if (!wantPlaying) return;
-          if (video.muted) showChip(); else hideChip();
+          updateChip();
         }).catch(function () {
           // Unmuted play was blocked. Retry muted so the visual still runs.
           if (!wantPlaying) return;
           video.muted = true;
           var p2 = video.play();
           if (p2 && p2.catch) p2.catch(function () { stop(); });  // give up: poster stays
-          showChip();
+          updateChip();
         });
       }
     }
@@ -154,15 +159,29 @@
       video.muted = true;                            // re-arm the safe default
       clearHighlight();
       fig.classList.remove('is-playing');
+      fig.classList.remove('snd-on');
       media.setAttribute('aria-pressed', 'false');
-      hideChip();
       if (current === api) current = null;
     }
 
     var api = { stop: stop };
 
-    function showChip() { if (chip) fig.classList.add('needs-sound'); }
-    function hideChip() { fig.classList.remove('needs-sound'); }
+    // The chip is visible whenever the clip plays (CSS, keyed on .is-playing). It is
+    // a sound on/off toggle: its label + icon reflect the live mute state.
+    function updateChip() {
+      var on = !video.muted;
+      fig.classList.toggle('snd-on', on);
+      if (chip) chip.textContent = on ? 'Tap to mute' : 'Tap for sound';
+    }
+
+    // Toggle audio for the talking-head clips. The choice sticks for the page so
+    // later hovers and the other clips honour it. Counts as a user gesture.
+    function setSound(on) {
+      soundPref = on;
+      hasGesture = true;
+      if (!video.paused) { video.muted = !on; updateChip(); }
+    }
+    function toggleSound() { setSound(video.paused ? !soundPref : video.muted); }
 
     function pageActivated() {
       return hasGesture ||
@@ -186,7 +205,7 @@
       if (sel && sel.toString() && fig.contains(sel.anchorNode)) return;
       hasGesture = true;
       if (fig.classList.contains('is-playing') && noHover) stop();  // tap again to stop
-      else play(true);
+      else play(soundPref);                                         // play; sound per the toggle
     });
 
     // Keyboard activation lives on the focusable portrait.
@@ -194,18 +213,18 @@
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
         hasGesture = true;
-        if (fig.classList.contains('is-playing')) stop(); else play(true);
+        if (fig.classList.contains('is-playing')) stop(); else play(soundPref);
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        toggleSound();                  // mute / unmute from the keyboard
       } else if (e.key === 'Escape') {
         stop();
       }
     });
     if (chip) {
       chip.addEventListener('click', function (e) {
-        e.stopPropagation();            // don't also trigger the figure click (which restarts)
-        hasGesture = true;
-        video.muted = false;
-        hideChip();
-        if (video.paused) play(true);
+        e.stopPropagation();            // don't also trigger the figure click
+        toggleSound();                  // tap on for sound, tap off to mute
       });
     }
 
@@ -222,7 +241,7 @@
     // once the page has been interacted with; before that it previews muted with a
     // "tap for sound" chip.
     if (!noHover) {
-      fig.addEventListener('mouseenter', function () { play(pageActivated()); });
+      fig.addEventListener('mouseenter', function () { play(soundPref && pageActivated()); });
       fig.addEventListener('mouseleave', stop);
     }
   }

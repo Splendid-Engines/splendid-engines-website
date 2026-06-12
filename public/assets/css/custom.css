@@ -1151,7 +1151,7 @@ hr.section-divider {
 }
 .talking-head.is-playing .th-media { box-shadow: 0 0 0 3px var(--poppy); }
 
-/* "Tap for sound" chip — shown only while a clip plays muted (.needs-sound). */
+/* Sound on/off chip: visible whenever a clip plays; label + icon flip with state. */
 .th-affordance {
   position: absolute;
   left: 50%;
@@ -1173,8 +1173,9 @@ hr.section-divider {
   white-space: nowrap;
   cursor: pointer;
 }
-.th-affordance::before { content: "\1F50A"; }   /* speaker emoji */
-.talking-head.needs-sound .th-affordance { display: flex; }
+.th-affordance::before { content: "\1F50A"; }                       /* speaker on: "Tap for sound" */
+.talking-head.snd-on .th-affordance::before { content: "\1F507"; }  /* muted speaker: "Tap to mute" */
+.talking-head.is-playing .th-affordance { display: flex; }          /* visible whenever a clip plays */
 
 /* Right column: the quote. A sibling of .pull-quote, between blockquote and
    pull-quote in scale. Beat the .longform blockquote / p rules with .longform. */
