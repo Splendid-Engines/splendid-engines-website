@@ -1127,6 +1127,7 @@ hr.section-divider {
   gap: 1.75rem;
   align-items: center;
   margin: 2.5rem 0;                   /* also zeroes the browser default figure margin */
+  cursor: pointer;                    /* the whole module is the hover / click hit area */
 }
 .th-media {
   position: relative;
@@ -1135,10 +1136,9 @@ hr.section-divider {
   overflow: hidden;
   background: var(--ash);             /* no flash of empty before the poster paints */
   box-shadow: 0 0 0 1px var(--line);
-  cursor: pointer;
   transition: box-shadow .15s ease, transform .15s ease;
 }
-.th-media:hover { transform: translateY(-2px); }
+.talking-head:hover .th-media { transform: translateY(-2px); }
 .th-video {
   display: block;
   width: 100%;
@@ -1215,7 +1215,7 @@ hr.section-divider {
 /* Reduced motion: the clip is click-to-play with sound, but the per-word
    highlight (the motion) is suppressed here and in talking-head.js. */
 @media (prefers-reduced-motion: reduce) {
-  .th-media:hover { transform: none; }
+  .talking-head:hover .th-media { transform: none; }
   .th-word { transition: none; }
   .th-word.is-active { background: none; }
 }
