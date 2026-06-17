@@ -190,6 +190,11 @@ a:hover { color: var(--lagoon); }
 .section-sm { padding: 3rem 0; }
 .section-lg { padding: 6.5rem 0; }
 
+/* Longform articles: tighter section padding so adjacent same-color sections don't stack */
+.longform .section { padding: 1.5rem 0; }
+.longform .section:first-of-type { padding-top: 3rem; }
+.longform .section:last-of-type { padding-bottom: 3rem; }
+
 .bg-snow      { background-color: var(--snow); }
 .bg-ash       { background-color: var(--ash); }
 .bg-ash-warm  { background-color: var(--ash-warm); }
