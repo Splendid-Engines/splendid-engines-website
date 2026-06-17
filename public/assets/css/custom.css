@@ -191,9 +191,8 @@ a:hover { color: var(--lagoon); }
 .section-lg { padding: 6.5rem 0; }
 
 /* Longform articles: tighter section padding so adjacent same-color sections don't stack */
-.longform .section { padding: 1.5rem 0; }
-.longform .section:first-of-type { padding-top: 3rem; }
-.longform .section:last-of-type { padding-bottom: 3rem; }
+.longform .section { padding: 0; }
+.longform .section + .longform .section { margin-top: 0; }
 
 .bg-snow      { background-color: var(--snow); }
 .bg-ash       { background-color: var(--ash); }
