@@ -1,0 +1,14 @@
+<!--
+  Canonical analytics / tracking tag. This goes right before </body> on EVERY
+  page, current and future. There is no build step, so it is copied into each
+  page by hand, the same maintenance contract as header.html and footer.html.
+
+  Rules:
+  - Add a new page? Add this tag to it, right before </body>.
+  - Need to change the id (or swap trackers)? Update it here, then update every
+    page. Find them with:  grep -rl "static.claydar.com" public --include=*.html
+
+  Currently: Clay web-intent tracking (Claydar). Identifies companies visiting
+  the site via reverse-IP; feeds the operator console's web-intent monitor.
+-->
+<script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>

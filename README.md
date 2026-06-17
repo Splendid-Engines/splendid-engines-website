@@ -45,7 +45,8 @@ public/
 │   └── img/
 └── _includes/
     ├── header.html                   # canonical header (copy into each page)
-    └── footer.html                   # canonical footer (copy into each page)
+    ├── footer.html                   # canonical footer (copy into each page)
+    └── analytics.html                # canonical tracking tag (copy into each page, before </body>)
 ```
 
 ## Header and footer
@@ -53,6 +54,23 @@ public/
 There is no build step, so the header and footer are duplicated into every page. The canonical versions live in `_includes/`. When changing them, update every page that uses them.
 
 This is a deliberate tradeoff: a tiny bit of duplication maintenance in exchange for zero build complexity.
+
+## Analytics and tracking
+
+Site-wide tracking tags go right before `</body>` on every page. Same as the
+header and footer, there is no build step, so they are copied into each page by
+hand. The canonical copy is `_includes/analytics.html`.
+
+Today that is the Clay web-intent script (Claydar). It identifies the companies
+visiting the site and feeds the web-intent monitor in the operator console.
+
+Add a page, add the tag. (Copying the writing template handles this for writing
+pieces, since the template already carries it.) To change the id or swap
+trackers, edit `_includes/analytics.html`, then update every page. Find them all:
+
+```
+grep -rl "static.claydar.com" public --include=*.html
+```
 
 ## Adding a writing piece
 
