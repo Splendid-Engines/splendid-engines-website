@@ -267,18 +267,11 @@ a:hover { color: var(--lagoon); }
 /* Article hero image (full-bleed banner between the text hero and the body) */
 .article-hero-image {
   width: 100%;
-  max-height: 600px;
-  overflow: hidden;
 }
 .article-hero-image img {
   width: 100%;
-  height: 600px;
-  object-fit: cover;
-  object-position: top;
+  height: auto;
   display: block;
-}
-@media (max-width: 767.98px) {
-  .article-hero-image img { height: 260px; }
 }
 
 /* Daffodil highlighter (per Splendid Visual Brand §5).
