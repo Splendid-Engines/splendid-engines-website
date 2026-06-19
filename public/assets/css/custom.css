@@ -438,14 +438,15 @@ hr.section-divider {
 }
 .site-footer .footer-nav {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
   justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .site-footer .footer-nav a {
+  display: inline-block;
   font-family: 'Big Shoulders Display', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
@@ -453,8 +454,16 @@ hr.section-divider {
   font-size: 0.9rem;
   white-space: nowrap;
 }
-@media (max-width: 575.98px) {
-  .site-footer .footer-nav { flex-wrap: wrap; gap: 0.75rem 1.25rem; }
+/* On large screens let the three footer columns size to their content so the
+   centered nav keeps its own row. Previously the equal thirds were too narrow
+   for the nav, which overflowed under the copyright column and lost clicks on
+   its right-hand links (Brand, and Contact at narrower widths). Below lg the
+   nav simply wraps within its column, which keeps every link clickable. */
+@media (min-width: 992px) {
+  .site-footer .row { flex-wrap: nowrap; }
+  .site-footer .row > [class*="col-"]:first-child,
+  .site-footer .row > [class*="col-"]:last-child { flex: 1 1 0; max-width: none; }
+  .site-footer .row > [class*="col-"]:nth-child(2) { flex: 0 0 auto; width: auto; max-width: none; }
 }
 
 /* ---------- Utility ---------- */
