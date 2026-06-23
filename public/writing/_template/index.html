@@ -24,8 +24,8 @@
   HOW TO USE THIS TEMPLATE
   ------------------------
   1. Copy this whole folder to writing/[your-slug]/
-  2. Replace [Piece title], [One-sentence summary], [slug], and the
-     date below with real values
+  2. Replace [Piece title], [One-sentence summary], [slug], the author
+     byline, and the date below with real values
   3. Replace the body content under <main> with the piece itself
   4. Add an entry to writing/index.html linking to /writing/[your-slug]/
 
@@ -69,25 +69,35 @@
 
 <main class="longform">
 
-  <!-- HEADER -->
-  <section class="hero text-center bg-snow">
-    <div class="container container-narrow">
-      <span class="eyebrow">[Type — Essay / Report / Note]</span>
-      <h1 class="hero-headline">[Piece title]</h1>
-      <p class="hero-body">[One-sentence summary of the piece.]</p>
-      <div class="text-muted-se" style="font-size: 0.9rem;">[Month DD, YYYY]</div>
+  <!-- HEADER (two-column fold: title + subhead + byline left, feature image right) -->
+  <section class="article-fold bg-snow">
+    <div class="container">
+      <div class="row align-items-center g-4 g-lg-5">
+        <div class="col-lg-6 article-fold-text">
+          <span class="eyebrow">[Type: Essay / Report / Note]</span>
+          <h1 class="article-fold-title">[Piece title]</h1>
+          <p class="article-fold-sub">[One-sentence summary of the piece.]</p>
+          <!-- Byline. Remove the avatar img if there is no author photo. -->
+          <div class="article-byline">
+            <img class="article-byline-avatar" src="/assets/img/writing/[slug]-author.jpg" alt="[Author name]" />
+            <div>
+              <div class="article-byline-name">[Author name]</div>
+              <div class="article-byline-meta">[Author title] &middot; [Month DD, YYYY]</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 article-fold-media">
+          <!-- Feature image. A 4:3 or 3:2 crop sits best in this column. -->
+          <img src="/assets/img/writing/[slug]-hero.jpg" alt="[Brief description of the image]" />
+        </div>
+      </div>
     </div>
   </section>
-
-  <!-- HERO IMAGE (1440 x 600px recommended) -->
-  <div class="article-hero-image">
-    <img src="/assets/img/writing/[slug]-hero.jpg" alt="[Brief description of the image]" />
-  </div>
 
   <!-- BODY -->
   <section class="section bg-snow">
     <div class="container container-narrow">
-      <p class="thesis mb-4">[Opening paragraph — sets the thesis. .thesis is the larger-weight body class.]</p>
+      <p class="thesis mb-4">[Opening paragraph: sets the thesis. .thesis is the larger-weight body class.]</p>
 
       <p>[Body paragraph. Mulish, 18px, line-height 1.65. Keep paragraphs tight.]</p>
 

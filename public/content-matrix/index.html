@@ -24,6 +24,17 @@
     .cm-lede { font-size: 1.25rem; line-height: 1.6; color: var(--lagoon); max-width: 46rem; }
     .cm-trust { font-size: 0.95rem; color: var(--muted); max-width: 44rem; }
 
+    /* Slim trust bar (compact, no preamble) */
+    .cm-trustbar { padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+    .cm-trustbar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1.25rem; }
+    .cm-trustbar-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+    .cm-trustbar .logo-strip { gap: 0.75rem 1.25rem; }
+    .cm-trustbar .logo-strip img { width: 82px; height: 26px; }
+    /* Pain-first lead (straight into it) */
+    .cm-lead { padding-top: 2.25rem; padding-bottom: 2.25rem; }
+    .cm-h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: 0.4rem; }
+    .cm-sub { font-size: 1.05rem; color: var(--muted); max-width: 40rem; margin-bottom: 1.5rem; }
+
     /* Pain selector */
     .cm-pains { display: flex; flex-wrap: wrap; gap: 0.625rem; }
     .cm-pain {
@@ -167,23 +178,10 @@
 
 <main>
 
-  <!-- HERO + CREDIBILITY -->
-  <section class="hero text-center bg-snow">
-    <div class="container container-narrow">
-      <span class="eyebrow">A Splendid tool</span>
-      <h1 class="hero-headline">The Content Matrix</h1>
-      <p class="hero-body">
-        Sales and marketing use the same words for content and mean different things. That gap wastes budget and starts fights. This is a shared map of every kind of content: what each one is for, who it is for, and how to measure it. Start with the problem you are facing, and we will point you to the content that solves it.
-      </p>
-    </div>
-  </section>
-
-  <section class="section-sm bg-snow">
-    <div class="container text-center">
-      <p class="cm-trust mx-auto mb-4">
-        Why trust this map? We are Splendid Engines. We build B2B community marketing programs for a living, and we have spent years watching sales and marketing teams talk past each other about content. This is how we end that argument.
-      </p>
-      <p class="text-muted-se mb-4">Some folks we&rsquo;ve put our clients in the room with</p>
+  <!-- SLIM TRUST BAR (compact, no big intro) -->
+  <section class="cm-trustbar bg-snow">
+    <div class="container cm-trustbar-inner">
+      <span class="cm-trustbar-label">From Splendid Engines, B2B GTM practitioners. Folks we&rsquo;ve put our clients in the room with:</span>
       <div class="logo-strip">
         <img src="/assets/img/logo-paypal.png" alt="PayPal" loading="lazy" />
         <img src="/assets/img/logo-spotify.png" alt="Spotify" loading="lazy" />
@@ -195,12 +193,12 @@
     </div>
   </section>
 
-  <!-- PAIN SELECTOR -->
-  <section class="cm-section bg-ash">
+  <!-- PAIN SELECTOR (the lead: straight into it) -->
+  <section class="cm-section cm-lead bg-ash">
     <div class="container">
-      <span class="eyebrow">Start here</span>
-      <h2 class="mb-2">What&rsquo;s the problem you&rsquo;re facing?</h2>
-      <p class="text-muted-se mb-4">Pick any that sound like you. We will light up the content types that solve them, and show you what each one does below.</p>
+      <span class="eyebrow">The Content Matrix</span>
+      <h1 class="cm-h1">What&rsquo;s going wrong?</h1>
+      <p class="cm-sub">Pick what sounds like you. We will light up the kind of content that fixes it, and show you how to measure it.</p>
       <div class="cm-pains" id="cm-pains" role="group" aria-label="Common problems"></div>
     </div>
   </section>
