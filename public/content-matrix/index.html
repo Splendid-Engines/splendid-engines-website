@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Content Matrix - Splendid Engines</title>
+  <meta name="description" content="A shared map of every kind of content: what each type is for, who it is for, and how to measure it. Start with the problem you are facing and find the content that solves it." />
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Mulish:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Content Matrix" />
+  <meta property="og:description" content="Sales and marketing use the same words for content and mean different things. This is a shared map of every kind of content, what each one is for, and how to measure it." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://splendidengines.com/content-matrix/" />
+
+  <style>
+    /* ---- Content Matrix tool (page-scoped, cm- prefix) ---- */
+    .cm-section { padding: 3.5rem 0; }
+    .cm-lede { font-size: 1.25rem; line-height: 1.6; color: var(--lagoon); max-width: 46rem; }
+    .cm-trust { font-size: 0.95rem; color: var(--muted); max-width: 44rem; }
+
+    /* Pain selector */
+    .cm-pains { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+    .cm-pain {
+      font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 0.95rem;
+      color: var(--lagoon); background: var(--snow);
+      border: 1.5px solid var(--line); border-radius: 999px;
+      padding: 0.55rem 1.1rem; cursor: pointer; transition: all .15s ease;
+    }
+    .cm-pain:hover { border-color: var(--poppy); }
+    .cm-pain[aria-pressed="true"] {
+      background: var(--poppy); border-color: var(--poppy); color: #fff;
+    }
+
+    /* Controls */
+    .cm-controls { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .cm-ctl {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem;
+      background: transparent; color: var(--lagoon); border: 2px solid var(--line);
+      border-radius: 999px; padding: 0.4rem 1rem; cursor: pointer; transition: all .15s ease;
+    }
+    .cm-ctl:hover { border-color: var(--lagoon); }
+
+    /* Matrix grid */
+    .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
+    .cm-grid {
+      display: grid;
+      grid-template-columns: 7rem repeat(3, minmax(9.5rem, 1fr));
+      gap: 0.6rem; min-width: 40rem; align-items: stretch;
+    }
+    .cm-axis-x, .cm-axis-y {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;
+      color: var(--muted); display: flex; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .cm-axis-y { writing-mode: initial; }
+    .cm-corner { display: flex; align-items: flex-end; }
+    .cm-corner small { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 0.7rem; color: var(--muted); text-transform: none; letter-spacing: 0; line-height: 1.3; }
+
+    .cm-cell {
+      text-align: left; background: var(--snow); border: 1.5px solid var(--line);
+      border-radius: 10px; padding: 0.85rem 0.9rem; cursor: pointer;
+      transition: all .15s ease; min-height: 5.5rem; display: flex;
+      flex-direction: column; justify-content: center; gap: 0.25rem; width: 100%;
+    }
+    .cm-cell:hover { border-color: var(--poppy); transform: translateY(-1px); }
+    .cm-cell .cm-cell-name {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.15rem; color: var(--lagoon);
+    }
+    .cm-cell .cm-cell-coord { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
+    .cm-cell[aria-pressed="true"] {
+      background: var(--lagoon); border-color: var(--lagoon);
+      box-shadow: 0 6px 18px rgba(21,48,71,0.18);
+    }
+    .cm-cell[aria-pressed="true"] .cm-cell-name { color: #fff; }
+    .cm-cell[aria-pressed="true"] .cm-cell-coord { color: var(--daffodil); }
+    .cm-row-tl .cm-cell { border-left: 3px solid var(--poppy); }
+
+    .cm-offgrid {
+      margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
+    }
+    .cm-offgrid .cm-cell { max-width: 16rem; }
+    .cm-offgrid-note { font-size: 0.85rem; color: var(--muted); }
+
+    .cm-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--muted); }
+    .cm-legend b { color: var(--lagoon); }
+
+    /* Records */
+    .cm-records { display: grid; grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); gap: 1.25rem; }
+    .cm-empty { color: var(--muted); font-size: 1.05rem; padding: 1rem 0; }
+    .cm-diag {
+      border-left: 4px solid var(--poppy); background: var(--ash);
+      padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; color: var(--lagoon);
+    }
+    .cm-card {
+      background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px;
+      padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;
+    }
+    .cm-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+    .cm-card-name {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.5rem; color: var(--lagoon); margin: 0;
+    }
+    .cm-tag {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--poppy);
+      border: 1.5px solid var(--poppy); border-radius: 999px; padding: 0.15rem 0.6rem; white-space: nowrap;
+    }
+    .cm-coord-pill { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+    .cm-field { font-size: 0.95rem; line-height: 1.55; }
+    .cm-field .cm-label {
+      display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.15rem;
+    }
+    .cm-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .cm-badge {
+      font-size: 0.78rem; font-weight: 600; color: var(--lagoon);
+      background: var(--ash); border-radius: 999px; padding: 0.25rem 0.7rem;
+    }
+    .cm-examples { display: flex; flex-direction: column; gap: 0.3rem; }
+    .cm-examples a { font-weight: 600; font-size: 0.95rem; }
+    .cm-card hr { border: 0; border-top: 1px solid var(--line); margin: 0.25rem 0; }
+
+    @media (max-width: 575.98px) {
+      .cm-card-name { font-size: 1.3rem; }
+      .cm-lede { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER (canonical: _includes/header.html) -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/img/favicon-splendid.svg" alt="" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Who we help</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sales/">Sales</a></li>
+            <li><a class="dropdown-item" href="/marketing/">Marketing</a></li>
+            <li><a class="dropdown-item" href="/experts/">Experts</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/case-study/">Case study</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/writing/">Writing</a></li>
+        <li class="nav-item ms-lg-3"><a class="btn-se-primary" href="/contact/">Book a call</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO + CREDIBILITY -->
+  <section class="hero text-center bg-snow">
+    <div class="container container-narrow">
+      <span class="eyebrow">A Splendid tool</span>
+      <h1 class="hero-headline">The Content Matrix</h1>
+      <p class="hero-body">
+        Sales and marketing use the same words for content and mean different things. That gap wastes budget and starts fights. This is a shared map of every kind of content: what each one is for, who it is for, and how to measure it. Start with the problem you are facing, and we will point you to the content that solves it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-sm bg-snow">
+    <div class="container text-center">
+      <p class="cm-trust mx-auto mb-4">
+        Why trust this map? We are Splendid Engines. We build B2B community marketing programs for a living, and we have spent years watching sales and marketing teams talk past each other about content. This is how we end that argument.
+      </p>
+      <p class="text-muted-se mb-4">Some folks we&rsquo;ve put our clients in the room with</p>
+      <div class="logo-strip">
+        <img src="/assets/img/logo-paypal.png" alt="PayPal" loading="lazy" />
+        <img src="/assets/img/logo-spotify.png" alt="Spotify" loading="lazy" />
+        <img src="/assets/img/logo-snap.png" alt="Snap" loading="lazy" />
+        <img src="/assets/img/logo-roku.png" alt="Roku" loading="lazy" />
+        <img src="/assets/img/logo-meta.png" alt="Meta" loading="lazy" />
+        <img src="/assets/img/logo-netflix.png" alt="Netflix" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN SELECTOR -->
+  <section class="cm-section bg-ash">
+    <div class="container">
+      <span class="eyebrow">Start here</span>
+      <h2 class="mb-2">What&rsquo;s the problem you&rsquo;re facing?</h2>
+      <p class="text-muted-se mb-4">Pick any that sound like you. We will light up the content types that solve them, and show you what each one does below.</p>
+      <div class="cm-pains" id="cm-pains" role="group" aria-label="Common problems"></div>
+    </div>
+  </section>
+
+  <!-- THE MATRIX -->
+  <section class="cm-section bg-snow">
+    <div class="container">
+      <span class="eyebrow">The map</span>
+      <h2 class="mb-2">Every cell is a kind of content</h2>
+      <p class="text-muted-se mb-3">
+        Two questions place any piece. Across: is it about the past, the present, or the future? Down: how much of your own point of view are you putting on the reader?
+      </p>
+
+      <div class="cm-controls mb-3">
+        <button class="cm-ctl" id="cm-all" type="button">Toggle all</button>
+        <button class="cm-ctl" id="cm-clear" type="button">Clear all</button>
+      </div>
+
+      <div class="cm-scroll">
+        <div class="cm-grid" id="cm-grid"></div>
+      </div>
+
+      <div class="cm-offgrid" id="cm-offgrid"></div>
+
+      <div class="cm-legend">
+        <span><b>Top row:</b> thought leadership. You plant a flag.</span>
+        <span><b>Middle row:</b> you make sense of something, without a personal flag.</span>
+        <span><b>Bottom row:</b> just the facts. The data does the talking.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORDS -->
+  <section class="cm-section bg-ash">
+    <div class="container">
+      <span class="eyebrow">Your content types</span>
+      <h2 class="mb-4">What each one does</h2>
+      <div id="cm-diag-slot"></div>
+      <div class="cm-records" id="cm-records"></div>
+      <p class="cm-empty" id="cm-empty">Pick a problem above, or tap any cell in the matrix, to see what that content type is for, who it is for, and how to measure it.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-snow text-center">
+    <div class="container container-narrow">
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="display-5 mb-3">Want help building these?</h2>
+      <p class="thesis mb-4">We build the whole program: the right content types, made with trusted voices, measured the right way.</p>
+      <a href="/contact/" class="btn-se-primary">Book a call</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (canonical: _includes/footer.html) -->
+<footer class="site-footer py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-4 text-center text-md-start">
+        <a href="/"><img src="/assets/img/logo-splendid.png" alt="Splendid Engines" class="footer-logo mb-2" /></a>
+        <div>
+          <span class="footer-tagline-script">Nice day, isn't it?</span>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <ul class="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/case-study/">Case study</a></li>
+          <li><a href="/writing/">Writing</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/our-brand/">Brand</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 text-center text-md-end footer-meta">
+        &copy; <span id="footer-year">2026</span> Splendid Engines. Operating in Canada and the USA.
+      </div>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/nav.js" defer></script>
+
+<!-- Content Matrix data + interactivity -->
+<script>
+(function () {
+  // The matrix as data. Each cell is a record. Edit here like a database.
+  var CELLS = [
+    { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
+      what: "A take that says the accepted story about something is wrong, and offers a better one.",
+      solves: "Differentiation and authority. You become the one who saw what everyone else missed.",
+      notfor: "Fast leads. And it falls apart if you cannot actually prove the old view wrong.",
+      metric: "Minds changed and citations from peers. Not leads.",
+      audience: "Peers and informed buyers who hold the old view.",
+      difficulty: "High", time_req: "1 to 2 weeks",
+      examples: [
+        { name: "The 1619 Project (The New York Times)", url: "https://www.nytimes.com/interactive/2019/08/14/magazine/1619-america-slavery.html" },
+        { name: "Moneyball, Michael Lewis", url: "https://en.wikipedia.org/wiki/Moneyball" }
+      ] },
+    { id: "position", name: "Position", time: "present", weight: "high",
+      what: "A clear stand on something happening right now, backed by current evidence.",
+      solves: "Trust, attention, and differentiation. It plants your flag.",
+      notfor: "Direct lead generation, or readers who want a neutral, both-sides take.",
+      metric: "Shifts in what the right people believe. Shares and replies from believers. Not raw leads.",
+      audience: "Buyers and peers who are forming an opinion on the issue.",
+      difficulty: "Medium", time_req: "2 to 4 days",
+      examples: [
+        { name: "Scott Galloway, No Mercy / No Malice", url: "https://www.profgalloway.com/" },
+        { name: "Paul Graham, Essays", url: "https://www.paulgraham.com/articles.html" }
+      ] },
+    { id: "prediction", name: "Prediction", time: "future", weight: "high",
+      what: "A specific, falsifiable claim about what will happen, backed by a mechanism.",
+      solves: "Authority and attention. It puts you ahead of the curve.",
+      notfor: "Hedgers. If you are vague it does nothing, and if you are wrong out loud it costs you.",
+      metric: "Whether you are remembered as having called it. Citations and inbound when it lands.",
+      audience: "Forward-looking buyers and the press.",
+      difficulty: "High", time_req: "3 to 5 days",
+      examples: [
+        { name: "Ben Thompson, Aggregation Theory (Stratechery)", url: "https://stratechery.com/concept/aggregation-theory/" },
+        { name: "Scott Galloway, market calls (No Mercy / No Malice)", url: "https://www.profgalloway.com/" }
+      ] },
+    { id: "reframing", name: "Reframing", time: "past", weight: "mid",
+      what: "A fresh lens on familiar events. Not a correction, a new way to see the same facts.",
+      solves: "Makes you a sense-maker. Useful and shareable, with less risk than a Reconsideration.",
+      notfor: "Planting a hard flag or sharp differentiation.",
+      metric: "Saves, shares, and “I never thought of it that way.” Reach among practitioners.",
+      audience: "Curious practitioners.",
+      difficulty: "Medium", time_req: "2 to 4 days",
+      examples: [
+        { name: "Hans Rosling, Factfulness / Gapminder", url: "https://www.gapminder.org/" },
+        { name: "Malcolm Gladwell, Outliers", url: "https://en.wikipedia.org/wiki/Outliers_(book)" }
+      ] },
+    { id: "analysis", name: "Analysis", time: "present", weight: "mid",
+      what: "An explanation of how or why something works now, with evidence and no personal verdict.",
+      solves: "Clarity, so people finally get what you do, plus credibility through usefulness.",
+      notfor: "Planting a flag or winning on opinion.",
+      metric: "Time on page, shares, and inbound questions. Did it make the space click.",
+      audience: "Buyers trying to understand a space.",
+      difficulty: "Medium", time_req: "2 to 5 days",
+      examples: [
+        { name: "Stratechery, Ben Thompson", url: "https://stratechery.com/" },
+        { name: "The Economist", url: "https://www.economist.com/" }
+      ] },
+    { id: "forecast", name: "Forecast", time: "future", weight: "mid",
+      what: "A future estimate built on a model or a trend, not on your gut.",
+      solves: "Planning value and credibility through rigor.",
+      notfor: "Standing out by opinion. If the model is wrong, you are wrong.",
+      metric: "Whether planners use it and cite it. Accuracy over time.",
+      audience: "Buyers and analysts who plan ahead.",
+      difficulty: "High", time_req: "1 to 2 weeks",
+      examples: [
+        { name: "IMF World Economic Outlook", url: "https://www.imf.org/en/Publications/WEO" },
+        { name: "Gartner Hype Cycle", url: "https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" }
+      ] },
+    { id: "history", name: "History", time: "past", weight: "low",
+      what: "A straight account of what happened, with little interpretation.",
+      solves: "Reference value, search traffic, and trust through being thorough.",
+      notfor: "Persuasion or differentiation. The editorial pull is low by design.",
+      metric: "Search traffic, references, and reach. Reference value, not persuasion.",
+      audience: "Anyone researching the topic.",
+      difficulty: "Low", time_req: "1 to 3 days",
+      examples: [
+        { name: "Computer History Museum, Timeline", url: "https://www.computerhistory.org/timeline/" },
+        { name: "Encyclopaedia Britannica", url: "https://www.britannica.com/" }
+      ] },
+    { id: "reporting", name: "Reporting", time: "present", weight: "low",
+      what: "Factual coverage of what is happening now, with little opinion.",
+      solves: "Awareness and trust. Original data earns coverage and links.",
+      notfor: "Planting a flag. Without original data it is easy to commoditize.",
+      metric: "Reach, pickups, and citations. With original data, inbound trust.",
+      audience: "The market and the press.",
+      difficulty: "Low to High", time_req: "Hours to 2 days",
+      examples: [
+        { name: "Reuters", url: "https://www.reuters.com/" },
+        { name: "Associated Press", url: "https://apnews.com/" }
+      ] },
+    { id: "projection", name: "Projection", time: "future", weight: "low",
+      what: "A numbers-based extrapolation of a trend, with little interpretation.",
+      solves: "A planning input and credibility through data.",
+      notfor: "Opinion or differentiation. It is only as good as the data.",
+      metric: "Use in planning and citations. Accuracy of the numbers.",
+      audience: "Planners and analysts.",
+      difficulty: "Medium", time_req: "3 to 5 days",
+      examples: [
+        { name: "U.S. Census Bureau, Population Projections", url: "https://www.census.gov/programs-surveys/popproj.html" },
+        { name: "Congressional Budget Office", url: "https://www.cbo.gov/" }
+      ] },
+    { id: "howto", name: "How-to", time: "n/a", weight: "offgrid",
+      what: "A step-by-step guide that teaches the reader to do something, backed by your authority.",
+      solves: "Clarity, trust, and captured demand. Great when people do not understand what you do.",
+      notfor: "Planting a big flag. It is weak if you have no real track record.",
+      metric: "Completion, saves, and inbound from people who tried it. Assisted pipeline, not direct leads.",
+      audience: "Practitioners trying to do the thing you enable.",
+      difficulty: "Medium", time_req: "2 to 4 days",
+      examples: [
+        { name: "James Clear, Atomic Habits", url: "https://jamesclear.com/atomic-habits" },
+        { name: "Tim Ferriss, The 4-Hour Workweek", url: "https://fourhourworkweek.com/" }
+      ] }
+  ];
+
+  // Pain points -> which content types answer them. This mapping is the argument.
+  var PAINS = [
+    { id: "unknown", label: "Nobody has heard of us", cells: ["position", "prediction", "reporting"] },
+    { id: "unclear", label: "People do not get what we do", cells: ["analysis", "howto"] },
+    { id: "distrust", label: "People do not trust us yet", cells: ["reconsideration", "position", "reporting"] },
+    { id: "pipeline", label: "Our pipeline is thin", cells: ["howto", "analysis", "position"] },
+    { id: "commodity", label: "Our category feels commodified", cells: ["reconsideration", "position", "prediction"] },
+    { id: "fit", label: "Buyers are not sure we fit them", cells: ["reporting", "howto", "analysis"] },
+    { id: "nothing", label: "We publish, but nothing happens", all: true,
+      note: "This usually means one of two things: you are making the wrong type for your goal, or you are grading the right type by the wrong metric. Open every card below and check each piece against its real job and its real measure." }
+  ];
+
+  var TIMES = ["past", "present", "future"];
+  var WEIGHTS = ["high", "mid", "low"];
+  var TIME_LABEL = { past: "Past", present: "Present", future: "Future", "n/a": "Off the grid" };
+  var WEIGHT_LABEL = { high: "High", mid: "Mid", low: "Low", offgrid: "Off-grid" };
+
+  var byId = {};
+  CELLS.forEach(function (c) { byId[c.id] = c; });
+
+  // State: cells turned on by hand, and pains currently selected.
+  var manualOn = {};      // id -> true
+  var painsOn = {};       // painId -> true
+
+  function activeIds() {
+    var set = {};
+    Object.keys(manualOn).forEach(function (id) { if (manualOn[id]) set[id] = true; });
+    PAINS.forEach(function (p) {
+      if (!painsOn[p.id]) return;
+      if (p.all) { CELLS.forEach(function (c) { set[c.id] = true; }); }
+      else { p.cells.forEach(function (id) { set[id] = true; }); }
+    });
+    return set;
+  }
+
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+  // ---- Build the pain chips ----
+  var painsWrap = document.getElementById("cm-pains");
+  PAINS.forEach(function (p) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "cm-pain";
+    b.setAttribute("aria-pressed", "false");
+    b.dataset.pain = p.id;
+    b.textContent = p.label;
+    b.addEventListener("click", function () {
+      painsOn[p.id] = !painsOn[p.id];
+      b.setAttribute("aria-pressed", painsOn[p.id] ? "true" : "false");
+      render();
+    });
+    painsWrap.appendChild(b);
+  });
+
+  // ---- Build the grid ----
+  var grid = document.getElementById("cm-grid");
+  function cellButton(cell) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "cm-cell";
+    b.setAttribute("aria-pressed", "false");
+    b.dataset.cell = cell.id;
+    b.innerHTML = '<span class="cm-cell-name">' + esc(cell.name) + '</span>' +
+                  '<span class="cm-cell-coord">' + esc(TIME_LABEL[cell.time]) + " · " + esc(WEIGHT_LABEL[cell.weight]) + ' weight</span>';
+    b.addEventListener("click", function () {
+      manualOn[cell.id] = !manualOn[cell.id];
+      render();
+      var rec = document.getElementById("rec-" + cell.id);
+      if (manualOn[cell.id] && rec) rec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+    return b;
+  }
+
+  // corner
+  var corner = document.createElement("div");
+  corner.className = "cm-corner";
+  corner.innerHTML = '<small>Editorial weight&nbsp;&darr;<br>Time&nbsp;&rarr;</small>';
+  grid.appendChild(corner);
+  // top column headers
+  TIMES.forEach(function (t) {
+    var h = document.createElement("div");
+    h.className = "cm-axis-x";
+    h.textContent = TIME_LABEL[t];
+    grid.appendChild(h);
+  });
+  // rows
+  WEIGHTS.forEach(function (w) {
+    var rowLabel = document.createElement("div");
+    rowLabel.className = "cm-axis-y" + (w === "high" ? " cm-row-tl-label" : "");
+    rowLabel.textContent = WEIGHT_LABEL[w];
+    grid.appendChild(rowLabel);
+    TIMES.forEach(function (t) {
+      var cell = CELLS.filter(function (c) { return c.weight === w && c.time === t; })[0];
+      var holder = document.createElement("div");
+      if (w === "high") holder.className = "cm-row-tl";
+      if (cell) holder.appendChild(cellButton(cell));
+      grid.appendChild(holder);
+    });
+  });
+
+  // off-grid How-to
+  var offWrap = document.getElementById("cm-offgrid");
+  var howto = byId["howto"];
+  offWrap.appendChild(cellButton(howto));
+  var note = document.createElement("span");
+  note.className = "cm-offgrid-note";
+  note.textContent = "How-to sits off the grid. It is thought leadership, but it teaches rather than observes, so it has no spot on the time axis.";
+  offWrap.appendChild(note);
+
+  // ---- Records ----
+  var recordsWrap = document.getElementById("cm-records");
+  var emptyMsg = document.getElementById("cm-empty");
+  var diagSlot = document.getElementById("cm-diag-slot");
+
+  function card(cell) {
+    var tl = cell.weight === "high" || cell.weight === "offgrid";
+    var coord = cell.weight === "offgrid" ? "Off the grid" : (TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " editorial weight");
+    var ex = cell.examples.map(function (e) {
+      return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
+    }).join("");
+    return '' +
+      '<article class="cm-card" id="rec-' + cell.id + '">' +
+        '<div class="cm-card-head">' +
+          '<h3 class="cm-card-name">' + esc(cell.name) + '</h3>' +
+          (tl ? '<span class="cm-tag">Thought leadership</span>' : '<span class="cm-coord-pill">' + esc(coord) + '</span>') +
+        '</div>' +
+        (tl ? '<div class="cm-coord-pill">' + esc(coord) + '</div>' : '') +
+        '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
+        '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
+        '<div class="cm-field"><span class="cm-label">What it does not do</span>' + esc(cell.notfor) + '</div>' +
+        '<div class="cm-field"><span class="cm-label">How to measure it</span>' + esc(cell.metric) + '</div>' +
+        '<div class="cm-field"><span class="cm-label">Ideal audience</span>' + esc(cell.audience) + '</div>' +
+        '<hr>' +
+        '<div class="cm-meta">' +
+          '<span class="cm-badge">Difficulty: ' + esc(cell.difficulty) + '</span>' +
+          '<span class="cm-badge">Time to produce: ' + esc(cell.time_req) + '</span>' +
+        '</div>' +
+        '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>' +
+      '</article>';
+  }
+
+  function render() {
+    var active = activeIds();
+
+    // sync grid + chips visuals
+    document.querySelectorAll(".cm-cell").forEach(function (b) {
+      b.setAttribute("aria-pressed", active[b.dataset.cell] ? "true" : "false");
+    });
+    document.querySelectorAll(".cm-pain").forEach(function (b) {
+      b.setAttribute("aria-pressed", painsOn[b.dataset.pain] ? "true" : "false");
+    });
+
+    // diagnostic note (from any selected pain that carries one)
+    var notes = PAINS.filter(function (p) { return painsOn[p.id] && p.note; });
+    diagSlot.innerHTML = notes.map(function (p) { return '<div class="cm-diag">' + esc(p.note) + '</div>'; }).join("");
+
+    // records, in matrix reading order
+    var ordered = CELLS.filter(function (c) { return active[c.id]; });
+    if (ordered.length === 0) {
+      recordsWrap.innerHTML = "";
+      emptyMsg.style.display = "";
+    } else {
+      emptyMsg.style.display = "none";
+      recordsWrap.innerHTML = ordered.map(card).join("");
+    }
+  }
+
+  document.getElementById("cm-all").addEventListener("click", function () {
+    CELLS.forEach(function (c) { manualOn[c.id] = true; });
+    render();
+  });
+  document.getElementById("cm-clear").addEventListener("click", function () {
+    manualOn = {}; painsOn = {};
+    render();
+  });
+
+  render();
+})();
+</script>
+
+<!-- Clay web-intent tracking (Claydar). Canonical copy: /_includes/analytics.html. Keep on every page. -->
+<script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>
+</body>
+</html>
