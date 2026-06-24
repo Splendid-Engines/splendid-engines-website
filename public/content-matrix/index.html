@@ -101,8 +101,8 @@
 
     /* Per-cell metric icons, led by a single green up arrow (the asset raises this set) */
     .cm-cell-metrics { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 0.25rem; }
-    .cm-cell-up { color: #1f9d57; font-weight: 800; font-size: 0.95rem; line-height: 1; }
-    .cm-cell-metric { width: 18px; height: 18px; }
+    .cm-cell-up { width: 16px; height: 16px; color: #1f9d57; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
+    .cm-cell-metric { width: 18px; height: 18px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-cell-metric.soft { color: var(--lagoon); }
     .cm-cell-metric.hard { color: var(--poppy); }
 
@@ -432,7 +432,7 @@
       var M = METRICS[k];
       return '<span class="splendid-icon cm-cell-metric ' + M.group + '" role="img" aria-label="' + esc(M.label) + '">' + M.icon + '</span>';
     }).join("");
-    return '<span class="cm-cell-up" aria-hidden="true">↑</span>' + icons;
+    return '<span class="splendid-icon cm-cell-up" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 12 12 6 18 12"/></svg></span>' + icons;
   }
   // Icon + label chips inside the popover
   function popMetricsHTML(keys) {
