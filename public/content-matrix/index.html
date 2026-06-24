@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Content Matrix - Splendid Engines</title>
-  <meta name="description" content="A shared map of every kind of content: what each type is for, who it is for, and how to measure it. Start with the problem you are facing and find the content that solves it." />
+  <title>The Splendid Content Matrix - Splendid Engines</title>
+  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps each type by time and perspective: what it is for, who it is for, and how to measure it." />
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,40 +13,15 @@
   <link rel="stylesheet" href="/assets/css/custom.css" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Content Matrix" />
-  <meta property="og:description" content="Sales and marketing use the same words for content and mean different things. This is a shared map of every kind of content, what each one is for, and how to measure it." />
+  <meta property="og:title" content="The Splendid Content Matrix" />
+  <meta property="og:description" content="Every kind of content has a job. Map any piece by time and perspective, see what it is for, and how to measure it." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://splendidengines.com/content-matrix/" />
 
   <style>
-    /* ---- Content Matrix tool (page-scoped, cm- prefix) ---- */
-    .cm-section { padding: 3.5rem 0; }
-    .cm-lede { font-size: 1.25rem; line-height: 1.6; color: var(--lagoon); max-width: 46rem; }
-    .cm-trust { font-size: 0.95rem; color: var(--muted); max-width: 44rem; }
-
-    /* Slim trust bar (compact, no preamble) */
-    .cm-trustbar { padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
-    .cm-trustbar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1.25rem; }
-    .cm-trustbar-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
-    .cm-trustbar .logo-strip { gap: 0.75rem 1.25rem; }
-    .cm-trustbar .logo-strip img { width: 82px; height: 26px; }
-    /* Pain-first lead (straight into it) */
-    .cm-lead { padding-top: 2.25rem; padding-bottom: 2.25rem; }
-    .cm-h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: 0.4rem; }
-    .cm-sub { font-size: 1.05rem; color: var(--muted); max-width: 40rem; margin-bottom: 1.5rem; }
-
-    /* Pain selector */
-    .cm-pains { display: flex; flex-wrap: wrap; gap: 0.625rem; }
-    .cm-pain {
-      font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 0.95rem;
-      color: var(--lagoon); background: var(--snow);
-      border: 1.5px solid var(--line); border-radius: 999px;
-      padding: 0.55rem 1.1rem; cursor: pointer; transition: all .15s ease;
-    }
-    .cm-pain:hover { border-color: var(--poppy); }
-    .cm-pain[aria-pressed="true"] {
-      background: var(--poppy); border-color: var(--poppy); color: #fff;
-    }
+    /* ---- The Splendid Content Matrix (page-scoped, cm- prefix) ---- */
+    .cm-h1 { font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 0.5rem; }
+    .cm-head-sub { font-size: 1.05rem; line-height: 1.6; color: var(--muted); max-width: 44rem; margin-bottom: 0; }
 
     /* Controls */
     .cm-controls { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
@@ -58,67 +33,72 @@
     }
     .cm-ctl:hover { border-color: var(--lagoon); }
 
-    /* Matrix grid */
+    /* Matrix grid: cells, row labels (col 2), rotated axis title (col 1),
+       x ticks on the bottom (row 4), x-axis title (row 5). */
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
     .cm-grid {
       display: grid;
-      grid-template-columns: 7rem repeat(3, minmax(9.5rem, 1fr));
-      gap: 0.6rem; min-width: 40rem; align-items: stretch;
+      grid-template-columns: auto auto repeat(3, minmax(8.5rem, 1fr));
+      grid-template-rows: repeat(3, minmax(6.25rem, auto)) auto auto;
+      gap: 0.6rem; min-width: 42rem; align-items: stretch;
     }
-    .cm-axis-x, .cm-axis-y {
+    .cm-axis-y-title {
+      grid-column: 1; grid-row: 1 / 4;
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.9rem; color: var(--lagoon);
+    }
+    .cm-axis-y {
+      display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; text-align: right;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;
-      color: var(--muted); display: flex; align-items: center; justify-content: center;
-      text-align: center;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; color: var(--muted);
     }
-    .cm-axis-y { writing-mode: initial; }
-    .cm-corner { display: flex; align-items: flex-end; }
-    .cm-corner small { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 0.7rem; color: var(--muted); text-transform: none; letter-spacing: 0; line-height: 1.3; }
+    .cm-axis-x {
+      display: flex; align-items: center; justify-content: center; padding-top: 0.35rem;
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--muted);
+    }
+    .cm-axis-x-title {
+      text-align: center; padding-top: 0.15rem;
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.9rem; color: var(--lagoon);
+    }
 
     .cm-cell {
-      text-align: left; background: var(--snow); border: 1.5px solid var(--line);
-      border-radius: 10px; padding: 0.85rem 0.9rem; cursor: pointer;
-      transition: all .15s ease; min-height: 5.5rem; display: flex;
-      flex-direction: column; justify-content: center; gap: 0.25rem; width: 100%;
+      text-align: center; background: var(--snow); border: 1.5px solid var(--line);
+      border-radius: 10px; padding: 0.85rem 0.75rem; cursor: pointer; transition: all .15s ease;
+      min-height: 6rem; height: 100%; width: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
     }
     .cm-cell:hover { border-color: var(--poppy); transform: translateY(-1px); }
-    .cm-cell .cm-cell-name {
+    .cm-cell-icon { width: 30px; height: 30px; color: var(--poppy); }
+    .cm-cell-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.15rem; color: var(--lagoon);
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.05rem; color: var(--lagoon); line-height: 1.1;
     }
-    .cm-cell .cm-cell-coord { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
-    .cm-cell[aria-pressed="true"] {
-      background: var(--lagoon); border-color: var(--lagoon);
-      box-shadow: 0 6px 18px rgba(21,48,71,0.18);
-    }
+    .cm-cell[aria-pressed="true"] { background: var(--lagoon); border-color: var(--lagoon); box-shadow: 0 6px 18px rgba(21,48,71,0.18); }
     .cm-cell[aria-pressed="true"] .cm-cell-name { color: #fff; }
-    .cm-cell[aria-pressed="true"] .cm-cell-coord { color: var(--daffodil); }
-    .cm-row-tl .cm-cell { border-left: 3px solid var(--poppy); }
+    .cm-cell[aria-pressed="true"] .cm-cell-icon { color: #fff; }
+    .cm-row-tl .cm-cell { border-top: 3px solid var(--poppy); }
 
-    .cm-offgrid {
-      margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
-    }
-    .cm-offgrid .cm-cell { max-width: 16rem; }
-    .cm-offgrid-note { font-size: 0.85rem; color: var(--muted); }
+    .cm-offgrid { margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem; }
+    .cm-offgrid .cm-cell { max-width: 15rem; min-height: 5.5rem; }
+    .cm-offgrid-note { font-size: 0.85rem; color: var(--muted); max-width: 28rem; }
 
-    .cm-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--muted); }
+    .cm-legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
     .cm-legend b { color: var(--lagoon); }
 
     /* Records */
     .cm-records { display: grid; grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); gap: 1.25rem; }
-    .cm-empty { color: var(--muted); font-size: 1.05rem; padding: 1rem 0; }
-    .cm-diag {
-      border-left: 4px solid var(--poppy); background: var(--ash);
-      padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; color: var(--lagoon);
-    }
-    .cm-card {
-      background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px;
-      padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;
-    }
-    .cm-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+    .cm-empty { color: var(--muted); font-size: 1.05rem; padding: 0.5rem 0; }
+    .cm-card { background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+    .cm-card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+    .cm-card-title { display: flex; align-items: center; gap: 0.5rem; }
+    .cm-card-icon { width: 24px; height: 24px; color: var(--poppy); flex: 0 0 auto; }
     .cm-card-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.5rem; color: var(--lagoon); margin: 0;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.4rem; color: var(--lagoon); margin: 0;
     }
     .cm-tag {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; font-size: 0.7rem;
@@ -132,17 +112,13 @@
       text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.15rem;
     }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .cm-badge {
-      font-size: 0.78rem; font-weight: 600; color: var(--lagoon);
-      background: var(--ash); border-radius: 999px; padding: 0.25rem 0.7rem;
-    }
+    .cm-badge { font-size: 0.78rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.25rem 0.7rem; }
     .cm-examples { display: flex; flex-direction: column; gap: 0.3rem; }
     .cm-examples a { font-weight: 600; font-size: 0.95rem; }
     .cm-card hr { border: 0; border-top: 1px solid var(--line); margin: 0.25rem 0; }
 
     @media (max-width: 575.98px) {
-      .cm-card-name { font-size: 1.3rem; }
-      .cm-lede { font-size: 1.1rem; }
+      .cm-card-name { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -178,41 +154,14 @@
 
 <main>
 
-  <!-- SLIM TRUST BAR (compact, no big intro) -->
-  <section class="cm-trustbar bg-snow">
-    <div class="container cm-trustbar-inner">
-      <span class="cm-trustbar-label">From Splendid Engines, B2B GTM practitioners. Folks we&rsquo;ve put our clients in the room with:</span>
-      <div class="logo-strip">
-        <img src="/assets/img/logo-paypal.png" alt="PayPal" loading="lazy" />
-        <img src="/assets/img/logo-spotify.png" alt="Spotify" loading="lazy" />
-        <img src="/assets/img/logo-snap.png" alt="Snap" loading="lazy" />
-        <img src="/assets/img/logo-roku.png" alt="Roku" loading="lazy" />
-        <img src="/assets/img/logo-meta.png" alt="Meta" loading="lazy" />
-        <img src="/assets/img/logo-netflix.png" alt="Netflix" loading="lazy" />
-      </div>
-    </div>
-  </section>
-
-  <!-- PAIN SELECTOR (the lead: straight into it) -->
-  <section class="cm-section cm-lead bg-ash">
+  <!-- THE MATRIX (front and center) -->
+  <section class="section bg-snow">
     <div class="container">
-      <span class="eyebrow">The Content Matrix</span>
-      <h1 class="cm-h1">What&rsquo;s going wrong?</h1>
-      <p class="cm-sub">Pick what sounds like you. We will light up the kind of content that fixes it, and show you how to measure it.</p>
-      <div class="cm-pains" id="cm-pains" role="group" aria-label="Common problems"></div>
-    </div>
-  </section>
+      <span class="eyebrow">A Splendid tool</span>
+      <h1 class="cm-h1">The Splendid Content Matrix</h1>
+      <p class="cm-head-sub">Every piece of content has a job. Place any piece with two questions: what time is it about, and how much of your own perspective is in it. Tap a cell to see what it is for, who it is for, and how to measure it.</p>
 
-  <!-- THE MATRIX -->
-  <section class="cm-section bg-snow">
-    <div class="container">
-      <span class="eyebrow">The map</span>
-      <h2 class="mb-2">Every cell is a kind of content</h2>
-      <p class="text-muted-se mb-3">
-        Two questions place any piece. Across: is it about the past, the present, or the future? Down: how much of your own point of view are you putting on the reader?
-      </p>
-
-      <div class="cm-controls mb-3">
+      <div class="cm-controls mt-4 mb-3">
         <button class="cm-ctl" id="cm-all" type="button">Toggle all</button>
         <button class="cm-ctl" id="cm-clear" type="button">Clear all</button>
       </div>
@@ -224,21 +173,20 @@
       <div class="cm-offgrid" id="cm-offgrid"></div>
 
       <div class="cm-legend">
-        <span><b>Top row:</b> thought leadership. You plant a flag.</span>
-        <span><b>Middle row:</b> you make sense of something, without a personal flag.</span>
-        <span><b>Bottom row:</b> just the facts. The data does the talking.</span>
+        <span><b>High perspective:</b> thought leadership. You take a stand and plant a flag.</span>
+        <span><b>Medium:</b> you make sense of things, without a personal flag.</span>
+        <span><b>Low:</b> just the facts. The data does the talking.</span>
       </div>
     </div>
   </section>
 
   <!-- RECORDS -->
-  <section class="cm-section bg-ash">
+  <section class="section bg-ash">
     <div class="container">
-      <span class="eyebrow">Your content types</span>
+      <span class="eyebrow">The detail</span>
       <h2 class="mb-4">What each one does</h2>
-      <div id="cm-diag-slot"></div>
       <div class="cm-records" id="cm-records"></div>
-      <p class="cm-empty" id="cm-empty">Pick a problem above, or tap any cell in the matrix, to see what that content type is for, who it is for, and how to measure it.</p>
+      <p class="cm-empty" id="cm-empty">Tap any cell in the matrix above to see what that content type is for, who it is for, and how to measure it.</p>
     </div>
   </section>
 
@@ -288,6 +236,20 @@
 <!-- Content Matrix data + interactivity -->
 <script>
 (function () {
+  // Brand icons (lucide-style paths; .splendid-icon supplies the 2.5 square/miter stroke).
+  var IC = {
+    reconsideration: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>',
+    position: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
+    prediction: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>',
+    reframing: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>',
+    analysis: '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    forecast: '<svg viewBox="0 0 24 24" fill="none"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>',
+    history: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
+    reporting: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 22a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h2"/><path d="M6 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6z"/><line x1="10" y1="7" x2="18" y2="7"/><line x1="10" y1="11" x2="18" y2="11"/><line x1="10" y1="15" x2="14" y2="15"/></svg>',
+    projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+    howto: '<svg viewBox="0 0 24 24" fill="none"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><line x1="13" y1="6" x2="21" y2="6"/><line x1="13" y1="12" x2="21" y2="12"/><line x1="13" y1="18" x2="21" y2="18"/></svg>'
+  };
+
   // The matrix as data. Each cell is a record. Edit here like a database.
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
@@ -402,130 +364,107 @@
       ] }
   ];
 
-  // Pain points -> which content types answer them. This mapping is the argument.
-  var PAINS = [
-    { id: "unknown", label: "Nobody has heard of us", cells: ["position", "prediction", "reporting"] },
-    { id: "unclear", label: "People do not get what we do", cells: ["analysis", "howto"] },
-    { id: "distrust", label: "People do not trust us yet", cells: ["reconsideration", "position", "reporting"] },
-    { id: "pipeline", label: "Our pipeline is thin", cells: ["howto", "analysis", "position"] },
-    { id: "commodity", label: "Our category feels commodified", cells: ["reconsideration", "position", "prediction"] },
-    { id: "fit", label: "Buyers are not sure we fit them", cells: ["reporting", "howto", "analysis"] },
-    { id: "nothing", label: "We publish, but nothing happens", all: true,
-      note: "This usually means one of two things: you are making the wrong type for your goal, or you are grading the right type by the wrong metric. Open every card below and check each piece against its real job and its real measure." }
-  ];
-
   var TIMES = ["past", "present", "future"];
   var WEIGHTS = ["high", "mid", "low"];
   var TIME_LABEL = { past: "Past", present: "Present", future: "Future", "n/a": "Off the grid" };
-  var WEIGHT_LABEL = { high: "High", mid: "Mid", low: "Low", offgrid: "Off-grid" };
+  var WEIGHT_LABEL = { high: "High", mid: "Medium", low: "Low", offgrid: "Off-grid" };
 
   var byId = {};
   CELLS.forEach(function (c) { byId[c.id] = c; });
 
-  // State: cells turned on by hand, and pains currently selected.
-  var manualOn = {};      // id -> true
-  var painsOn = {};       // painId -> true
-
-  function activeIds() {
-    var set = {};
-    Object.keys(manualOn).forEach(function (id) { if (manualOn[id]) set[id] = true; });
-    PAINS.forEach(function (p) {
-      if (!painsOn[p.id]) return;
-      if (p.all) { CELLS.forEach(function (c) { set[c.id] = true; }); }
-      else { p.cells.forEach(function (id) { set[id] = true; }); }
-    });
-    return set;
-  }
+  // State: which cells are toggled open.
+  var openOn = {};
 
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-  // ---- Build the pain chips ----
-  var painsWrap = document.getElementById("cm-pains");
-  PAINS.forEach(function (p) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "cm-pain";
-    b.setAttribute("aria-pressed", "false");
-    b.dataset.pain = p.id;
-    b.textContent = p.label;
-    b.addEventListener("click", function () {
-      painsOn[p.id] = !painsOn[p.id];
-      b.setAttribute("aria-pressed", painsOn[p.id] ? "true" : "false");
-      render();
-    });
-    painsWrap.appendChild(b);
-  });
-
-  // ---- Build the grid ----
-  var grid = document.getElementById("cm-grid");
   function cellButton(cell) {
     var b = document.createElement("button");
     b.type = "button";
     b.className = "cm-cell";
     b.setAttribute("aria-pressed", "false");
     b.dataset.cell = cell.id;
-    b.innerHTML = '<span class="cm-cell-name">' + esc(cell.name) + '</span>' +
-                  '<span class="cm-cell-coord">' + esc(TIME_LABEL[cell.time]) + " · " + esc(WEIGHT_LABEL[cell.weight]) + ' weight</span>';
+    b.innerHTML = '<span class="splendid-icon cm-cell-icon">' + (IC[cell.id] || "") + '</span>' +
+                  '<span class="cm-cell-name">' + esc(cell.name) + '</span>';
     b.addEventListener("click", function () {
-      manualOn[cell.id] = !manualOn[cell.id];
+      openOn[cell.id] = !openOn[cell.id];
       render();
       var rec = document.getElementById("rec-" + cell.id);
-      if (manualOn[cell.id] && rec) rec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (openOn[cell.id] && rec) rec.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
     return b;
   }
 
-  // corner
-  var corner = document.createElement("div");
-  corner.className = "cm-corner";
-  corner.innerHTML = '<small>Editorial weight&nbsp;&darr;<br>Time&nbsp;&rarr;</small>';
-  grid.appendChild(corner);
-  // top column headers
-  TIMES.forEach(function (t) {
-    var h = document.createElement("div");
-    h.className = "cm-axis-x";
-    h.textContent = TIME_LABEL[t];
-    grid.appendChild(h);
-  });
-  // rows
-  WEIGHTS.forEach(function (w) {
-    var rowLabel = document.createElement("div");
-    rowLabel.className = "cm-axis-y" + (w === "high" ? " cm-row-tl-label" : "");
-    rowLabel.textContent = WEIGHT_LABEL[w];
-    grid.appendChild(rowLabel);
-    TIMES.forEach(function (t) {
-      var cell = CELLS.filter(function (c) { return c.weight === w && c.time === t; })[0];
+  // ---- Build the grid ----
+  var grid = document.getElementById("cm-grid");
+  var byWT = {};
+  CELLS.forEach(function (c) { if (c.weight !== "offgrid") byWT[c.weight + "-" + c.time] = c; });
+
+  // Rotated y-axis title (spans the three perspective rows)
+  var yTitle = document.createElement("div");
+  yTitle.className = "cm-axis-y-title";
+  yTitle.textContent = "Perspective";
+  grid.appendChild(yTitle);
+
+  // Rows: High / Medium / Low, each with its label (col 2) then three cells (cols 3-5)
+  WEIGHTS.forEach(function (w, ri) {
+    var lab = document.createElement("div");
+    lab.className = "cm-axis-y";
+    lab.textContent = WEIGHT_LABEL[w];
+    lab.style.gridColumn = "2";
+    lab.style.gridRow = String(ri + 1);
+    grid.appendChild(lab);
+
+    TIMES.forEach(function (t, ci) {
       var holder = document.createElement("div");
+      holder.style.gridColumn = String(ci + 3);
+      holder.style.gridRow = String(ri + 1);
       if (w === "high") holder.className = "cm-row-tl";
+      var cell = byWT[w + "-" + t];
       if (cell) holder.appendChild(cellButton(cell));
       grid.appendChild(holder);
     });
   });
 
-  // off-grid How-to
+  // X-axis tick labels along the BOTTOM (row 4)
+  TIMES.forEach(function (t, ci) {
+    var x = document.createElement("div");
+    x.className = "cm-axis-x";
+    x.textContent = TIME_LABEL[t];
+    x.style.gridColumn = String(ci + 3);
+    x.style.gridRow = "4";
+    grid.appendChild(x);
+  });
+
+  // X-axis title "Time" (row 5, under the tick labels)
+  var xTitle = document.createElement("div");
+  xTitle.className = "cm-axis-x-title";
+  xTitle.textContent = "Time";
+  xTitle.style.gridColumn = "3 / 6";
+  xTitle.style.gridRow = "5";
+  grid.appendChild(xTitle);
+
+  // Off-grid How-to
   var offWrap = document.getElementById("cm-offgrid");
-  var howto = byId["howto"];
-  offWrap.appendChild(cellButton(howto));
+  offWrap.appendChild(cellButton(byId["howto"]));
   var note = document.createElement("span");
   note.className = "cm-offgrid-note";
-  note.textContent = "How-to sits off the grid. It is thought leadership, but it teaches rather than observes, so it has no spot on the time axis.";
+  note.textContent = "How-to is thought leadership too, but it teaches a method rather than placing something in time, so it sits off the grid.";
   offWrap.appendChild(note);
 
   // ---- Records ----
   var recordsWrap = document.getElementById("cm-records");
   var emptyMsg = document.getElementById("cm-empty");
-  var diagSlot = document.getElementById("cm-diag-slot");
 
   function card(cell) {
     var tl = cell.weight === "high" || cell.weight === "offgrid";
-    var coord = cell.weight === "offgrid" ? "Off the grid" : (TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " editorial weight");
+    var coord = cell.weight === "offgrid" ? "Off the grid" : (TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " perspective");
     var ex = cell.examples.map(function (e) {
       return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
     }).join("");
     return '' +
       '<article class="cm-card" id="rec-' + cell.id + '">' +
         '<div class="cm-card-head">' +
-          '<h3 class="cm-card-name">' + esc(cell.name) + '</h3>' +
+          '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
           (tl ? '<span class="cm-tag">Thought leadership</span>' : '<span class="cm-coord-pill">' + esc(coord) + '</span>') +
         '</div>' +
         (tl ? '<div class="cm-coord-pill">' + esc(coord) + '</div>' : '') +
@@ -544,22 +483,10 @@
   }
 
   function render() {
-    var active = activeIds();
-
-    // sync grid + chips visuals
     document.querySelectorAll(".cm-cell").forEach(function (b) {
-      b.setAttribute("aria-pressed", active[b.dataset.cell] ? "true" : "false");
+      b.setAttribute("aria-pressed", openOn[b.dataset.cell] ? "true" : "false");
     });
-    document.querySelectorAll(".cm-pain").forEach(function (b) {
-      b.setAttribute("aria-pressed", painsOn[b.dataset.pain] ? "true" : "false");
-    });
-
-    // diagnostic note (from any selected pain that carries one)
-    var notes = PAINS.filter(function (p) { return painsOn[p.id] && p.note; });
-    diagSlot.innerHTML = notes.map(function (p) { return '<div class="cm-diag">' + esc(p.note) + '</div>'; }).join("");
-
-    // records, in matrix reading order
-    var ordered = CELLS.filter(function (c) { return active[c.id]; });
+    var ordered = CELLS.filter(function (c) { return openOn[c.id]; });
     if (ordered.length === 0) {
       recordsWrap.innerHTML = "";
       emptyMsg.style.display = "";
@@ -570,11 +497,11 @@
   }
 
   document.getElementById("cm-all").addEventListener("click", function () {
-    CELLS.forEach(function (c) { manualOn[c.id] = true; });
+    CELLS.forEach(function (c) { openOn[c.id] = true; });
     render();
   });
   document.getElementById("cm-clear").addEventListener("click", function () {
-    manualOn = {}; painsOn = {};
+    openOn = {};
     render();
   });
 
