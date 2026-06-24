@@ -30,8 +30,8 @@
     .cm-head-sub { font-size: 1.12rem; line-height: 1.55; color: var(--muted); max-width: 46rem; margin-bottom: 1.5rem; }
 
     /* Problem picker */
-    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.65rem; margin: 0 auto 2.25rem; }
-    .cm-pain-label { font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; color: var(--lagoon); }
+    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.85rem; margin: 0.25rem auto 2.5rem; }
+    .cm-pain-lead { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 1.12rem; color: var(--lagoon); }
     .cm-pain-select {
       font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--lagoon);
       background-color: var(--snow); border: 1.5px solid var(--line); border-radius: 999px;
@@ -171,6 +171,7 @@
     .cm-aud-tier.off { background: var(--ash); color: var(--muted); text-decoration: line-through; opacity: 0.7; }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
+    .cm-badge-press { background: var(--poppy); color: #fff; }
     .cm-examples { display: flex; flex-direction: column; gap: 0.25rem; }
     .cm-examples a { font-weight: 600; font-size: 0.85rem; }
     .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.15rem 0; width: 100%; }
@@ -221,10 +222,9 @@
     <div class="container text-center">
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
-      <p class="cm-head-sub mx-auto">Every piece of content has a job. Every job solves a problem.</p>
 
       <div class="cm-pain-wrap">
-        <label class="cm-pain-label" for="cm-pain">What problem is your business facing?</label>
+        <label class="cm-pain-lead" for="cm-pain">Every content type solves a problem. What&rsquo;s yours?</label>
         <select class="cm-pain-select" id="cm-pain">
           <option value="">Show everything</option>
         </select>
@@ -323,6 +323,9 @@
     { key: "demandgen", label: "Our pipeline is thin" },
     { key: "winrate", label: "We keep losing deals" }
   ];
+
+  // Which assets are press-worthy (earn media coverage and citations).
+  var PRESS_WORTHY = { reconsideration: true, position: true, prediction: true, forecast: true, reporting: true };
 
   // The matrix. metrics = METRICS keys. audience = which AUD_TIERS apply (multiple allowed).
   var CELLS = [
@@ -534,6 +537,7 @@
       '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
       '<div class="cm-meta">' +
+        (PRESS_WORTHY[cell.id] ? '<span class="cm-badge cm-badge-press">Press-worthy</span>' : '<span class="cm-badge">Not press-worthy</span>') +
         '<span class="cm-badge">Required Expertise: ' + esc(cell.difficulty) + '</span>' +
         '<span class="cm-badge">Time: ' + esc(cell.time_req) + '</span>' +
       '</div>' +
