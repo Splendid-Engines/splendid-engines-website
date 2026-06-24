@@ -20,21 +20,26 @@
 
   <style>
     /* ---- The Splendid Content Matrix (page-scoped, cm- prefix) ---- */
-    .cm-top { padding-top: 1.75rem; padding-bottom: 3rem; }
-    .cm-h1 { font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 0.5rem; }
-    .cm-head-sub { font-size: 1.05rem; line-height: 1.6; color: var(--muted); max-width: 42rem; margin-bottom: 2rem; }
 
-    /* Matrix grid (centered): lane labels (col 2), rotated axis title (col 1),
-       x ticks on the bottom (row 4), x-axis title (row 5). */
+    /* Compact nav on this tool page, to lift the matrix above the fold */
+    .navbar, .navbar.scrolled { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+    .navbar-brand img, .navbar.scrolled .navbar-brand img { height: 28px; width: 28px; }
+
+    .cm-top { padding-top: 1.1rem; padding-bottom: 2.5rem; }
+    .cm-h1 { font-size: clamp(1.7rem, 3.8vw, 2.5rem); margin-bottom: 0.5rem; }
+    .cm-head-sub { font-size: 1.02rem; line-height: 1.55; color: var(--muted); max-width: 42rem; margin-bottom: 1.75rem; }
+
+    /* Matrix + right-hand legend sit in one centered row */
+    .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
+
+    /* Matrix grid: lane labels (col 2), rotated axis title (col 1),
+       x ticks on the bottom (row 4), x-axis title (row 5). */
     .cm-grid {
       display: grid;
-      /* Left labels (rotated Perspective + lane labels) are balanced by an equal
-         spacer column on the right, so the 3x3 cell block itself centers on the
-         page, under the title. col1 + gap + col2 + gap (9.2rem) == gap + spacer. */
-      grid-template-columns: 2rem 6rem repeat(3, minmax(8.5rem, 11rem)) 8.6rem;
-      grid-template-rows: repeat(3, minmax(7rem, auto)) auto auto;
-      gap: 0.6rem; width: max-content; max-width: 100%; margin: 0 auto; align-items: stretch;
+      grid-template-columns: 2rem 6rem repeat(3, minmax(8.5rem, 10.5rem));
+      grid-template-rows: repeat(3, minmax(6.5rem, auto)) auto auto;
+      gap: 0.55rem; width: max-content; max-width: 100%; align-items: stretch;
     }
     .cm-axis-y-title {
       grid-column: 1; grid-row: 1 / 4;
@@ -47,7 +52,9 @@
       display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; text-align: right;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; line-height: 1.15;
       text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; color: var(--lagoon);
+      cursor: pointer; transition: color .15s ease;
     }
+    .cm-axis-y:hover, .cm-axis-y.is-anchor { color: var(--poppy); }
     .cm-axis-x {
       display: flex; align-items: center; justify-content: center; padding-top: 0.35rem;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
@@ -61,68 +68,82 @@
 
     .cm-cell {
       text-align: center; background: var(--snow); border: 1.5px solid var(--line);
-      border-radius: 10px; padding: 0.75rem 0.6rem; cursor: pointer; transition: all .15s ease;
-      min-height: 7rem; height: 100%; width: 100%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
+      border-radius: 10px; padding: 0.7rem 0.55rem; cursor: pointer; transition: all .15s ease;
+      min-height: 6.5rem; height: 100%; width: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
     }
     .cm-cell:hover, .cm-cell.is-active {
       border-color: var(--poppy); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(21,48,71,0.12);
     }
-    .cm-cell-icon { width: 26px; height: 26px; color: var(--poppy); }
+    /* Fade the other cells while one cell (or lane) is in focus */
+    .cm-grid.cm-dim .cm-cell { opacity: 0.32; }
+    .cm-grid.cm-dim .cm-cell.is-active { opacity: 1; }
+    .cm-cell-icon { width: 24px; height: 24px; color: var(--poppy); }
     .cm-cell-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1rem; color: var(--lagoon); line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.98rem; color: var(--lagoon); line-height: 1.1;
     }
     .cm-row-tl .cm-cell { border-top: 3px solid var(--poppy); }
 
-    /* Metric chips (arrow-coded). Soft / hard / risk are styled distinctly. */
-    .cm-metrics { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; margin-top: 0.1rem; }
-    .cm-metric {
-      display: inline-flex; align-items: center; gap: 3px;
-      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.62rem;
-      text-transform: uppercase; letter-spacing: 0.02em; border-radius: 999px; padding: 2px 7px; line-height: 1.45;
+    /* Per-cell metric icons (one row; decoded by the right-hand legend) */
+    .cm-cell-metrics { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 0.15rem; }
+    .cm-cell-metric { width: 16px; height: 16px; }
+    .cm-cell-metric.soft { color: var(--lagoon); }
+    .cm-cell-metric.hard { color: var(--poppy); }
+
+    /* Right-hand legend */
+    .cm-legend-panel { text-align: left; min-width: 10.5rem; }
+    .cm-legend-group + .cm-legend-group { margin-top: 1.25rem; }
+    .cm-legend-title {
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem; color: var(--poppy); margin-bottom: 0.6rem;
     }
-    .cm-metric .cm-arrow { font-weight: 800; font-size: 0.72rem; line-height: 1; }
-    .cm-metric.soft { background: var(--ash); color: var(--lagoon); }
-    .cm-metric.soft .cm-arrow { color: var(--poppy); }
-    .cm-metric.hard { background: var(--lagoon); color: #fff; }
-    .cm-metric.hard .cm-arrow { color: var(--daffodil); }
-    .cm-metric.risk { background: rgba(219,73,55,0.12); color: var(--poppy); }
-    .cm-metric.risk .cm-arrow { color: var(--poppy); }
+    .cm-legend-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .cm-legend-item { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; color: var(--lagoon); }
+    .cm-legend-ico { width: 18px; height: 18px; flex: 0 0 auto; }
+    .cm-legend-item.soft .cm-legend-ico { color: var(--lagoon); }
+    .cm-legend-item.hard .cm-legend-ico { color: var(--poppy); }
+    .cm-legend-note { font-size: 0.76rem; color: var(--muted); margin-top: 1rem; max-width: 12rem; }
 
-    .cm-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.85rem; color: var(--muted); }
-    .cm-legend b { color: var(--lagoon); }
-    .cm-metric-key { font-size: 0.85rem; color: var(--muted); margin-top: 0.85rem; max-width: 48rem; }
-    .cm-metric-key b { color: var(--lagoon); }
-
-    /* Hover detail popover (rendered to body, positioned by JS) */
+    /* Hover/click detail popover (rendered to body, positioned by JS) */
     .cm-pop {
-      position: fixed; z-index: 1080; width: 22rem; max-width: calc(100vw - 24px);
+      position: fixed; z-index: 1080; width: 19rem; max-width: calc(100vw - 24px);
       max-height: calc(100vh - 24px); overflow-y: auto; text-align: left;
       background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px;
-      padding: 1.25rem; box-shadow: 0 16px 40px rgba(21,48,71,0.20);
-      display: flex; flex-direction: column; gap: 0.7rem;
+      padding: 1rem 1.05rem; box-shadow: 0 16px 40px rgba(21,48,71,0.20);
+      display: flex; flex-direction: column; gap: 0.5rem;
     }
     .cm-card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
-    .cm-card-title { display: flex; align-items: center; gap: 0.5rem; }
-    .cm-card-icon { width: 24px; height: 24px; color: var(--poppy); flex: 0 0 auto; }
+    .cm-card-title { display: flex; align-items: center; gap: 0.45rem; }
+    .cm-card-icon { width: 22px; height: 22px; color: var(--poppy); flex: 0 0 auto; }
     .cm-card-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.4rem; color: var(--lagoon); margin: 0;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.2rem; color: var(--lagoon); margin: 0;
     }
-    .cm-coord-pill { font-size: 0.78rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
-    .cm-pop .cm-metrics { justify-content: flex-start; gap: 4px; }
-    .cm-pop .cm-metric { font-size: 0.68rem; padding: 3px 8px; }
-    .cm-field { font-size: 0.92rem; line-height: 1.5; }
+    .cm-coord-pill { font-size: 0.72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .cm-pop-metrics { display: flex; flex-wrap: wrap; gap: 4px; }
+    .cm-met-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.66rem;
+      text-transform: uppercase; letter-spacing: 0.02em; border-radius: 999px; padding: 2px 8px; line-height: 1.4;
+    }
+    .cm-met-chip.soft { background: var(--ash); color: var(--lagoon); }
+    .cm-met-chip.hard { background: var(--lagoon); color: #fff; }
+    .cm-met-ico { width: 13px; height: 13px; flex: 0 0 auto; }
+    .cm-met-chip.soft .cm-met-ico { color: var(--poppy); }
+    .cm-met-chip.hard .cm-met-ico { color: var(--daffodil); }
+    .cm-field { font-size: 0.85rem; line-height: 1.45; }
     .cm-field .cm-label {
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; color: var(--poppy); margin-bottom: 0.2rem;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; color: var(--poppy); margin-bottom: 0.1rem;
     }
-    .cm-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .cm-badge { font-size: 0.78rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.25rem 0.7rem; }
-    .cm-examples { display: flex; flex-direction: column; gap: 0.3rem; }
-    .cm-examples a { font-weight: 600; font-size: 0.92rem; }
-    .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.25rem 0; width: 100%; }
+    .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
+    .cm-examples { display: flex; flex-direction: column; gap: 0.25rem; }
+    .cm-examples a { font-weight: 600; font-size: 0.85rem; }
+    .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.15rem 0; width: 100%; }
+
+    @media (max-width: 575.98px) { .cm-card-name { font-size: 1.1rem; } }
   </style>
 </head>
 <body>
@@ -163,18 +184,14 @@
     <div class="container text-center">
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
-      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece by two questions: what time is it about, and how much of your perspective is in it. Each cell names the asset that fills it. Hover for the detail.</p>
+      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece by two questions: what time is it about, and how much of your perspective is in it. Each cell names the asset and the metrics it moves. Hover for the detail, or click to pin it open.</p>
 
-      <div class="cm-scroll">
-        <div class="cm-grid" id="cm-grid"></div>
+      <div class="cm-matrix-row">
+        <div class="cm-scroll">
+          <div class="cm-grid" id="cm-grid"></div>
+        </div>
+        <aside class="cm-legend-panel" id="cm-legend-panel"></aside>
       </div>
-
-      <div class="cm-legend">
-        <span><b>Thought leadership:</b> you take a stand and plant a flag.</span>
-        <span><b>Analysis:</b> you make sense of things with evidence, no personal flag.</span>
-        <span><b>Reporting:</b> just the facts. The data does the talking.</span>
-      </div>
-      <p class="cm-metric-key mx-auto">Each cell is tagged with the metrics it moves. Soft signals (<b>Awareness, Understanding, Trust, Affinity</b>) sit alongside hard outcomes (<b>Lead gen, Win rate</b>) and <b>Risk</b>. An up arrow raises the metric; on Risk, a down arrow means the content lowers it.</p>
     </div>
   </section>
 
@@ -224,7 +241,7 @@
 <!-- Content Matrix data + interactivity -->
 <script>
 (function () {
-  // Brand icons (lucide-style paths; .splendid-icon supplies the 2.5 square/miter stroke).
+  // Asset-type icons (lucide-style; .splendid-icon supplies the 2.5 square/miter stroke).
   var IC = {
     reconsideration: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>',
     position: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
@@ -237,17 +254,26 @@
     projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>'
   };
 
-  // metrics: { l: label, d: "up" | "down", t: "soft" | "hard" | "risk" }.
-  // Cell names are the recognizable asset type; the lane (row) is the category.
+  // Metric vocabulary. group: soft | hard. Each has an icon for the cells + legend.
+  var METRICS = {
+    awareness:     { label: "Awareness",     group: "soft", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>' },
+    understanding: { label: "Understanding", group: "soft", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 14c.2-1 .7-1.7 1.5-2.5a4.5 4.5 0 1 0-9 0c.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>' },
+    trust:         { label: "Trust",         group: "soft", icon: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>' },
+    affinity:      { label: "Affinity",      group: "soft", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>' },
+    leadgen:       { label: "Lead gen",      group: "hard", icon: '<svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>' },
+    winrate:       { label: "Win rate",      group: "hard", icon: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg>' },
+    risk:          { label: "Risk", dir: "down", group: "hard", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v6c0 4 3 6.5 7 8 4-1.5 7-4 7-8V6z"/></svg>' }
+  };
+
+  // The matrix. metrics = array of METRICS keys. Cell name = the recognizable asset.
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
       what: "A take that says the accepted story about something is wrong, and offers a better one.",
       solves: "Differentiation and authority. You become the one who saw what everyone else missed.",
       notfor: "Fast leads. And it falls apart if you cannot actually prove the old view wrong.",
-      metric: "Minds changed and citations from peers. Not leads.",
       audience: "Peers and informed buyers who hold the old view.",
       difficulty: "High", time_req: "1 to 2 weeks",
-      metrics: [ {l:"Trust",d:"up",t:"soft"}, {l:"Affinity",d:"up",t:"soft"}, {l:"Risk",d:"down",t:"risk"} ],
+      metrics: ["trust", "affinity", "risk"],
       examples: [
         { name: "The 1619 Project (The New York Times)", url: "https://www.nytimes.com/interactive/2019/08/14/magazine/1619-america-slavery.html" },
         { name: "Moneyball, Michael Lewis", url: "https://en.wikipedia.org/wiki/Moneyball" }
@@ -256,10 +282,9 @@
       what: "A sharp, clearly-argued opinion on something happening right now.",
       solves: "Trust, attention, and differentiation. It plants your flag.",
       notfor: "Direct lead generation, or readers who want a neutral, both-sides take.",
-      metric: "Shifts in what the right people believe. Shares and replies from believers. Not raw leads.",
       audience: "Buyers and peers who are forming an opinion on the issue.",
       difficulty: "Low", time_req: "Hours to 2 days",
-      metrics: [ {l:"Affinity",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"} ],
+      metrics: ["affinity", "trust", "winrate"],
       examples: [
         { name: "Scott Galloway, No Mercy / No Malice", url: "https://www.profgalloway.com/" },
         { name: "Paul Graham, Essays", url: "https://www.paulgraham.com/articles.html" }
@@ -268,10 +293,9 @@
       what: "A specific, falsifiable claim about what will happen, backed by a mechanism.",
       solves: "Authority and attention. It puts you ahead of the curve.",
       notfor: "Hedgers. If you are vague it does nothing, and if you are wrong out loud it costs you.",
-      metric: "Whether you are remembered as having called it. Citations and inbound when it lands.",
       audience: "Forward-looking buyers and the press.",
       difficulty: "High", time_req: "3 to 5 days",
-      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Affinity",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"} ],
+      metrics: ["awareness", "affinity", "winrate"],
       examples: [
         { name: "Ben Thompson, Aggregation Theory (Stratechery)", url: "https://stratechery.com/concept/aggregation-theory/" },
         { name: "Scott Galloway, market calls (No Mercy / No Malice)", url: "https://www.profgalloway.com/" }
@@ -280,10 +304,9 @@
       what: "An evidence-based look at a real example, drawing out why it worked.",
       solves: "Proof. It shows the result is real and repeatable, which moves deals.",
       notfor: "Planting a bold flag. It persuades with evidence, not opinion.",
-      metric: "Influenced pipeline and win rate. Sales using it in deals, and reference requests.",
       audience: "Buyers in evaluation who need proof before they commit.",
       difficulty: "Medium", time_req: "3 to 5 days",
-      metrics: [ {l:"Trust",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"}, {l:"Risk",d:"down",t:"risk"} ],
+      metrics: ["trust", "winrate", "risk"],
       examples: [
         { name: "Harvard Business Review, Case Studies", url: "https://hbr.org/" },
         { name: "McKinsey & Company, Insights", url: "https://www.mckinsey.com/featured-insights" }
@@ -292,10 +315,9 @@
       what: "A clear, evidence-based explanation of how or why something works now.",
       solves: "Clarity, so people finally get what you do, plus credibility through usefulness.",
       notfor: "Planting a flag or winning on opinion.",
-      metric: "Time on page, shares, and inbound questions. Did it make the space click.",
       audience: "Buyers trying to understand a space.",
       difficulty: "Medium", time_req: "2 to 5 days",
-      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Risk",d:"down",t:"risk"}, {l:"Win rate",d:"up",t:"hard"} ],
+      metrics: ["understanding", "risk", "winrate"],
       examples: [
         { name: "Stratechery, Ben Thompson", url: "https://stratechery.com/" },
         { name: "The Economist", url: "https://www.economist.com/" }
@@ -304,10 +326,9 @@
       what: "A future estimate built on a model or a trend, not on your gut.",
       solves: "Planning value and credibility through rigor.",
       notfor: "Standing out by opinion. If the model is wrong, you are wrong.",
-      metric: "Whether planners use it and cite it. Accuracy over time.",
       audience: "Buyers and analysts who plan ahead.",
       difficulty: "High", time_req: "1 to 2 weeks",
-      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"} ],
+      metrics: ["understanding", "trust"],
       examples: [
         { name: "IMF World Economic Outlook", url: "https://www.imf.org/en/Publications/WEO" },
         { name: "Gartner Hype Cycle", url: "https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" }
@@ -316,10 +337,9 @@
       what: "A factual record of what happened, laid out in order.",
       solves: "Reference value, search traffic, and trust through being thorough.",
       notfor: "Persuasion or differentiation. The editorial pull is low by design.",
-      metric: "Search traffic, references, and reach. Reference value, not persuasion.",
       audience: "Anyone researching the topic.",
       difficulty: "Low", time_req: "1 to 3 days",
-      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Understanding",d:"up",t:"soft"} ],
+      metrics: ["awareness", "understanding"],
       examples: [
         { name: "Computer History Museum, Timeline", url: "https://www.computerhistory.org/timeline/" },
         { name: "Encyclopaedia Britannica", url: "https://www.britannica.com/" }
@@ -328,10 +348,9 @@
       what: "Original data on the current state of your market, reported straight.",
       solves: "Awareness and trust. New data earns coverage, links, and leads.",
       notfor: "Planting a flag. The data has to be genuinely new to land.",
-      metric: "Reach, pickups, citations, and leads from a gated report.",
       audience: "The market and the press.",
       difficulty: "Medium to High", time_req: "1 to 3 weeks",
-      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Lead gen",d:"up",t:"hard"} ],
+      metrics: ["awareness", "leadgen"],
       examples: [
         { name: "Edelman Trust Barometer", url: "https://www.edelman.com/trust/trust-barometer" },
         { name: "HubSpot, State of Marketing", url: "https://www.hubspot.com/state-of-marketing" }
@@ -340,15 +359,21 @@
       what: "A numbers-based extrapolation of a trend, with little interpretation.",
       solves: "A planning input and credibility through data.",
       notfor: "Opinion or differentiation. It is only as good as the data.",
-      metric: "Use in planning and citations. Accuracy of the numbers.",
       audience: "Planners and analysts.",
       difficulty: "Medium", time_req: "3 to 5 days",
-      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Understanding",d:"up",t:"soft"} ],
+      metrics: ["awareness", "understanding"],
       examples: [
         { name: "U.S. Census Bureau, Population Projections", url: "https://www.census.gov/programs-surveys/popproj.html" },
         { name: "Congressional Budget Office", url: "https://www.cbo.gov/" }
       ] }
   ];
+
+  // Lane (row) details, shown when a lane label is hovered/clicked.
+  var LANES = {
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", assets: "Reconsideration, Hot take, Prediction", metrics: ["trust", "affinity", "winrate"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", assets: "Case study, Explainer, Forecast", metrics: ["understanding", "trust", "risk"] },
+    low:  { name: "Reporting", blurb: "Just the facts. The data does the talking, with little or no interpretation.", assets: "Timeline, Survey, Projection", metrics: ["awareness", "leadgen"] }
+  };
 
   var TIMES = ["past", "present", "future"];
   var WEIGHTS = ["high", "mid", "low"];
@@ -357,13 +382,23 @@
 
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-  function chip(m) {
-    var arrow = m.d === "down" ? "↓" : "↑";
-    return '<span class="cm-metric ' + m.t + '"><span class="cm-arrow">' + arrow + '</span>' + esc(m.l) + '</span>';
+  // Metric icons inside a cell (one row, decoded by the legend)
+  function cellMetricsHTML(keys) {
+    return keys.map(function (k) {
+      var M = METRICS[k];
+      return '<span class="splendid-icon cm-cell-metric ' + M.group + '" role="img" aria-label="' + esc(M.label) + '">' + M.icon + '</span>';
+    }).join("");
   }
-  function chips(cell) { return cell.metrics.map(chip).join(""); }
+  // Metric chips inside the popover (icon + label)
+  function popMetricsHTML(keys) {
+    return keys.map(function (k) {
+      var M = METRICS[k];
+      return '<span class="cm-met-chip ' + M.group + '"><span class="splendid-icon cm-met-ico">' + M.icon + '</span>' + esc(M.label) + (M.dir === "down" ? " ↓" : "") + '</span>';
+    }).join("");
+  }
 
-  // ---- Hover detail popover ----
+  // ---- Detail popover ----
+  var grid = document.getElementById("cm-grid");
   var pop = document.createElement("div");
   pop.className = "cm-pop";
   pop.id = "cm-pop";
@@ -371,38 +406,58 @@
   pop.style.display = "none";
   document.body.appendChild(pop);
 
-  var hideTimer = null, activeAnchor = null;
-  function scheduleHide() { clearTimeout(hideTimer); hideTimer = setTimeout(hidePop, 180); }
+  var hideTimer = null, activeAnchor = null, activeSide = "right", pinned = false;
   function cancelHide() { clearTimeout(hideTimer); }
-  function hidePop() {
-    pop.style.display = "none";
-    if (activeAnchor) { activeAnchor.classList.remove("is-active"); activeAnchor = null; }
+  function scheduleHide() { if (pinned) return; clearTimeout(hideTimer); hideTimer = setTimeout(hide, 180); }
+  function clearActive() {
+    Array.prototype.forEach.call(grid.querySelectorAll(".is-active"), function (el) { el.classList.remove("is-active"); });
+    if (activeAnchor) activeAnchor.classList.remove("is-anchor");
   }
-  function positionPop(anchor) {
+  function positionPop(anchor, side) {
     var r = anchor.getBoundingClientRect();
-    var pw = pop.offsetWidth, ph = pop.offsetHeight, gap = 10;
-    var left = r.right + gap;
-    if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left
-    left = Math.max(8, Math.min(window.innerWidth - pw - 8, left));  // clamp
+    var pw = pop.offsetWidth, ph = pop.offsetHeight, gap = 10, left;
+    if (side === "left") {
+      left = r.left - gap - pw;
+      if (left < 8) left = r.right + gap;                       // not enough room left, flip right
+    } else {
+      left = r.right + gap;
+      if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left
+    }
+    left = Math.max(8, Math.min(window.innerWidth - pw - 8, left));
     var top = r.top + r.height / 2 - ph / 2;
     top = Math.max(8, Math.min(window.innerHeight - ph - 8, top));
     pop.style.left = left + "px";
     pop.style.top = top + "px";
   }
-  function showPop(cell, anchor) {
+  function showItem(anchor, side, html, brightEls, pin) {
     cancelHide();
-    if (activeAnchor && activeAnchor !== anchor) activeAnchor.classList.remove("is-active");
-    activeAnchor = anchor; anchor.classList.add("is-active");
-    pop.innerHTML = cardHTML(cell);
+    clearActive();
+    activeAnchor = anchor; activeSide = side; pinned = !!pin;
+    grid.classList.add("cm-dim");
+    brightEls.forEach(function (el) { if (el) el.classList.add("is-active"); });
+    anchor.classList.add("is-anchor");
+    pop.innerHTML = html;
     pop.style.display = "flex";
-    positionPop(anchor);
+    positionPop(anchor, side);
+  }
+  function hide() {
+    pop.style.display = "none";
+    grid.classList.remove("cm-dim");
+    clearActive();
+    activeAnchor = null; pinned = false;
+  }
+  function reposition() {
+    if (pop.style.display === "none" || !activeAnchor) return;
+    if (pinned) positionPop(activeAnchor, activeSide); else hide();
   }
   pop.addEventListener("mouseenter", cancelHide);
   pop.addEventListener("mouseleave", scheduleHide);
-  window.addEventListener("scroll", hidePop, true);
-  window.addEventListener("resize", hidePop);
+  window.addEventListener("scroll", reposition, true);
+  window.addEventListener("resize", reposition);
   document.addEventListener("click", function (e) {
-    if (activeAnchor && !activeAnchor.contains(e.target) && !pop.contains(e.target)) hidePop();
+    if (pop.style.display === "none") return;
+    if (activeAnchor && (activeAnchor.contains(e.target) || pop.contains(e.target))) return;
+    hide();
   });
 
   function cardHTML(cell) {
@@ -415,18 +470,26 @@
         '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
         '<span class="cm-coord-pill">' + esc(coord) + '</span>' +
       '</div>' +
-      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-metrics">' + chips(cell) + '</div></div>' +
+      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-pop-metrics">' + popMetricsHTML(cell.metrics) + '</div></div>' +
       '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
       '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
       '<div class="cm-field"><span class="cm-label">What it does not do</span>' + esc(cell.notfor) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">How to measure it</span>' + esc(cell.metric) + '</div>' +
       '<div class="cm-field"><span class="cm-label">Ideal audience</span>' + esc(cell.audience) + '</div>' +
       '<hr>' +
       '<div class="cm-meta">' +
         '<span class="cm-badge">Difficulty: ' + esc(cell.difficulty) + '</span>' +
-        '<span class="cm-badge">Time to produce: ' + esc(cell.time_req) + '</span>' +
+        '<span class="cm-badge">Time: ' + esc(cell.time_req) + '</span>' +
       '</div>' +
       '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>';
+  }
+
+  function laneCardHTML(key) {
+    var L = LANES[key];
+    return '' +
+      '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div><span class="cm-coord-pill">Lane</span></div>' +
+      '<div class="cm-field">' + esc(L.blurb) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">Assets</span>' + esc(L.assets) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">Tends to move</span><div class="cm-pop-metrics">' + popMetricsHTML(L.metrics) + '</div></div>';
   }
 
   function cellButton(cell) {
@@ -436,22 +499,21 @@
     b.dataset.cell = cell.id;
     b.innerHTML = '<span class="splendid-icon cm-cell-icon">' + (IC[cell.id] || "") + '</span>' +
                   '<span class="cm-cell-name">' + esc(cell.name) + '</span>' +
-                  '<span class="cm-metrics">' + chips(cell) + '</span>';
-    b.addEventListener("mouseenter", function () { showPop(cell, b); });
+                  '<span class="cm-cell-metrics">' + cellMetricsHTML(cell.metrics) + '</span>';
+    var side = cell.time === "past" ? "left" : "right";
+    function show(pin) { showItem(b, side, cardHTML(cell), [b], pin); }
+    b.addEventListener("mouseenter", function () { if (!pinned) show(false); });
     b.addEventListener("mouseleave", scheduleHide);
-    b.addEventListener("focus", function () { showPop(cell, b); });
+    b.addEventListener("focus", function () { if (!pinned) show(false); });
     b.addEventListener("blur", scheduleHide);
-    b.addEventListener("click", function () {
-      if (activeAnchor === b && pop.style.display !== "none") hidePop();
-      else showPop(cell, b);
-    });
+    b.addEventListener("click", function () { if (pinned && activeAnchor === b) hide(); else show(true); });
     return b;
   }
 
   // ---- Build the grid ----
-  var grid = document.getElementById("cm-grid");
   var byWT = {};
   CELLS.forEach(function (c) { byWT[c.weight + "-" + c.time] = c; });
+  var laneCellEls = { high: [], mid: [], low: [] };
 
   // Rotated y-axis title (spans the three lanes)
   var yTitle = document.createElement("div");
@@ -459,13 +521,25 @@
   yTitle.textContent = "Perspective";
   grid.appendChild(yTitle);
 
-  // Lanes: Thought leadership / Analysis / Reporting, each with its label (col 2) then three cells (cols 3-5)
   WEIGHTS.forEach(function (w, ri) {
     var lab = document.createElement("div");
     lab.className = "cm-axis-y";
     lab.textContent = LANE_LABEL[w];
     lab.style.gridColumn = "2";
     lab.style.gridRow = String(ri + 1);
+    lab.tabIndex = 0;
+    lab.setAttribute("role", "button");
+    (function (weight) {
+      function show(pin) { showItem(lab, "left", laneCardHTML(weight), laneCellEls[weight], pin); }
+      lab.addEventListener("mouseenter", function () { if (!pinned) show(false); });
+      lab.addEventListener("mouseleave", scheduleHide);
+      lab.addEventListener("focus", function () { if (!pinned) show(false); });
+      lab.addEventListener("blur", scheduleHide);
+      lab.addEventListener("click", function () { if (pinned && activeAnchor === lab) hide(); else show(true); });
+      lab.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (pinned && activeAnchor === lab) hide(); else show(true); }
+      });
+    })(w);
     grid.appendChild(lab);
 
     TIMES.forEach(function (t, ci) {
@@ -474,7 +548,7 @@
       holder.style.gridRow = String(ri + 1);
       if (w === "high") holder.className = "cm-row-tl";
       var cell = byWT[w + "-" + t];
-      if (cell) holder.appendChild(cellButton(cell));
+      if (cell) { var btn = cellButton(cell); laneCellEls[w].push(btn); holder.appendChild(btn); }
       grid.appendChild(holder);
     });
   });
@@ -489,13 +563,27 @@
     grid.appendChild(x);
   });
 
-  // X-axis title "Time" (row 5, under the tick labels)
+  // X-axis title "Time" (row 5)
   var xTitle = document.createElement("div");
   xTitle.className = "cm-axis-x-title";
   xTitle.textContent = "Time";
   xTitle.style.gridColumn = "3 / 6";
   xTitle.style.gridRow = "5";
   grid.appendChild(xTitle);
+
+  // ---- Build the right-hand legend ----
+  var panel = document.getElementById("cm-legend-panel");
+  function legendGroup(title, keys) {
+    var items = keys.map(function (k) {
+      var M = METRICS[k];
+      return '<li class="cm-legend-item ' + M.group + '"><span class="splendid-icon cm-legend-ico">' + M.icon + '</span>' + esc(M.label) + (M.dir === "down" ? " ↓" : "") + '</li>';
+    }).join("");
+    return '<div class="cm-legend-group"><div class="cm-legend-title">' + title + '</div><ul class="cm-legend-list">' + items + '</ul></div>';
+  }
+  panel.innerHTML =
+    legendGroup("Soft metrics", ["awareness", "understanding", "trust", "affinity"]) +
+    legendGroup("Hard metrics", ["leadgen", "winrate", "risk"]) +
+    '<p class="cm-legend-note">Each asset raises the metrics shown. Risk (↓) is the one it lowers.</p>';
 })();
 </script>
 
