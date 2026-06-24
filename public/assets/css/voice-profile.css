@@ -538,7 +538,33 @@
 }
 .vpb-landing-copy .hero-headline {
   font-size: clamp(2.25rem, 4vw, 3.5rem);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+/* Time lozenge under the title. */
+.vpb-time { margin: 0 0 1.4rem; }
+.vpb-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.8rem;
+  border-radius: 999px;
+  background: var(--ash);
+  border: 1px solid var(--line);
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: var(--lagoon);
+}
+.vpb-time-ico {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: var(--poppy);
+  stroke-width: 2.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
 }
 .vpb-lead {
   font-family: 'Mulish', sans-serif;
@@ -550,11 +576,11 @@
 }
 .vpb-points {
   display: grid;
-  gap: 1rem;
-  margin: 0 0 2rem;
+  gap: 0.55rem;
+  margin: 0 0 1.75rem;
   max-width: 34rem;
 }
-.vpb-points > div { display: block; }
+.vpb-points > div { display: flex; gap: 0.45rem; align-items: baseline; }
 .vpb-points dt {
   font-family: 'Big Shoulders Display', sans-serif;
   font-weight: 700;
@@ -562,7 +588,8 @@
   letter-spacing: 0.12em;
   font-size: 0.78rem;
   color: var(--poppy);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0;
+  white-space: nowrap;
 }
 .vpb-points dd {
   margin: 0;
