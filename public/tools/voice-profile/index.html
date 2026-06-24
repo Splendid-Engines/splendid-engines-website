@@ -77,7 +77,7 @@
             </div>
             <div>
               <dt>How long</dt>
-              <dd>About two minutes. Seven short steps, and you can skip any that do not matter to you.</dd>
+              <dd>About two minutes. A few short steps, and you can skip any that do not matter to you.</dd>
             </div>
             <div>
               <dt>Private</dt>
@@ -88,7 +88,7 @@
         </div>
 
         <!-- RIGHT: markdown file mockup of the end product -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 vpb-mock-col">
           <div class="vpb-file-mock" aria-hidden="true">
             <div class="vpb-file-bar">
               <span class="vpb-file-dots"><i></i><i></i><i></i></span>
@@ -103,20 +103,19 @@
               <div class="md-blank"></div>
               <div class="md-h2">## Style</div>
               <div class="md-li">- Tone: Friendly. Warm but clear.</div>
-              <div class="md-li">- Length: Concise. Short sentences.</div>
-              <div class="md-li">- Reading level: grade 7.</div>
+              <div class="md-li">- Reading level: grade 6.</div>
+              <div class="md-li">- Concision: Concise. Short sentences.</div>
               <div class="md-blank"></div>
               <div class="md-h2">## Greeting and address</div>
               <div class="md-li">- Open with "Hi {first name},".</div>
               <div class="md-li">- Use the person's first name.</div>
               <div class="md-blank"></div>
-              <div class="md-h2">## Voice traits</div>
-              <div class="md-li">- Plain spoken</div>
-              <div class="md-li">- Specific, no fluff</div>
+              <div class="md-h2">## Phrasing</div>
+              <div class="md-li">- Jargon: plain language.</div>
               <div class="md-blank"></div>
               <div class="md-h2">## Hard rules (never break these)</div>
               <div class="md-li">- No em-dashes</div>
-              <div class="md-li">- No emoji</div>
+              <div class="md-li" id="vpb-type">- No emoji</div>
               <div class="md-fade"></div>
             </div>
           </div>
@@ -181,7 +180,7 @@
       <!-- Progress -->
       <div class="vpb-progress">
         <div class="vpb-progress-meta">
-          <span class="vpb-step-count" id="vpb-step-count">Step 1 of 7</span>
+          <span class="vpb-step-count" id="vpb-step-count">Step 1 of 8</span>
           <span class="vpb-step-name" id="vpb-step-name">Basics</span>
         </div>
         <div class="vpb-track"><div class="vpb-fill" id="vpb-fill"></div></div>
@@ -193,7 +192,7 @@
         <section class="vpb-step is-active" data-step="1">
           <div class="vpb-step-head">
             <h2>Name your voice</h2>
-            <p>Give this profile a name so you can find it later. The rest is optional, so skip anything that does not matter to you.</p>
+            <p>Give this profile a name, and pick where you will use it. Everything is optional, so skip anything that does not matter.</p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label" for="vpb-name">Name</label>
@@ -201,70 +200,86 @@
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Where will you use it?</label>
-            <p class="vpb-hint">Pick the formats and channels this voice is for. The AI adapts to whichever you are writing. Optional.</p>
+            <p class="vpb-hint">Pick the formats and channels this voice is for. The AI adapts to whichever you are writing.</p>
             <div class="vpb-pills" id="vpb-formats"></div>
+          </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Telling the AI where you will use the voice helps it fit the medium. A quick DM and a case study should not read the same.</p>
           </div>
         </section>
 
-        <!-- Step 2: The feel -->
+        <!-- Step 2: Reading level -->
         <section class="vpb-step" data-step="2">
           <div class="vpb-step-head">
-            <h2>The feel</h2>
-            <p>How should it sound, and how easy should it be to read?</p>
+            <h2>Reading level</h2>
+            <p>How simple or advanced should the writing be? Drag the slider to see an example at each level.</p>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label">Tone</label>
-            <p class="vpb-hint">Pick the one that fits best. Tap it again to clear it.</p>
-            <div class="vpb-options" id="vpb-tones"></div>
-          </div>
-          <div class="vpb-field">
-            <label class="vpb-label">Reading level</label>
             <div class="vpb-slider-head">
               <span class="vpb-slider-value" id="vpb-reading-value">Not set</span>
               <button type="button" class="vpb-clear" id="vpb-reading-clear" hidden>Clear</button>
             </div>
-            <input type="range" class="vpb-range" id="vpb-reading-range" min="4" max="12" step="1" value="7" aria-label="Reading level (grade)" />
-            <div class="vpb-range-ends"><span>Grade 4</span><span>Grade 12</span></div>
-            <p class="vpb-hint" id="vpb-reading-caption" style="margin-top:0.5rem;"></p>
+            <input type="range" class="vpb-range" id="vpb-reading-range" min="1" max="11" step="1" value="3" aria-label="Reading level" />
+            <div class="vpb-range-ends"><span>Grade 4</span><span>Graduate</span></div>
+            <p class="vpb-tip">We recommend Grade 6 or lower. Most people read it fastest.</p>
+            <div class="vpb-preview" id="vpb-reading-preview">
+              <div class="vpb-preview-blurb" id="vpb-reading-blurb"></div>
+              <p class="vpb-preview-example" id="vpb-reading-example"></p>
+              <p class="vpb-preview-note" id="vpb-reading-note" style="display:none;"></p>
+            </div>
+          </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Most people read fast at a low grade level. Higher levels sound expert but lose readers. Pick the level your audience reads with ease.</p>
           </div>
         </section>
 
-        <!-- Step 3: The shape -->
+        <!-- Step 3: Tone -->
         <section class="vpb-step" data-step="3">
           <div class="vpb-step-head">
-            <h2>The shape</h2>
-            <p>How is a typical piece put together?</p>
+            <h2>Tone</h2>
+            <p>How should it sound? Pick the one that fits best. Tap it again to clear it.</p>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label">Structure</label>
-            <p class="vpb-hint">How the writing tends to be organized. Optional.</p>
-            <div class="vpb-options" id="vpb-structures"></div>
+            <div class="vpb-options" id="vpb-tones"></div>
+            <div class="vpb-example" id="vpb-tone-example" style="display:none;"></div>
           </div>
-          <div class="vpb-field">
-            <label class="vpb-label" for="vpb-manual">Style guide</label>
-            <p class="vpb-hint">If you follow a specific copy style guide, name it.</p>
-            <select class="vpb-select" id="vpb-manual">
-              <option value="">No preference</option>
-              <option value="ap">AP style</option>
-              <option value="chicago_manual_of_style">Chicago Manual of Style</option>
-              <option value="other">Other / house style</option>
-            </select>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Tone is the first thing people feel. The same point can sound warm, sharp, or flat. Pick the one that fits you and your reader.</p>
           </div>
         </section>
 
-        <!-- Step 4: Length -->
+        <!-- Step 4: Style guide -->
         <section class="vpb-step" data-step="4">
           <div class="vpb-step-head">
-            <h2>Length</h2>
-            <p>How lean or how full should the writing be? Drag the slider to see what each setting means.</p>
+            <h2>Style guide</h2>
+            <p>Do you follow a specific copy style guide? Optional. Tap one, or tap it again to clear.</p>
+          </div>
+          <div class="vpb-field">
+            <div class="vpb-options" id="vpb-manual"></div>
+          </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Some publishers require a set style guide. Newsrooms and PR wires usually expect AP. Books and journals often want Chicago. If you write for one of these, match it. If not, leave it blank.</p>
+          </div>
+        </section>
+
+        <!-- Step 5: Concision -->
+        <section class="vpb-step" data-step="5">
+          <div class="vpb-step-head">
+            <h2>Concision</h2>
+            <p>How lean or how full should the writing be? Drag to see what each setting means.</p>
           </div>
           <div class="vpb-field">
             <div class="vpb-slider-head">
               <span class="vpb-slider-value" id="vpb-concision-value">Not set</span>
               <button type="button" class="vpb-clear" id="vpb-concision-clear" hidden>Clear</button>
             </div>
-            <input type="range" class="vpb-range" id="vpb-concision-range" min="1" max="5" step="1" value="3" aria-label="Length (concise to expansive)" />
+            <input type="range" class="vpb-range" id="vpb-concision-range" min="1" max="5" step="1" value="3" aria-label="Concision (concise to expansive)" />
             <div class="vpb-range-ends"><span>Concise</span><span>Expansive</span></div>
+            <p class="vpb-tip">We lean concise. Short sentences get read and understood faster.</p>
             <div class="vpb-preview" id="vpb-concision-preview">
               <div class="vpb-preview-blurb" id="vpb-concision-blurb"></div>
               <div class="vpb-preview-stats">
@@ -275,23 +290,47 @@
               <p class="vpb-preview-example" id="vpb-concision-example"></p>
             </div>
           </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Length changes how much gets read. Short, lean copy gets read and understood faster. Go longer only when the idea needs the room.</p>
+          </div>
         </section>
 
-        <!-- Step 5: Greetings & phrasing -->
-        <section class="vpb-step" data-step="5">
+        <!-- Step 6: Greetings -->
+        <section class="vpb-step" data-step="6">
           <div class="vpb-step-head">
-            <h2>Greetings &amp; phrasing</h2>
+            <h2>Greetings</h2>
+            <p>How can a message open? Pick any. Leave all off for no preference.</p>
+          </div>
+          <div class="vpb-field">
+            <div class="vpb-pills" id="vpb-greetings"></div>
+          </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>The opening word sets the mood fast. "Hey" feels casual. "Dear" feels formal. Pick the ones that fit so the AI does not guess.</p>
+          </div>
+        </section>
+
+        <!-- Step 7: Phrasing -->
+        <section class="vpb-step" data-step="7">
+          <div class="vpb-step-head">
+            <h2>Phrasing</h2>
             <p>The small habits that make writing sound like a person.</p>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label">Greetings</label>
-            <p class="vpb-hint">Which openings are allowed? Pick any. Leave all off for no preference.</p>
-            <div class="vpb-pills" id="vpb-greetings"></div>
+            <label class="vpb-label">Name</label>
+            <p class="vpb-hint">Address people by first name or last name?</p>
+            <div class="vpb-seg" id="vpb-name-basis"></div>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label">Form of address</label>
-            <p class="vpb-hint">How should it address the reader?</p>
+            <label class="vpb-label">Honorifics</label>
+            <p class="vpb-hint">When someone has a title like Dr. or Prof., use it with their last name?</p>
             <div class="vpb-seg" id="vpb-honorifics"></div>
+          </div>
+          <div class="vpb-field">
+            <label class="vpb-label">Jargon</label>
+            <p class="vpb-hint">Use industry jargon, or keep it plain?</p>
+            <div class="vpb-seg" id="vpb-jargon"></div>
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Abbreviations</label>
@@ -303,60 +342,34 @@
             <p class="vpb-hint">Write the way people talk ("Would be great to connect"), or use full sentences?</p>
             <div class="vpb-seg" id="vpb-conversational"></div>
           </div>
-        </section>
-
-        <!-- Step 6: Your words -->
-        <section class="vpb-step" data-step="6">
-          <div class="vpb-step-head">
-            <h2>Your words</h2>
-            <p>A few traits and real examples teach the AI more than any setting.</p>
-          </div>
-          <div class="vpb-field">
-            <label class="vpb-label" for="vpb-traits-input">Traits</label>
-            <p class="vpb-hint">Short words that describe the voice. Type one and press Enter.</p>
-            <div class="vpb-tags" id="vpb-traits-tags"></div>
-            <input type="text" id="vpb-traits-input" class="vpb-input" placeholder="Type a trait and press Enter" autocomplete="off" />
-            <p class="vpb-suggest">Or tap to add:</p>
-            <div class="vpb-suggest-pills" id="vpb-traits-suggest"></div>
-          </div>
-          <div class="vpb-field">
-            <label class="vpb-label" for="vpb-samples">Sample messages</label>
-            <p class="vpb-hint">Paste one or two lines you have actually written in this voice, one per line. The AI matches their rhythm.</p>
-            <textarea id="vpb-samples" class="vpb-textarea" placeholder="One sample per line"></textarea>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>These small habits make writing sound like you. They set how formal you are and how easy you are to read.</p>
           </div>
         </section>
 
-        <!-- Step 7: Rules & extras -->
-        <section class="vpb-step" data-step="7">
+        <!-- Step 8: Hard rules -->
+        <section class="vpb-step" data-step="8">
           <div class="vpb-step-head">
-            <h2>Rules &amp; extras</h2>
-            <p>Hard rules are things the AI must never do. The rest is optional.</p>
+            <h2>Hard rules</h2>
+            <p>Things the AI must never do.</p>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label" for="vpb-rules-input">Hard rules (never do these)</label>
+            <label class="vpb-label" for="vpb-rules-input">Never do these</label>
             <p class="vpb-hint">Words, clichés, or punctuation to ban. Type one and press Enter.</p>
             <div class="vpb-tags" id="vpb-rules-tags"></div>
             <input type="text" id="vpb-rules-input" class="vpb-input" placeholder="e.g. No em-dashes" autocomplete="off" />
             <p class="vpb-suggest">Common ones, tap to add:</p>
             <div class="vpb-suggest-pills" id="vpb-rules-suggest"></div>
           </div>
-          <div class="vpb-optional">
-            <span class="vpb-optional-tag">Optional</span>
-            <div class="vpb-field">
-              <label class="vpb-label" for="vpb-ack">Opener pattern</label>
-              <p class="vpb-hint">A go-to way you like to open. The AI adapts it, never copies it word for word.</p>
-              <input type="text" id="vpb-ack" class="vpb-input" placeholder="e.g. Start by naming the reader's problem in one line" autocomplete="off" />
-            </div>
-            <div class="vpb-field">
-              <label class="vpb-label" for="vpb-cta">Call-to-action pattern</label>
-              <p class="vpb-hint">How you like to ask for the next step.</p>
-              <input type="text" id="vpb-cta" class="vpb-input" placeholder="e.g. End with a low-pressure question" autocomplete="off" />
-            </div>
+          <div class="vpb-why">
+            <span class="vpb-why-label">Why this matters</span>
+            <p>Hard rules are the lines the AI must never cross. Bans like em-dashes or emoji get followed every time.</p>
           </div>
         </section>
 
-        <!-- Step 8: Result -->
-        <section class="vpb-step" data-step="8">
+        <!-- Step 9: Result -->
+        <section class="vpb-step" data-step="9">
           <div class="vpb-step-head">
             <h2>Your voice profile</h2>
             <p>Here is your profile. Copy it or download it, then hand it to your AI.</p>
