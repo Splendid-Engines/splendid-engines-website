@@ -576,11 +576,11 @@
 }
 .vpb-points {
   display: grid;
-  gap: 0.55rem;
-  margin: 0 0 1.75rem;
+  gap: 1rem;
+  margin: 0 0 2rem;
   max-width: 34rem;
 }
-.vpb-points > div { display: flex; gap: 0.45rem; align-items: baseline; }
+.vpb-points > div { display: block; }
 .vpb-points dt {
   font-family: 'Big Shoulders Display', sans-serif;
   font-weight: 700;
@@ -588,8 +588,7 @@
   letter-spacing: 0.12em;
   font-size: 0.78rem;
   color: var(--poppy);
-  margin-bottom: 0;
-  white-space: nowrap;
+  margin-bottom: 0.15rem;
 }
 .vpb-points dd {
   margin: 0;
