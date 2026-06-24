@@ -29,8 +29,8 @@
     .cm-h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); margin-bottom: 0.6rem; }
 
     /* Problem picker */
-    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.85rem; margin: 0.25rem auto 2.5rem; }
-    .cm-lead { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 1.12rem; line-height: 1.4; color: var(--lagoon); max-width: 34rem; margin: 0 auto 1.3rem; }
+    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.85rem; margin: 0.75rem auto 2.5rem; }
+    .cm-lead { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 1.12rem; line-height: 1.4; color: var(--lagoon); margin: 0; }
     /* Custom problem picker: no native select UI, an icon on the trigger + every option */
     .cm-select { position: relative; display: inline-block; text-align: left; }
     .cm-select-trigger {
@@ -278,9 +278,9 @@
     <div class="container text-center">
       <span class="eyebrow">The Splendid Content Matrix</span>
       <h1 class="cm-h1">Good Content Solves Problems</h1>
-      <p class="cm-lead" id="cm-pain-label">Pick yours, get a plan.</p>
 
       <div class="cm-pain-wrap">
+        <span class="cm-lead" id="cm-pain-label">Pick yours, get a plan.</span>
         <div class="cm-select" id="cm-pain">
           <button type="button" class="cm-select-trigger" id="cm-pain-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="cm-pain-list" aria-labelledby="cm-pain-label cm-pain-text">
             <span class="splendid-icon cm-select-ico" id="cm-pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
