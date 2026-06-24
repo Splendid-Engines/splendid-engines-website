@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voice Profile Builder - Splendid Engines</title>
+  <meta name="description" content="A free, guided tool that turns a few choices into a voice profile you can paste into ChatGPT, Claude, or any AI. Build it in two minutes. Nothing leaves your browser." />
+
+  <meta property="og:title" content="Voice Profile Builder - Splendid Engines" />
+  <meta property="og:description" content="Answer a few questions and get a markdown voice guide for any AI. Free, no signup, nothing leaves your browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://splendidengines.com/tools/voice-profile/" />
+
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Mulish:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+  <link rel="stylesheet" href="/assets/css/voice-profile.css" />
+</head>
+<body>
+
+<!-- HEADER (canonical: _includes/header.html) -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/img/favicon-splendid.svg" alt="" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Who we help</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sales/">Sales</a></li>
+            <li><a class="dropdown-item" href="/marketing/">Marketing</a></li>
+            <li><a class="dropdown-item" href="/experts/">Experts</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/case-study/">Case study</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/writing/">Writing</a></li>
+        <li class="nav-item"><a class="nav-link" href="/tools/">Tools</a></li>
+        <li class="nav-item ms-lg-3"><a class="btn-se-primary" href="/contact/">Book a call</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO / EXPLAINER -->
+  <section class="hero bg-snow" style="padding-top: 3.5rem; padding-bottom: 2rem;">
+    <div class="container vpb-wrap text-center">
+      <span class="eyebrow">Free tool</span>
+      <h1 class="hero-headline">Voice Profile <span class="hl">Builder</span></h1>
+      <p class="hero-body" style="margin-bottom: 1.25rem;">
+        Every AI writes in a generic voice until you tell it not to. This tool walks you
+        through a few quick choices, then hands you a voice profile you can paste into
+        ChatGPT, Claude, or any AI so it writes the way you do.
+      </p>
+      <ul class="hero-bullets" style="max-width: 460px; margin: 0 auto 1.5rem;">
+        <li>Answer a few short questions. Takes about two minutes.</li>
+        <li>Get a clean markdown file built to guide any AI.</li>
+        <li>Paste it in, or save it and reuse it whenever you write.</li>
+      </ul>
+      <a href="#vpb-card" id="vpb-start-link" class="btn-se-primary">Build your profile</a>
+      <p class="text-muted-se" style="font-size: 0.85rem; margin: 1rem 0 0;">
+        Free. No signup. Everything runs in your browser, so nothing you type is sent anywhere.
+      </p>
+    </div>
+  </section>
+
+  <!-- WIZARD -->
+  <section class="section-sm bg-snow" style="padding-top: 1rem;">
+    <div class="container vpb-wrap">
+      <div class="vpb-card" id="vpb-card">
+
+        <!-- Progress -->
+        <div class="vpb-progress">
+          <div class="vpb-progress-meta">
+            <span class="vpb-step-count" id="vpb-step-count">Step 1 of 7</span>
+            <span class="vpb-step-name" id="vpb-step-name">Basics</span>
+          </div>
+          <div class="vpb-track"><div class="vpb-fill" id="vpb-fill"></div></div>
+        </div>
+
+        <div class="vpb-body">
+
+          <!-- Step 1: Basics -->
+          <section class="vpb-step is-active" data-step="1">
+            <div class="vpb-step-head">
+              <h2>Name your voice</h2>
+              <p>Give this profile a name so you can find it later. The rest is optional, so skip anything that does not matter to you.</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-name">Name</label>
+              <input type="text" id="vpb-name" class="vpb-input" placeholder="e.g. My LinkedIn voice" autocomplete="off" />
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-description">Who or what is it for?</label>
+              <p class="vpb-hint">One line of context. This shows up at the top of your file.</p>
+              <input type="text" id="vpb-description" class="vpb-input" placeholder="e.g. Posts and DMs from our founder" autocomplete="off" />
+            </div>
+          </section>
+
+          <!-- Step 2: The feel -->
+          <section class="vpb-step" data-step="2">
+            <div class="vpb-step-head">
+              <h2>The feel</h2>
+              <p>How should it sound, and how easy should it be to read?</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Tone</label>
+              <p class="vpb-hint">Pick the one that fits best. Tap it again to clear it.</p>
+              <div class="vpb-options" id="vpb-tones"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Reading level</label>
+              <div class="vpb-slider-head">
+                <span class="vpb-slider-value" id="vpb-reading-value">Not set</span>
+                <button type="button" class="vpb-clear" id="vpb-reading-clear" hidden>Clear</button>
+              </div>
+              <input type="range" class="vpb-range" id="vpb-reading-range" min="4" max="12" step="1" value="7" aria-label="Reading level (grade)" />
+              <div class="vpb-range-ends"><span>Grade 4</span><span>Grade 12</span></div>
+              <p class="vpb-hint" id="vpb-reading-caption" style="margin-top:0.5rem;"></p>
+            </div>
+          </section>
+
+          <!-- Step 3: The shape -->
+          <section class="vpb-step" data-step="3">
+            <div class="vpb-step-head">
+              <h2>The shape</h2>
+              <p>How is a typical piece put together?</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Structure</label>
+              <p class="vpb-hint">How the writing tends to be organized. Optional.</p>
+              <div class="vpb-options" id="vpb-structures"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-manual">Style guide</label>
+              <p class="vpb-hint">If you follow a specific copy style guide, name it.</p>
+              <select class="vpb-select" id="vpb-manual">
+                <option value="">No preference</option>
+                <option value="ap">AP style</option>
+                <option value="chicago_manual_of_style">Chicago Manual of Style</option>
+                <option value="other">Other / house style</option>
+              </select>
+            </div>
+          </section>
+
+          <!-- Step 4: Length -->
+          <section class="vpb-step" data-step="4">
+            <div class="vpb-step-head">
+              <h2>Length</h2>
+              <p>How lean or how full should the writing be? Drag the slider to see what each setting means.</p>
+            </div>
+            <div class="vpb-field">
+              <div class="vpb-slider-head">
+                <span class="vpb-slider-value" id="vpb-concision-value">Not set</span>
+                <button type="button" class="vpb-clear" id="vpb-concision-clear" hidden>Clear</button>
+              </div>
+              <input type="range" class="vpb-range" id="vpb-concision-range" min="1" max="5" step="1" value="3" aria-label="Length (concise to expansive)" />
+              <div class="vpb-range-ends"><span>Concise</span><span>Expansive</span></div>
+              <div class="vpb-preview" id="vpb-concision-preview">
+                <div class="vpb-preview-blurb" id="vpb-concision-blurb"></div>
+                <div class="vpb-preview-stats">
+                  <div class="vpb-preview-stat"><span class="vpb-ps-label">Sentence</span><span class="vpb-ps-value" id="vpb-cp-sentence"></span></div>
+                  <div class="vpb-preview-stat"><span class="vpb-ps-label">Short message</span><span class="vpb-ps-value" id="vpb-cp-linkedin"></span></div>
+                  <div class="vpb-preview-stat"><span class="vpb-ps-label">Email</span><span class="vpb-ps-value" id="vpb-cp-email"></span></div>
+                </div>
+                <p class="vpb-preview-example" id="vpb-concision-example"></p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 5: Greetings & phrasing -->
+          <section class="vpb-step" data-step="5">
+            <div class="vpb-step-head">
+              <h2>Greetings &amp; phrasing</h2>
+              <p>The small habits that make writing sound like a person.</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Greetings</label>
+              <p class="vpb-hint">Which openings are allowed? Pick any. Leave all off for no preference.</p>
+              <div class="vpb-pills" id="vpb-greetings"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Form of address</label>
+              <p class="vpb-hint">How should it address the reader?</p>
+              <div class="vpb-seg" id="vpb-honorifics"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Abbreviations</label>
+              <p class="vpb-hint">Short forms like TBD and WFH, or spell everything out?</p>
+              <div class="vpb-seg" id="vpb-abbreviations"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label">Conversational phrasing</label>
+              <p class="vpb-hint">Write the way people talk ("Would be great to connect"), or use full sentences?</p>
+              <div class="vpb-seg" id="vpb-conversational"></div>
+            </div>
+          </section>
+
+          <!-- Step 6: Your words -->
+          <section class="vpb-step" data-step="6">
+            <div class="vpb-step-head">
+              <h2>Your words</h2>
+              <p>A few traits and real examples teach the AI more than any setting.</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-traits-input">Traits</label>
+              <p class="vpb-hint">Short words that describe the voice. Type one and press Enter.</p>
+              <div class="vpb-tags" id="vpb-traits-tags"></div>
+              <input type="text" id="vpb-traits-input" class="vpb-input" placeholder="Type a trait and press Enter" autocomplete="off" />
+              <p class="vpb-suggest">Or tap to add:</p>
+              <div class="vpb-suggest-pills" id="vpb-traits-suggest"></div>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-samples">Sample messages</label>
+              <p class="vpb-hint">Paste one or two lines you have actually written in this voice, one per line. The AI matches their rhythm.</p>
+              <textarea id="vpb-samples" class="vpb-textarea" placeholder="One sample per line"></textarea>
+            </div>
+          </section>
+
+          <!-- Step 7: Rules & extras -->
+          <section class="vpb-step" data-step="7">
+            <div class="vpb-step-head">
+              <h2>Rules &amp; extras</h2>
+              <p>Hard rules are things the AI must never do. The rest is optional.</p>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-rules-input">Hard rules (never do these)</label>
+              <p class="vpb-hint">Words, clichés, or punctuation to ban. Type one and press Enter.</p>
+              <div class="vpb-tags" id="vpb-rules-tags"></div>
+              <input type="text" id="vpb-rules-input" class="vpb-input" placeholder="e.g. No em-dashes" autocomplete="off" />
+              <p class="vpb-suggest">Common ones, tap to add:</p>
+              <div class="vpb-suggest-pills" id="vpb-rules-suggest"></div>
+            </div>
+            <div class="vpb-optional">
+              <span class="vpb-optional-tag">Optional</span>
+              <div class="vpb-field">
+                <label class="vpb-label" for="vpb-ack">Opener pattern</label>
+                <p class="vpb-hint">A go-to way you like to open. The AI adapts it, never copies it word for word.</p>
+                <input type="text" id="vpb-ack" class="vpb-input" placeholder="e.g. Start by naming the reader's problem in one line" autocomplete="off" />
+              </div>
+              <div class="vpb-field">
+                <label class="vpb-label" for="vpb-cta">Call-to-action pattern</label>
+                <p class="vpb-hint">How you like to ask for the next step.</p>
+                <input type="text" id="vpb-cta" class="vpb-input" placeholder="e.g. End with a low-pressure question" autocomplete="off" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 8: Result -->
+          <section class="vpb-step" data-step="8">
+            <div class="vpb-step-head">
+              <h2>Your voice profile</h2>
+              <p>Here is your profile. Copy it or download it, then hand it to your AI.</p>
+            </div>
+            <p class="vpb-result-intro">This is plain markdown. It works in any AI chat. Edit it any time by going back through the steps.</p>
+            <div class="vpb-output">
+              <pre id="vpb-output-text"></pre>
+            </div>
+            <div class="vpb-result-actions">
+              <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-copy">Copy markdown</button>
+              <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-download">Download .md</button>
+              <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-startover">Start over</button>
+              <span class="vpb-copy-flag" id="vpb-copy-flag">Copied to clipboard</span>
+            </div>
+            <div class="vpb-howto">
+              <h3>How to use it</h3>
+              <ol>
+                <li>Open a new chat in ChatGPT, Claude, or any AI you like.</li>
+                <li>Paste this profile as your first message, or add it to the system prompt or custom instructions.</li>
+                <li>Then ask for what you need. The AI will write in your voice.</li>
+              </ol>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Wizard nav -->
+        <div class="vpb-nav">
+          <div class="vpb-nav-left">
+            <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-back" hidden>Back</button>
+          </div>
+          <div class="vpb-nav-right" style="display:flex; gap:0.7rem;">
+            <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-next">Next</button>
+            <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-finish" hidden>See my profile</button>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-center" style="margin-top:1.5rem;">
+        <a href="/tools/" class="text-muted-se" style="font-size:0.9rem;">Back to all tools</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT IS A VOICE PROFILE -->
+  <section class="section bg-ash">
+    <div class="container container-medium">
+      <div class="text-center mb-5">
+        <span class="eyebrow">The idea</span>
+        <h2 class="display-6">It sets <span class="hl">how</span> you write, not what you write</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="criterion h-100">
+            <h3>One voice, every tool</h3>
+            <p>Build it once. Use it in any AI, on any day. No more re-explaining how you like to sound.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="criterion h-100">
+            <h3>Form, not facts</h3>
+            <p>A voice profile guides tone, length, and rules. It never makes up claims or facts. The substance still comes from you.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="criterion h-100">
+            <h3>Built on our own system</h3>
+            <p>This is the same voice model we use to run outreach and content for our clients, made free and simple for you.</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center" style="margin-top:2.5rem;">
+        <p class="thesis" style="max-width: 640px; margin: 0 auto 1.5rem;">
+          We help B2B teams build a market, find the right buyers, and reach them in a voice that sounds human. Want that done for you?
+        </p>
+        <a href="/contact/" class="btn-se-primary">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (canonical: _includes/footer.html) -->
+<footer class="site-footer py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-4 text-center text-md-start">
+        <a href="/"><img src="/assets/img/logo-splendid.png" alt="Splendid Engines" class="footer-logo mb-2" /></a>
+        <div>
+          <span class="footer-tagline-script">Nice day, isn't it?</span>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <ul class="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/case-study/">Case study</a></li>
+          <li><a href="/writing/">Writing</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/our-brand/">Brand</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 text-center text-md-end footer-meta">
+        &copy; <span id="footer-year">2026</span> Splendid Engines. Operating in Canada and the USA.
+      </div>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/voice-profile.js" defer></script>
+
+<!-- Clay web-intent tracking (Claydar). Canonical copy: /_includes/analytics.html. Keep on every page. -->
+<script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>
+</body>
+</html>
