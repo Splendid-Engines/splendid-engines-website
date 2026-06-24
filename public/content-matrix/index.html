@@ -29,9 +29,12 @@
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
     .cm-grid {
       display: grid;
-      grid-template-columns: auto auto repeat(3, minmax(9rem, 12rem));
+      /* Left labels (rotated Perspective + row labels) are balanced by an equal
+         spacer column on the right, so the 3x3 cell block itself centers on the
+         page, under the title. col1 + gap + col2 + gap (8.2rem) == gap + spacer. */
+      grid-template-columns: 2rem 5rem repeat(3, minmax(8.5rem, 11rem)) 7.6rem;
       grid-template-rows: repeat(3, minmax(7rem, auto)) auto auto;
-      gap: 0.6rem; min-width: 42rem; max-width: 54rem; margin: 0 auto; align-items: stretch;
+      gap: 0.6rem; width: max-content; max-width: 100%; margin: 0 auto; align-items: stretch;
     }
     .cm-axis-y-title {
       grid-column: 1; grid-row: 1 / 4;
