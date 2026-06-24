@@ -43,6 +43,26 @@
     .cm-grid.cm-pain-active .cm-cell { opacity: 0.3; }
     .cm-grid.cm-pain-active .cm-cell.cm-pain-on { opacity: 1; border-color: var(--poppy); box-shadow: 0 6px 18px rgba(21,48,71,0.12); }
 
+    /* Prescriptive recommendation, revealed when a problem is picked */
+    .cm-rec {
+      display: none; max-width: 44rem; margin: -1.25rem auto 2.5rem; text-align: left;
+      background: var(--ash); border: 1.5px solid var(--line); border-left: 4px solid var(--poppy);
+      border-radius: 12px; padding: 1rem 1.25rem;
+    }
+    .cm-rec.is-shown { display: block; }
+    .cm-rec-label {
+      display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.35rem;
+    }
+    .cm-rec-text { font-size: 1.08rem; line-height: 1.5; color: var(--lagoon); margin: 0; }
+    .cm-rec-text strong { font-weight: 800; }
+    .cm-rec-cta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
+      margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--line);
+    }
+    .cm-rec-cta-text { font-size: 0.95rem; font-weight: 600; color: var(--lagoon); }
+    .cm-rec-cta .btn-se-primary { margin-left: auto; white-space: nowrap; }
+
     /* Matrix + right-hand legend sit in one centered row */
     .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
@@ -231,6 +251,15 @@
         </select>
       </div>
 
+      <div class="cm-rec" id="cm-rec" role="status" aria-live="polite">
+        <span class="cm-rec-label">Start here</span>
+        <p class="cm-rec-text" id="cm-rec-text"></p>
+        <div class="cm-rec-cta">
+          <span class="cm-rec-cta-text" id="cm-rec-cta-text"></span>
+          <a class="btn-se-primary" href="/contact/">Book a call</a>
+        </div>
+      </div>
+
       <div class="cm-matrix-row">
         <div class="cm-scroll">
           <div class="cm-grid" id="cm-grid"></div>
@@ -320,16 +349,34 @@
   var SOFT_KEYS = ["awareness", "understanding", "trust", "affinity"];
   var HARD_KEYS = ["traffic", "subscribers", "demandgen", "winrate"];
 
-  // Business problems for the picker; each maps to the metric it is about.
+  // Business problems for the picker. Each maps to the metric it is about,
+  // a one-line recommendation (names the assets that light up), and a short
+  // CTA lead that ties the answer to booking a call.
   var PAINS = [
-    { key: "awareness", label: "Nobody has heard of us" },
-    { key: "traffic", label: "Our site traffic is low" },
-    { key: "understanding", label: "People do not get what we do" },
-    { key: "trust", label: "People do not trust us yet" },
-    { key: "affinity", label: "We are not winning people over" },
-    { key: "subscribers", label: "We do not own an audience" },
-    { key: "demandgen", label: "Our pipeline is thin" },
-    { key: "winrate", label: "We keep losing deals" }
+    { key: "awareness", label: "Nobody has heard of us",
+      rec: 'Start with a <strong>Survey</strong> or a bold <strong>Prediction</strong>. New data and a sharp call get you cited and seen.',
+      cta: "Want to get known?" },
+    { key: "traffic", label: "Our site traffic is low",
+      rec: 'Publish a <strong>Survey</strong> and a <strong>Timeline</strong>. Original data and a solid reference pull in search and shares.',
+      cta: "Want more traffic?" },
+    { key: "understanding", label: "People do not get what we do",
+      rec: 'Lead with an <strong>Explainer</strong>. Make how it works plain, then back it with a <strong>Forecast</strong> or <strong>Projection</strong>.',
+      cta: "Want people to get it?" },
+    { key: "trust", label: "People do not trust us yet",
+      rec: 'Show proof. A <strong>Case study</strong> plus a clear <strong>Perspective</strong> proves the result is real and that you know your stuff.',
+      cta: "Want to earn trust?" },
+    { key: "affinity", label: "We are not winning people over",
+      rec: 'Take a stand. A <strong>Perspective</strong> or a <strong>Reconsideration</strong> makes people feel you are their kind of people.',
+      cta: "Want people on your side?" },
+    { key: "subscribers", label: "We do not own an audience",
+      rec: 'Give people a reason to come back. A regular <strong>Perspective</strong> or <strong>Explainer</strong> builds a list you own.',
+      cta: "Want an audience you own?" },
+    { key: "demandgen", label: "Our pipeline is thin",
+      rec: 'Run a <strong>Survey</strong>. Fresh data earns coverage and brings in people who did not know they needed you.',
+      cta: "Want a fuller pipeline?" },
+    { key: "winrate", label: "We keep losing deals",
+      rec: 'Arm the deal. A <strong>Case study</strong> and an <strong>Explainer</strong> frame the decision so more deals close.',
+      cta: "Want to win more deals?" }
   ];
 
   // Which assets are press-worthy (earn media coverage and citations).
@@ -584,7 +631,8 @@
     b.innerHTML = '<span class="splendid-icon cm-cell-icon">' + (IC[cell.id] || "") + '</span>' +
                   '<span class="cm-cell-name">' + esc(cell.name) + '</span>' +
                   '<span class="cm-cell-metrics">' + cellMetricsHTML(cell.metrics) + '</span>';
-    var side = cell.time === "past" ? "left" : "right";
+    // Always open left so the popover never covers the right-hand legend.
+    var side = "left";
     function show(pin) { showItem(b, side, cardHTML(cell), [b], pin, true); }
     b.addEventListener("mouseenter", function () { if (!pinned) show(false); });
     b.addEventListener("mouseleave", scheduleHide);
@@ -680,9 +728,15 @@
     });
   });
 
-  // ---- Problem picker: highlight the assets that solve the chosen problem ----
+  // ---- Problem picker: highlight the assets that solve the chosen problem,
+  //      and surface a one-line recommendation + a CTA toward booking a call ----
   var sel = document.getElementById("cm-pain");
+  var recBox = document.getElementById("cm-rec");
+  var recText = document.getElementById("cm-rec-text");
+  var recCta = document.getElementById("cm-rec-cta-text");
+  var PAIN_BY_KEY = {};
   PAINS.forEach(function (p) {
+    PAIN_BY_KEY[p.key] = p;
     var o = document.createElement("option");
     o.value = p.key; o.textContent = p.label;
     sel.appendChild(o);
@@ -690,11 +744,21 @@
   sel.addEventListener("change", function () {
     Array.prototype.forEach.call(grid.querySelectorAll(".cm-pain-on"), function (el) { el.classList.remove("cm-pain-on"); });
     var key = sel.value;
-    if (!key) { grid.classList.remove("cm-pain-active"); return; }
+    if (!key) {
+      grid.classList.remove("cm-pain-active");
+      recBox.classList.remove("is-shown");
+      return;
+    }
     grid.classList.add("cm-pain-active");
     CELLS.forEach(function (c) {
       if (c.metrics.indexOf(key) !== -1 && cellEls[c.id]) cellEls[c.id].classList.add("cm-pain-on");
     });
+    var p = PAIN_BY_KEY[key];
+    if (p) {
+      recText.innerHTML = p.rec;
+      recCta.textContent = p.cta + " We can build it with you.";
+      recBox.classList.add("is-shown");
+    }
   });
 })();
 </script>
