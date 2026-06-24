@@ -26,11 +26,10 @@
     .navbar-brand img, .navbar.scrolled .navbar-brand img { height: 28px; width: 28px; }
 
     .cm-top { padding-top: 1.1rem; padding-bottom: 2.5rem; }
-    .cm-h1 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); margin-bottom: 0.5rem; }
 
     /* Problem picker */
     .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.85rem; margin: 0.25rem auto 2.5rem; }
-    .cm-pain-lead { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 1.12rem; color: var(--lagoon); }
+    .cm-lead { font-family: 'Mulish', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 2.4vw, 1.55rem); line-height: 1.3; color: var(--lagoon); max-width: 34rem; margin: 0 auto 1.3rem; }
     /* Custom problem picker: no native select UI, an icon on the trigger + every option */
     .cm-select { position: relative; display: inline-block; text-align: left; }
     .cm-select-trigger {
@@ -78,17 +77,19 @@
       text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.35rem;
     }
     .cm-rec-text { font-size: 1.05rem; line-height: 1.5; color: var(--lagoon); margin: 0; }
-    .cm-path { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; padding: 0; list-style: none; }
+    .cm-path { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.7rem 0 0; padding: 0; list-style: none; }
     .cm-path-step {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--lagoon);
-      background: var(--snow); border: 1.5px solid var(--line); border-radius: 999px; padding: 0.28rem 0.85rem 0.28rem 0.32rem;
+      display: flex; align-items: flex-start; gap: 0.65rem;
+      background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px; padding: 0.6rem 0.8rem;
     }
     .cm-path-num {
-      display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
-      width: 1.3rem; height: 1.3rem; border-radius: 999px; background: var(--poppy); color: #fff;
-      font-family: 'Mulish', sans-serif; font-size: 0.72rem; font-weight: 800;
+      display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; margin-top: 0.1rem;
+      width: 1.4rem; height: 1.4rem; border-radius: 999px; background: var(--poppy); color: #fff;
+      font-family: 'Mulish', sans-serif; font-size: 0.74rem; font-weight: 800;
     }
+    .cm-path-body { display: flex; flex-direction: column; gap: 0.12rem; }
+    .cm-path-asset { font-family: 'Mulish', sans-serif; font-weight: 800; font-size: 0.92rem; color: var(--lagoon); }
+    .cm-path-detail { font-size: 0.85rem; line-height: 1.4; color: var(--muted); }
     .cm-rec-cta {
       display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
       margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--line);
@@ -275,14 +276,13 @@
   <section class="section cm-top bg-snow">
     <div class="container text-center">
       <span class="eyebrow">The Splendid Content Matrix</span>
-      <h1 class="cm-h1">What&rsquo;s your growth problem?</h1>
+      <h1 class="cm-lead" id="cm-pain-label">Good content solves problems. Pick yours, get a plan.</h1>
 
       <div class="cm-pain-wrap">
-        <span class="cm-pain-lead" id="cm-pain-label">Pick yours, get a plan:</span>
         <div class="cm-select" id="cm-pain">
           <button type="button" class="cm-select-trigger" id="cm-pain-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="cm-pain-list" aria-labelledby="cm-pain-label cm-pain-text">
             <span class="splendid-icon cm-select-ico" id="cm-pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
-            <span class="cm-select-text" id="cm-pain-text">Show everything</span>
+            <span class="cm-select-text" id="cm-pain-text">Pick your problem&hellip;</span>
             <span class="splendid-icon cm-select-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9"/></svg></span>
           </button>
           <ul class="cm-select-list" id="cm-pain-list" role="listbox" tabindex="-1" aria-labelledby="cm-pain-label"></ul>
@@ -302,7 +302,7 @@
         <ol class="cm-path" id="cm-rec-path"></ol>
         <div class="cm-rec-cta">
           <span class="cm-rec-cta-text" id="cm-rec-cta-text"></span>
-          <a class="btn-se-primary" href="/contact/">Book a call</a>
+          <a class="btn-se-primary" href="/contact/">Get In Touch</a>
         </div>
       </div>
     </div>
@@ -426,8 +426,21 @@
       cta: "Want to win more deals?" }
   ];
 
+  // One-line "how to make it" for each asset, shown under each Critical Path step.
+  var STEP_DETAIL = {
+    "Reconsideration": "Challenge the accepted story and make the case for a better one.",
+    "Perspective": "Stake a clear, honest opinion on something happening right now.",
+    "Prediction": "Make one specific call about what happens next, and show why.",
+    "Case study": "Walk through one real result and show why it worked.",
+    "Explainer": "Explain how it works in plain language, step by step.",
+    "Forecast": "Model where the market is heading and show your assumptions.",
+    "History": "Lay out how the space got here, as the record people cite.",
+    "Survey": "Run an original survey of your market and publish the numbers.",
+    "Projection": "Extend the trend with numbers, light on opinion."
+  };
+
   // Which assets are press-worthy (earn media coverage and citations).
-  var PRESS_WORTHY = { reconsideration: true, position: true, prediction: true, forecast: true, reporting: true };
+  var PRESS_WORTHY = { reconsideration: true, position: true, prediction: true, forecast: true, reporting: true, projection: true };
 
   // The matrix. metrics = METRICS keys. audience = which AUD_TIERS apply (multiple allowed).
   var CELLS = [
@@ -832,7 +845,7 @@
   function closeMenu(returnFocus) {
     selWrap.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
-    if (returnFocus) trigger.focus();
+    if (returnFocus) trigger.focus({ preventScroll: true });
   }
   function toggleMenu() { if (selWrap.classList.contains("is-open")) closeMenu(true); else openMenu(); }
 
@@ -850,6 +863,16 @@
       el.setAttribute("aria-selected", on ? "true" : "false");
     });
     applyPain(key);
+    if (key) scrollToMatrix();
+  }
+
+  // After a problem is picked, slide the matrix to the top of the viewport so
+  // the highlighted grid and the plan beneath it are both in view.
+  function scrollToMatrix() {
+    var el = document.querySelector(".cm-matrix-row");
+    if (!el) return;
+    var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 16;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: "smooth" });
   }
 
   function applyPain(key) {
@@ -867,7 +890,11 @@
     if (p) {
       recText.textContent = p.lead;
       recPath.innerHTML = p.path.map(function (step, i) {
-        return '<li class="cm-path-step"><span class="cm-path-num">' + (i + 1) + '</span>' + esc(step) + '</li>';
+        var detail = STEP_DETAIL[step] || "";
+        return '<li class="cm-path-step"><span class="cm-path-num">' + (i + 1) + '</span>' +
+          '<span class="cm-path-body"><span class="cm-path-asset">' + esc(step) + '</span>' +
+          (detail ? '<span class="cm-path-detail">' + esc(detail) + '</span>' : '') +
+          '</span></li>';
       }).join("");
       recCta.textContent = p.cta + " We can build it with you.";
       recBox.classList.add("is-shown");
