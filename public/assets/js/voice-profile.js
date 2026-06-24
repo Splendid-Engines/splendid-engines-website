@@ -102,6 +102,33 @@
     }
   };
 
+  // Inline line-icons (lucide, ISC license) for the format lozenges. Rendered
+  // to the brand line-icon spec (square caps, miter joins) via CSS.
+  var ICON = {
+    mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+    linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
+    messageCircle: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+    messageSquare: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    slack: '<rect width="3" height="8" x="13" y="2" rx="1.5"/><path d="M19 8.5V10h1.5A1.5 1.5 0 1 0 19 8.5"/><rect width="3" height="8" x="8" y="14" rx="1.5"/><path d="M5 15.5V14H3.5A1.5 1.5 0 1 0 5 15.5"/><rect width="8" height="3" x="14" y="13" rx="1.5"/><path d="M15.5 19H14v1.5a1.5 1.5 0 1 0 1.5-1.5"/><rect width="8" height="3" x="2" y="8" rx="1.5"/><path d="M8.5 5H10V3.5A1.5 1.5 0 1 0 8.5 5"/>',
+    newspaper: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/>',
+    fileText: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+    send: '<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>',
+    globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'
+  };
+
+  // Content formats / channels this voice is for (multi-select lozenges, step 1).
+  var FORMATS = [
+    { value: 'email', label: 'Email', icon: ICON.mail },
+    { value: 'linkedin_posts', label: 'LinkedIn posts', icon: ICON.linkedin },
+    { value: 'linkedin_dms', label: 'LinkedIn DMs', icon: ICON.messageCircle },
+    { value: 'comments', label: 'Comments', icon: ICON.messageSquare },
+    { value: 'slack', label: 'Slack', icon: ICON.slack },
+    { value: 'newsletters', label: 'Newsletters', icon: ICON.send },
+    { value: 'blog_posts', label: 'Blog posts', icon: ICON.newspaper },
+    { value: 'case_studies', label: 'Case studies', icon: ICON.fileText },
+    { value: 'website_copy', label: 'Website copy', icon: ICON.globe }
+  ];
+
   var SUGGESTED_TRAITS = ['Plain spoken', 'Warm', 'Specific', 'No fluff', 'Curious', 'Confident', 'Practical', 'Wry'];
   var QUICK_HARD_RULES = ['No em-dashes', 'No en-dashes', 'No emoji', 'No exclamation points', 'No buzzwords', 'No "I hope this finds you well"'];
 
@@ -114,7 +141,7 @@
   function blankState() {
     return {
       name: '',
-      description: '',
+      formats: [],                // content formats / channels this voice is for
       reading_grade: null,        // 4-12 or null
       tone: '',
       structure: '',
@@ -192,15 +219,20 @@
     });
   }
 
-  // Multi-select pills.
+  // Multi-select pills (optionally with a leading line-icon).
   function renderPills(containerId, items, key, withExamples) {
     var box = el(containerId);
     clear(box);
     items.forEach(function (item) {
       var on = state[key].indexOf(item.value) !== -1;
-      var btn = make('button', 'vpb-pill' + (on ? ' is-on' : ''));
+      var btn = make('button', 'vpb-pill' + (item.icon ? ' vpb-pill-fmt' : '') + (on ? ' is-on' : ''));
       btn.type = 'button';
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (item.icon) {
+        var ico = make('span', 'vpb-pill-ico');
+        ico.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + item.icon + '</svg>';
+        btn.appendChild(ico);
+      }
       btn.appendChild(document.createTextNode(item.label));
       if (withExamples && item.example) {
         var ex = make('span', 'vpb-pill-ex', ' ' + item.example);
@@ -386,8 +418,9 @@
     var lines = [];
     lines.push('# Voice Profile: ' + name);
     lines.push('');
-    if ((state.description || '').trim()) {
-      lines.push('_' + state.description.trim() + '_');
+    if (state.formats.length) {
+      var fmtLabels = state.formats.map(function (v) { var f = byValue(FORMATS, v); return f ? f.label : v; });
+      lines.push('_Used for: ' + fmtLabels.join(', ') + '._');
       lines.push('');
     }
     lines.push('You are writing in my voice. This profile sets **how** the writing should read: the tone, the length, and the rules. It does not tell you **what** to say. The topic, the facts, and the message come from me. Apply this voice to everything you draft for me, and ask me for the substance when you need it.');
@@ -555,11 +588,11 @@
 
     // Text fields
     var nameInput = el('vpb-name');
-    var descInput = el('vpb-description');
     nameInput.value = state.name;
-    descInput.value = state.description;
     nameInput.addEventListener('input', function () { state.name = nameInput.value; save(); });
-    descInput.addEventListener('input', function () { state.description = descInput.value; save(); });
+
+    // Formats (where the voice is used) - multi-select lozenges on step 1.
+    renderPills('vpb-formats', FORMATS, 'formats', false);
 
     var samplesInput = el('vpb-samples');
     samplesInput.value = state.samples;
@@ -637,8 +670,9 @@
       state = blankState();
       try { window.localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
       // Reset the text inputs and re-render every control.
-      nameInput.value = ''; descInput.value = ''; samplesInput.value = '';
+      nameInput.value = ''; samplesInput.value = '';
       ackInput.value = ''; ctaInput.value = ''; manualSel.value = '';
+      renderPills('vpb-formats', FORMATS, 'formats', false);
       renderOptions('vpb-tones', TONES, 'tone');
       renderOptions('vpb-structures', STRUCTURES, 'structure');
       renderReading(); renderConcision();
