@@ -206,6 +206,23 @@
   opacity: 0.8;
   font-size: 0.82rem;
 }
+/* Format lozenges: a leading line-icon + label. */
+.vpb-pill-fmt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.vpb-pill-ico { display: inline-flex; flex: 0 0 auto; }
+.vpb-pill-ico svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
 
 /* ---------- Segmented control (2 or 3 state) ---------- */
 .vpb-seg {
@@ -597,6 +614,7 @@
 }
 .vpb-md > div { white-space: pre-wrap; word-break: break-word; }
 .md-h1 { color: var(--poppy); font-weight: 700; }
+.md-sub { color: var(--muted); font-style: italic; }
 .md-h2 { color: var(--lagoon); font-weight: 700; margin-top: 0.15rem; }
 .md-p  { color: var(--muted); }
 .md-li { color: var(--lagoon); }
