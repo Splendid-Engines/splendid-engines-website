@@ -27,7 +27,21 @@
 
     .cm-top { padding-top: 1.1rem; padding-bottom: 2.5rem; }
     .cm-h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); margin-bottom: 0.6rem; }
-    .cm-head-sub { font-size: 1.12rem; line-height: 1.55; color: var(--muted); max-width: 46rem; margin-bottom: 2rem; }
+    .cm-head-sub { font-size: 1.12rem; line-height: 1.55; color: var(--muted); max-width: 46rem; margin-bottom: 1.5rem; }
+
+    /* Problem picker */
+    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.65rem; margin: 0 auto 2.25rem; }
+    .cm-pain-label { font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; color: var(--lagoon); }
+    .cm-pain-select {
+      font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--lagoon);
+      background-color: var(--snow); border: 1.5px solid var(--line); border-radius: 999px;
+      padding: 0.5rem 2.4rem 0.5rem 1.1rem; cursor: pointer; appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23153047' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center; background-size: 0.85rem;
+    }
+    .cm-pain-select:focus { outline: none; border-color: var(--poppy); }
+    .cm-grid.cm-pain-active .cm-cell { opacity: 0.3; }
+    .cm-grid.cm-pain-active .cm-cell.cm-pain-on { opacity: 1; border-color: var(--poppy); box-shadow: 0 6px 18px rgba(21,48,71,0.12); }
 
     /* Matrix + right-hand legend sit in one centered row */
     .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
@@ -85,18 +99,12 @@
     }
     .cm-row-tl .cm-cell { border-top: 4px solid var(--poppy); }
 
-    /* Per-cell metric lozenges (small text + arrow) */
-    .cm-cell-metrics { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin-top: 0.25rem; }
-    .cm-cell-met {
-      display: inline-flex; align-items: center; gap: 3px;
-      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.68rem;
-      text-transform: uppercase; letter-spacing: 0.01em; border-radius: 999px; padding: 2px 7px; line-height: 1.3;
-    }
-    .cm-cell-met .cm-arrow { font-weight: 800; font-size: 0.78rem; line-height: 1; }
-    .cm-cell-met.soft { background: var(--ash); color: var(--lagoon); }
-    .cm-cell-met.soft .cm-arrow { color: var(--poppy); }
-    .cm-cell-met.hard { background: var(--lagoon); color: #fff; }
-    .cm-cell-met.hard .cm-arrow { color: var(--daffodil); }
+    /* Per-cell metric icons, led by a single green up arrow (the asset raises this set) */
+    .cm-cell-metrics { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 0.25rem; }
+    .cm-cell-up { color: #1f9d57; font-weight: 800; font-size: 0.95rem; line-height: 1; }
+    .cm-cell-metric { width: 18px; height: 18px; }
+    .cm-cell-metric.soft { color: var(--lagoon); }
+    .cm-cell-metric.hard { color: var(--poppy); }
 
     /* Right-hand legend */
     .cm-legend-panel { text-align: left; min-width: 12.5rem; }
@@ -151,6 +159,10 @@
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; color: var(--poppy); margin-bottom: 0.1rem;
     }
+    /* Audience: all three tiers shown; the ones that do not apply are faded + struck */
+    .cm-aud { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+    .cm-aud-tier { font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--lagoon); }
+    .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.55; }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-examples { display: flex; flex-direction: column; gap: 0.25rem; }
@@ -204,6 +216,13 @@
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
       <p class="cm-head-sub mx-auto">Every piece of content has a job. Every job solves a problem.</p>
+
+      <div class="cm-pain-wrap">
+        <label class="cm-pain-label" for="cm-pain">What problem is your business facing?</label>
+        <select class="cm-pain-select" id="cm-pain">
+          <option value="">Show everything</option>
+        </select>
+      </div>
 
       <div class="cm-matrix-row">
         <div class="cm-scroll">
@@ -285,13 +304,26 @@
     subscribers:   { label: "Subscribers",   group: "hard", desc: "People who opt in to hear from you again, an audience you own.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>' }
   };
 
-  // The matrix. metrics = array of METRICS keys. Cell name = the recognizable asset.
+  var AUD_TIERS = ["ICs", "Managers", "Executives"];
+
+  // Business problems for the picker; each maps to the metric it is about.
+  var PAINS = [
+    { key: "awareness", label: "Nobody has heard of us" },
+    { key: "traffic", label: "Our site traffic is low" },
+    { key: "understanding", label: "People do not get what we do" },
+    { key: "trust", label: "People do not trust us yet" },
+    { key: "affinity", label: "We are not winning people over" },
+    { key: "subscribers", label: "We do not own an audience" },
+    { key: "demandgen", label: "Our pipeline is thin" },
+    { key: "winrate", label: "We keep losing deals" }
+  ];
+
+  // The matrix. metrics = METRICS keys. audience = which AUD_TIERS apply (multiple allowed).
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
       what: "A take that says the accepted story about something is wrong, and offers a better one.",
       solves: "Differentiation and authority. You become the one who saw what everyone else missed.",
-      notfor: "Fast leads. And it falls apart if you cannot actually prove the old view wrong.",
-      audience: "Executives",
+      audience: ["Executives"],
       difficulty: "High", time_req: "1 to 2 weeks",
       metrics: ["trust", "affinity", "subscribers"],
       examples: [
@@ -301,8 +333,7 @@
     { id: "position", name: "Hot take", time: "present", weight: "high",
       what: "A sharp, clearly-argued opinion on something happening right now.",
       solves: "Trust, attention, and differentiation. It plants your flag.",
-      notfor: "Direct lead generation, or readers who want a neutral, both-sides take.",
-      audience: "Executives",
+      audience: ["Managers", "Executives"],
       difficulty: "Low", time_req: "Hours to 2 days",
       metrics: ["affinity", "trust", "subscribers"],
       examples: [
@@ -312,8 +343,7 @@
     { id: "prediction", name: "Prediction", time: "future", weight: "high",
       what: "A specific, falsifiable claim about what will happen, backed by a mechanism.",
       solves: "Authority and attention. It puts you ahead of the curve.",
-      notfor: "Hedgers. If you are vague it does nothing, and if you are wrong out loud it costs you.",
-      audience: "Executives",
+      audience: ["Executives"],
       difficulty: "High", time_req: "3 to 5 days",
       metrics: ["awareness", "affinity", "winrate"],
       examples: [
@@ -323,8 +353,7 @@
     { id: "reframing", name: "Case study", time: "past", weight: "mid",
       what: "An evidence-based look at a real example, drawing out why it worked.",
       solves: "Proof. It shows the result is real and repeatable, which moves deals.",
-      notfor: "Planting a bold flag. It persuades with evidence, not opinion.",
-      audience: "Managers",
+      audience: ["Managers", "Executives"],
       difficulty: "Medium", time_req: "3 to 5 days",
       metrics: ["trust", "winrate"],
       examples: [
@@ -334,8 +363,7 @@
     { id: "analysis", name: "Explainer", time: "present", weight: "mid",
       what: "A clear, evidence-based explanation of how or why something works now.",
       solves: "Clarity, so people finally get what you do, plus credibility through usefulness.",
-      notfor: "Planting a flag or winning on opinion.",
-      audience: "ICs",
+      audience: ["ICs", "Managers"],
       difficulty: "Medium", time_req: "2 to 5 days",
       metrics: ["understanding", "winrate", "subscribers"],
       examples: [
@@ -345,8 +373,7 @@
     { id: "forecast", name: "Forecast", time: "future", weight: "mid",
       what: "A future estimate built on a model or a trend, not on your gut.",
       solves: "Planning value and credibility through rigor.",
-      notfor: "Standing out by opinion. If the model is wrong, you are wrong.",
-      audience: "Managers",
+      audience: ["Managers", "Executives"],
       difficulty: "High", time_req: "1 to 2 weeks",
       metrics: ["understanding", "trust"],
       examples: [
@@ -356,8 +383,7 @@
     { id: "history", name: "Timeline", time: "past", weight: "low",
       what: "A factual record of what happened, laid out in order.",
       solves: "Reference value, search traffic, and trust through being thorough.",
-      notfor: "Persuasion or differentiation. The editorial pull is low by design.",
-      audience: "ICs",
+      audience: ["ICs"],
       difficulty: "Low", time_req: "1 to 3 days",
       metrics: ["awareness", "traffic"],
       examples: [
@@ -367,8 +393,7 @@
     { id: "reporting", name: "Survey", time: "present", weight: "low",
       what: "Original data on the current state of your market, reported straight.",
       solves: "Awareness and trust. New data earns coverage, links, and leads.",
-      notfor: "Planting a flag. The data has to be genuinely new to land.",
-      audience: "Managers",
+      audience: ["Managers", "Executives"],
       difficulty: "Medium to High", time_req: "1 to 3 weeks",
       metrics: ["awareness", "demandgen", "traffic"],
       examples: [
@@ -378,8 +403,7 @@
     { id: "projection", name: "Projection", time: "future", weight: "low",
       what: "A numbers-based extrapolation of a trend, with little interpretation.",
       solves: "A planning input and credibility through data.",
-      notfor: "Opinion or differentiation. It is only as good as the data.",
-      audience: "Managers",
+      audience: ["Managers", "Executives"],
       difficulty: "Medium", time_req: "3 to 5 days",
       metrics: ["understanding", "traffic"],
       examples: [
@@ -402,19 +426,19 @@
 
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-  // Small text lozenges inside a cell
+  // Cell metrics: a single green up arrow + the metric icons it raises
   function cellMetricsHTML(keys) {
-    return keys.map(function (k) {
+    var icons = keys.map(function (k) {
       var M = METRICS[k];
-      var arrow = M.dir === "down" ? "↓" : "↑";
-      return '<span class="cm-cell-met ' + M.group + '"><span class="cm-arrow">' + arrow + '</span>' + esc(M.label) + '</span>';
+      return '<span class="splendid-icon cm-cell-metric ' + M.group + '" role="img" aria-label="' + esc(M.label) + '">' + M.icon + '</span>';
     }).join("");
+    return '<span class="cm-cell-up" aria-hidden="true">↑</span>' + icons;
   }
   // Icon + label chips inside the popover
   function popMetricsHTML(keys) {
     return keys.map(function (k) {
       var M = METRICS[k];
-      return '<span class="cm-met-chip ' + M.group + '"><span class="splendid-icon cm-met-ico">' + M.icon + '</span>' + esc(M.label) + (M.dir === "down" ? " ↓" : "") + '</span>';
+      return '<span class="cm-met-chip ' + M.group + '"><span class="splendid-icon cm-met-ico">' + M.icon + '</span>' + esc(M.label) + '</span>';
     }).join("");
   }
 
@@ -438,12 +462,12 @@
   function positionPop(anchor, side) {
     var r = anchor.getBoundingClientRect();
     var pw = pop.offsetWidth, ph = pop.offsetHeight, gap = 10, left;
-    if (side === "left" || side === "left-strict") {
+    if (side === "left") {
       left = r.left - gap - pw;
-      if (left < 8 && side === "left") left = r.right + gap;           // flip right only when not strict
+      if (left < 8) left = r.right + gap;                              // flip right if no room
     } else {
       left = r.right + gap;
-      if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left
+      if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left if no room
     }
     left = Math.max(8, Math.min(window.innerWidth - pw - 8, left));
     var top = r.top + r.height / 2 - ph / 2;
@@ -472,8 +496,8 @@
     clearActive();
     activeAnchor = null; pinned = false;
   }
-  // Tooltip persists only while over the cell, not when moving onto it: no
-  // pointer bridge from the popover. A pinned tooltip stays until dismissed.
+  // Tooltip persists only while over the cell, not when moving onto it (no
+  // pointer bridge). A pinned tooltip stays until dismissed.
   window.addEventListener("scroll", function () {
     if (pop.style.display === "none" || !activeAnchor) return;
     if (pinned) positionPop(activeAnchor, activeSide); else hide();
@@ -489,23 +513,22 @@
   });
 
   function cardHTML(cell) {
-    var coord = LANE_LABEL[cell.weight] + " · " + TIME_LABEL[cell.time];
     var ex = cell.examples.map(function (e) {
       return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
     }).join("");
+    var aud = AUD_TIERS.map(function (t) {
+      var on = cell.audience.indexOf(t) !== -1;
+      return '<span class="cm-aud-tier' + (on ? "" : " off") + '">' + esc(t) + '</span>';
+    }).join("");
     return '' +
-      '<div class="cm-card-head">' +
-        '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
-        '<span class="cm-coord-pill">' + esc(coord) + '</span>' +
-      '</div>' +
-      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-pop-metrics">' + popMetricsHTML(cell.metrics) + '</div></div>' +
+      '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
       '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-pop-metrics">' + popMetricsHTML(cell.metrics) + '</div></div>' +
       '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">What it does not do</span>' + esc(cell.notfor) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">Audience</span>' + esc(cell.audience) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
       '<div class="cm-meta">' +
-        '<span class="cm-badge">Difficulty: ' + esc(cell.difficulty) + '</span>' +
+        '<span class="cm-badge">Required Expertise: ' + esc(cell.difficulty) + '</span>' +
         '<span class="cm-badge">Time: ' + esc(cell.time_req) + '</span>' +
       '</div>' +
       '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>';
@@ -549,6 +572,7 @@
   var byWT = {};
   CELLS.forEach(function (c) { byWT[c.weight + "-" + c.time] = c; });
   var laneCellEls = { high: [], mid: [], low: [] };
+  var cellEls = {};
 
   var yTitle = document.createElement("div");
   yTitle.className = "cm-axis-y-title";
@@ -564,7 +588,7 @@
     lab.tabIndex = 0;
     lab.setAttribute("role", "button");
     (function (weight) {
-      function show(pin) { showItem(lab, "left-strict", laneCardHTML(weight), laneCellEls[weight], pin, true); }
+      function show(pin) { showItem(lab, "right", laneCardHTML(weight), laneCellEls[weight], pin, true); }
       lab.addEventListener("mouseenter", function () { if (!pinned) show(false); });
       lab.addEventListener("mouseleave", scheduleHide);
       lab.addEventListener("focus", function () { if (!pinned) show(false); });
@@ -582,7 +606,7 @@
       holder.style.gridRow = String(ri + 1);
       if (w === "high") holder.className = "cm-row-tl";
       var cell = byWT[w + "-" + t];
-      if (cell) { var btn = cellButton(cell); laneCellEls[w].push(btn); holder.appendChild(btn); }
+      if (cell) { var btn = cellButton(cell); laneCellEls[w].push(btn); cellEls[cell.id] = btn; holder.appendChild(btn); }
       grid.appendChild(holder);
     });
   });
@@ -627,6 +651,23 @@
     item.addEventListener("click", function () { if (pinned && activeAnchor === item) hide(); else show(true); });
     item.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (pinned && activeAnchor === item) hide(); else show(true); }
+    });
+  });
+
+  // ---- Problem picker: highlight the assets that solve the chosen problem ----
+  var sel = document.getElementById("cm-pain");
+  PAINS.forEach(function (p) {
+    var o = document.createElement("option");
+    o.value = p.key; o.textContent = p.label;
+    sel.appendChild(o);
+  });
+  sel.addEventListener("change", function () {
+    Array.prototype.forEach.call(grid.querySelectorAll(".cm-pain-on"), function (el) { el.classList.remove("cm-pain-on"); });
+    var key = sel.value;
+    if (!key) { grid.classList.remove("cm-pain-active"); return; }
+    grid.classList.add("cm-pain-active");
+    CELLS.forEach(function (c) {
+      if (c.metrics.indexOf(key) !== -1 && cellEls[c.id]) cellEls[c.id].classList.add("cm-pain-on");
     });
   });
 })();
