@@ -541,7 +541,7 @@
     }).join("");
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
-      '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
+      '<div class="cm-field">' + esc(cell.what) + '</div>' +
       metricSectionHTML("Metrics", SOFT_KEYS.concat(HARD_KEYS), cell.metrics) +
       '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
