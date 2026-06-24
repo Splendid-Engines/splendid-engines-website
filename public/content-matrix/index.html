@@ -159,10 +159,16 @@
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; color: var(--poppy); margin-bottom: 0.1rem;
     }
+    .cm-success { font-style: italic; color: var(--lagoon); }
     /* Audience: all three tiers shown; the ones that do not apply are faded + struck */
-    .cm-aud { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-    .cm-aud-tier { font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--lagoon); }
-    .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.55; }
+    .cm-aud { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .cm-aud-tier {
+      display: inline-flex; align-items: center;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      background: var(--lagoon); color: #fff; border-radius: 999px; padding: 2px 9px; line-height: 1.45;
+    }
+    .cm-aud-tier.off { background: var(--ash); color: var(--muted); text-decoration: line-through; opacity: 0.7; }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-examples { display: flex; flex-direction: column; gap: 0.25rem; }
@@ -294,10 +300,10 @@
 
   // Metric vocabulary. group: soft | hard.
   var METRICS = {
-    awareness:     { label: "Awareness",     group: "soft", desc: "How many of the right people know you exist.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>' },
-    understanding: { label: "Understanding", group: "soft", desc: "Whether people grasp what you do and how it works.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 14c.2-1 .7-1.7 1.5-2.5a4.5 4.5 0 1 0-9 0c.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>' },
-    trust:         { label: "Trust",         group: "soft", desc: "Belief that you are credible and will deliver.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>' },
-    affinity:      { label: "Affinity",      group: "soft", desc: "How much people like you and lean your way.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>' },
+    awareness:     { label: "Awareness",     group: "soft", success: "Yeah, I've heard of you guys.", desc: "How many of the right people know you exist.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>' },
+    understanding: { label: "Understanding", group: "soft", success: "Oh, now I get what you do.", desc: "Whether people grasp what you do and how it works.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 14c.2-1 .7-1.7 1.5-2.5a4.5 4.5 0 1 0-9 0c.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>' },
+    trust:         { label: "Trust",         group: "soft", success: "If you say so, I believe it.", desc: "Belief that you are credible and will deliver.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>' },
+    affinity:      { label: "Affinity",      group: "soft", success: "You're my kind of people.", desc: "How much people like you and lean your way.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>' },
     demandgen:     { label: "Demand",        group: "hard", desc: "Net-new interest and inbound from people who did not know they needed you.", icon: '<svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>' },
     winrate:       { label: "Win rate",      group: "hard", desc: "The share of deals you close. Content that frames the decision lifts it.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>' },
     traffic:       { label: "Traffic",       group: "hard", desc: "Visits to your site from search, shares, and referral links.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>' },
@@ -547,7 +553,8 @@
     var grp = M.group === "hard" ? "Hard metric" : "Soft metric";
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon ' + M.group + '">' + M.icon + '</span><h3 class="cm-card-name">' + esc(M.label) + '</h3></div><span class="cm-coord-pill">' + grp + '</span></div>' +
-      '<div class="cm-field">' + esc(M.desc) + '</div>';
+      '<div class="cm-field">' + esc(M.desc) + '</div>' +
+      (M.success ? '<div class="cm-field"><span class="cm-label">Success sounds like</span><span class="cm-success">&ldquo;' + esc(M.success) + '&rdquo;</span></div>' : '');
   }
 
   function cellButton(cell) {
