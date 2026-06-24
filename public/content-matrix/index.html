@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Splendid Content Matrix - Splendid Engines</title>
-  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps each type by time and perspective, and shows the metrics each one moves." />
+  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps the asset that fills each cell by time and perspective, and the metrics each one moves." />
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Splendid Content Matrix" />
-  <meta property="og:description" content="Every kind of content has a job. Map any piece by time and perspective, and see the metrics it moves." />
+  <meta property="og:description" content="Every kind of content has a job. Find the asset that fills each cell by time and perspective, and see the metrics it moves." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://splendidengines.com/content-matrix/" />
 
@@ -24,15 +24,15 @@
     .cm-h1 { font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 0.5rem; }
     .cm-head-sub { font-size: 1.05rem; line-height: 1.6; color: var(--muted); max-width: 42rem; margin-bottom: 2rem; }
 
-    /* Matrix grid (centered): row labels (col 2), rotated axis title (col 1),
+    /* Matrix grid (centered): lane labels (col 2), rotated axis title (col 1),
        x ticks on the bottom (row 4), x-axis title (row 5). */
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
     .cm-grid {
       display: grid;
-      /* Left labels (rotated Perspective + row labels) are balanced by an equal
+      /* Left labels (rotated Perspective + lane labels) are balanced by an equal
          spacer column on the right, so the 3x3 cell block itself centers on the
-         page, under the title. col1 + gap + col2 + gap (8.2rem) == gap + spacer. */
-      grid-template-columns: 2rem 5rem repeat(3, minmax(8.5rem, 11rem)) 7.6rem;
+         page, under the title. col1 + gap + col2 + gap (9.2rem) == gap + spacer. */
+      grid-template-columns: 2rem 6rem repeat(3, minmax(8.5rem, 11rem)) 8.6rem;
       grid-template-rows: repeat(3, minmax(7rem, auto)) auto auto;
       gap: 0.6rem; width: max-content; max-width: 100%; margin: 0 auto; align-items: stretch;
     }
@@ -45,8 +45,8 @@
     }
     .cm-axis-y {
       display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; text-align: right;
-      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; color: var(--muted);
+      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; line-height: 1.15;
+      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; color: var(--lagoon);
     }
     .cm-axis-x {
       display: flex; align-items: center; justify-content: center; padding-top: 0.35rem;
@@ -110,12 +110,7 @@
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
       text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.4rem; color: var(--lagoon); margin: 0;
     }
-    .cm-tag {
-      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; font-size: 0.7rem;
-      text-transform: uppercase; letter-spacing: 0.12em; color: var(--poppy);
-      border: 1.5px solid var(--poppy); border-radius: 999px; padding: 0.15rem 0.6rem; white-space: nowrap;
-    }
-    .cm-coord-pill { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+    .cm-coord-pill { font-size: 0.78rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
     .cm-pop .cm-metrics { justify-content: flex-start; gap: 4px; }
     .cm-pop .cm-metric { font-size: 0.68rem; padding: 3px 8px; }
     .cm-field { font-size: 0.92rem; line-height: 1.5; }
@@ -167,16 +162,16 @@
     <div class="container text-center">
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
-      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece with two questions: what time is it about, and how much of your own perspective is in it. Each cell shows the metrics it moves. Hover for the detail.</p>
+      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece by two questions: what time is it about, and how much of your perspective is in it. Each cell names the asset that fills it. Hover for the detail.</p>
 
       <div class="cm-scroll">
         <div class="cm-grid" id="cm-grid"></div>
       </div>
 
       <div class="cm-legend">
-        <span><b>High perspective:</b> thought leadership. You take a stand and plant a flag.</span>
-        <span><b>Medium:</b> you make sense of things, without a personal flag.</span>
-        <span><b>Low:</b> just the facts. The data does the talking.</span>
+        <span><b>Thought leadership:</b> you take a stand and plant a flag.</span>
+        <span><b>Analysis:</b> you make sense of things with evidence, no personal flag.</span>
+        <span><b>Reporting:</b> just the facts. The data does the talking.</span>
       </div>
       <p class="cm-metric-key mx-auto">Each cell is tagged with the metrics it moves. Soft signals (<b>Awareness, Understanding, Trust, Affinity</b>) sit alongside hard outcomes (<b>Lead gen, Win rate</b>) and <b>Risk</b>. An up arrow raises the metric; on Risk, a down arrow means the content lowers it.</p>
     </div>
@@ -233,16 +228,16 @@
     reconsideration: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>',
     position: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
     prediction: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>',
-    reframing: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>',
+    reframing: '<svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="8" y1="9" x2="10" y2="9"/></svg>',
     analysis: '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
     forecast: '<svg viewBox="0 0 24 24" fill="none"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>',
     history: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
-    reporting: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 22a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h2"/><path d="M6 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6z"/><line x1="10" y1="7" x2="18" y2="7"/><line x1="10" y1="11" x2="18" y2="11"/><line x1="10" y1="15" x2="14" y2="15"/></svg>',
+    reporting: '<svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>',
     projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>'
   };
 
   // metrics: { l: label, d: "up" | "down", t: "soft" | "hard" | "risk" }.
-  // Soft signals + hard outcomes + Risk; an up arrow raises it, a down arrow (Risk) lowers it.
+  // Cell names are the recognizable asset type; the lane (row) is the category.
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
       what: "A take that says the accepted story about something is wrong, and offers a better one.",
@@ -256,13 +251,13 @@
         { name: "The 1619 Project (The New York Times)", url: "https://www.nytimes.com/interactive/2019/08/14/magazine/1619-america-slavery.html" },
         { name: "Moneyball, Michael Lewis", url: "https://en.wikipedia.org/wiki/Moneyball" }
       ] },
-    { id: "position", name: "Position", time: "present", weight: "high",
-      what: "A clear stand on something happening right now, backed by current evidence.",
+    { id: "position", name: "Hot take", time: "present", weight: "high",
+      what: "A sharp, clearly-argued opinion on something happening right now.",
       solves: "Trust, attention, and differentiation. It plants your flag.",
       notfor: "Direct lead generation, or readers who want a neutral, both-sides take.",
       metric: "Shifts in what the right people believe. Shares and replies from believers. Not raw leads.",
       audience: "Buyers and peers who are forming an opinion on the issue.",
-      difficulty: "Medium", time_req: "2 to 4 days",
+      difficulty: "Low", time_req: "Hours to 2 days",
       metrics: [ {l:"Affinity",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"} ],
       examples: [
         { name: "Scott Galloway, No Mercy / No Malice", url: "https://www.profgalloway.com/" },
@@ -280,20 +275,20 @@
         { name: "Ben Thompson, Aggregation Theory (Stratechery)", url: "https://stratechery.com/concept/aggregation-theory/" },
         { name: "Scott Galloway, market calls (No Mercy / No Malice)", url: "https://www.profgalloway.com/" }
       ] },
-    { id: "reframing", name: "Reframing", time: "past", weight: "mid",
-      what: "A fresh lens on familiar events. Not a correction, a new way to see the same facts.",
-      solves: "Makes you a sense-maker. Useful and shareable, with less risk than a Reconsideration.",
-      notfor: "Planting a hard flag or sharp differentiation.",
-      metric: "Saves, shares, and “I never thought of it that way.” Reach among practitioners.",
-      audience: "Curious practitioners.",
-      difficulty: "Medium", time_req: "2 to 4 days",
-      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"} ],
+    { id: "reframing", name: "Case study", time: "past", weight: "mid",
+      what: "An evidence-based look at a real example, drawing out why it worked.",
+      solves: "Proof. It shows the result is real and repeatable, which moves deals.",
+      notfor: "Planting a bold flag. It persuades with evidence, not opinion.",
+      metric: "Influenced pipeline and win rate. Sales using it in deals, and reference requests.",
+      audience: "Buyers in evaluation who need proof before they commit.",
+      difficulty: "Medium", time_req: "3 to 5 days",
+      metrics: [ {l:"Trust",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"}, {l:"Risk",d:"down",t:"risk"} ],
       examples: [
-        { name: "Hans Rosling, Factfulness / Gapminder", url: "https://www.gapminder.org/" },
-        { name: "Malcolm Gladwell, Outliers", url: "https://en.wikipedia.org/wiki/Outliers_(book)" }
+        { name: "Harvard Business Review, Case Studies", url: "https://hbr.org/" },
+        { name: "McKinsey & Company, Insights", url: "https://www.mckinsey.com/featured-insights" }
       ] },
-    { id: "analysis", name: "Analysis", time: "present", weight: "mid",
-      what: "An explanation of how or why something works now, with evidence and no personal verdict.",
+    { id: "analysis", name: "Explainer", time: "present", weight: "mid",
+      what: "A clear, evidence-based explanation of how or why something works now.",
       solves: "Clarity, so people finally get what you do, plus credibility through usefulness.",
       notfor: "Planting a flag or winning on opinion.",
       metric: "Time on page, shares, and inbound questions. Did it make the space click.",
@@ -316,8 +311,8 @@
         { name: "IMF World Economic Outlook", url: "https://www.imf.org/en/Publications/WEO" },
         { name: "Gartner Hype Cycle", url: "https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" }
       ] },
-    { id: "history", name: "History", time: "past", weight: "low",
-      what: "A straight account of what happened, with little interpretation.",
+    { id: "history", name: "Timeline", time: "past", weight: "low",
+      what: "A factual record of what happened, laid out in order.",
       solves: "Reference value, search traffic, and trust through being thorough.",
       notfor: "Persuasion or differentiation. The editorial pull is low by design.",
       metric: "Search traffic, references, and reach. Reference value, not persuasion.",
@@ -328,17 +323,17 @@
         { name: "Computer History Museum, Timeline", url: "https://www.computerhistory.org/timeline/" },
         { name: "Encyclopaedia Britannica", url: "https://www.britannica.com/" }
       ] },
-    { id: "reporting", name: "Reporting", time: "present", weight: "low",
-      what: "Factual coverage of what is happening now, with little opinion.",
-      solves: "Awareness and trust. Original data earns coverage and links.",
-      notfor: "Planting a flag. Without original data it is easy to commoditize.",
-      metric: "Reach, pickups, and citations. With original data, inbound trust.",
+    { id: "reporting", name: "Survey", time: "present", weight: "low",
+      what: "Original data on the current state of your market, reported straight.",
+      solves: "Awareness and trust. New data earns coverage, links, and leads.",
+      notfor: "Planting a flag. The data has to be genuinely new to land.",
+      metric: "Reach, pickups, citations, and leads from a gated report.",
       audience: "The market and the press.",
-      difficulty: "Low to High", time_req: "Hours to 2 days",
+      difficulty: "Medium to High", time_req: "1 to 3 weeks",
       metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Lead gen",d:"up",t:"hard"} ],
       examples: [
-        { name: "Reuters", url: "https://www.reuters.com/" },
-        { name: "Associated Press", url: "https://apnews.com/" }
+        { name: "Edelman Trust Barometer", url: "https://www.edelman.com/trust/trust-barometer" },
+        { name: "HubSpot, State of Marketing", url: "https://www.hubspot.com/state-of-marketing" }
       ] },
     { id: "projection", name: "Projection", time: "future", weight: "low",
       what: "A numbers-based extrapolation of a trend, with little interpretation.",
@@ -357,7 +352,7 @@
   var TIMES = ["past", "present", "future"];
   var WEIGHTS = ["high", "mid", "low"];
   var TIME_LABEL = { past: "Past", present: "Present", future: "Future" };
-  var WEIGHT_LABEL = { high: "High", mid: "Medium", low: "Low" };
+  var LANE_LABEL = { high: "Thought leadership", mid: "Analysis", low: "Reporting" };
 
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
@@ -410,17 +405,15 @@
   });
 
   function cardHTML(cell) {
-    var tl = cell.weight === "high";
-    var coord = TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " perspective";
+    var coord = LANE_LABEL[cell.weight] + " · " + TIME_LABEL[cell.time];
     var ex = cell.examples.map(function (e) {
       return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
     }).join("");
     return '' +
       '<div class="cm-card-head">' +
         '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
-        (tl ? '<span class="cm-tag">Thought leadership</span>' : '<span class="cm-coord-pill">' + esc(coord) + '</span>') +
+        '<span class="cm-coord-pill">' + esc(coord) + '</span>' +
       '</div>' +
-      (tl ? '<div class="cm-coord-pill">' + esc(coord) + '</div>' : '') +
       '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-metrics">' + chips(cell) + '</div></div>' +
       '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
       '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
@@ -459,17 +452,17 @@
   var byWT = {};
   CELLS.forEach(function (c) { byWT[c.weight + "-" + c.time] = c; });
 
-  // Rotated y-axis title (spans the three perspective rows)
+  // Rotated y-axis title (spans the three lanes)
   var yTitle = document.createElement("div");
   yTitle.className = "cm-axis-y-title";
   yTitle.textContent = "Perspective";
   grid.appendChild(yTitle);
 
-  // Rows: High / Medium / Low, each with its label (col 2) then three cells (cols 3-5)
+  // Lanes: Thought leadership / Analysis / Reporting, each with its label (col 2) then three cells (cols 3-5)
   WEIGHTS.forEach(function (w, ri) {
     var lab = document.createElement("div");
     lab.className = "cm-axis-y";
-    lab.textContent = WEIGHT_LABEL[w];
+    lab.textContent = LANE_LABEL[w];
     lab.style.gridColumn = "2";
     lab.style.gridRow = String(ri + 1);
     grid.appendChild(lab);
