@@ -104,7 +104,7 @@
     .cm-cell-up { width: 16px; height: 16px; color: #1f9d57; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-cell-metric { width: 18px; height: 18px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-cell-metric.soft { color: var(--lagoon); }
-    .cm-cell-metric.hard { color: var(--poppy); }
+    .cm-cell-metric.hard { color: var(--lagoon); }
 
     /* Right-hand legend */
     .cm-legend-panel { text-align: left; min-width: 12.5rem; }
@@ -121,7 +121,7 @@
     .cm-legend-item:hover, .cm-legend-item.is-anchor { color: var(--poppy); }
     .cm-legend-ico { width: 22px; height: 22px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-legend-item.soft .cm-legend-ico { color: var(--lagoon); }
-    .cm-legend-item.hard .cm-legend-ico { color: var(--poppy); }
+    .cm-legend-item.hard .cm-legend-ico { color: var(--lagoon); }
     .cm-legend-item:hover .cm-legend-ico, .cm-legend-item.is-anchor .cm-legend-ico { color: var(--poppy); }
     .cm-legend-note { font-size: 0.85rem; color: var(--muted); margin-top: 1.1rem; max-width: 14rem; }
 
@@ -160,12 +160,12 @@
     }
     .cm-success { font-style: italic; color: var(--lagoon); }
     /* Audience: all three tiers shown; the ones that do not apply are faded + struck */
-    .cm-aud { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .cm-aud { display: flex; flex-wrap: wrap; gap: 4px; }
     .cm-aud-tier {
       display: inline-flex; align-items: center;
-      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.78rem;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.66rem;
       text-transform: uppercase; letter-spacing: 0.02em;
-      background: var(--ash); color: var(--lagoon); border-radius: 999px; padding: 2px 9px; line-height: 1.45;
+      background: var(--ash); color: var(--lagoon); border-radius: 999px; padding: 2px 8px; line-height: 1.4;
     }
     .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -542,8 +542,7 @@
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
       '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
-      metricSectionHTML("Soft metrics", SOFT_KEYS, cell.metrics) +
-      metricSectionHTML("Hard metrics", HARD_KEYS, cell.metrics) +
+      metricSectionHTML("Metrics", SOFT_KEYS.concat(HARD_KEYS), cell.metrics) +
       '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
       '<div class="cm-meta">' +
@@ -657,8 +656,7 @@
     return '<div class="cm-legend-group"><div class="cm-legend-title">' + title + '</div><ul class="cm-legend-list">' + items + '</ul></div>';
   }
   panel.innerHTML =
-    legendGroup("Soft metrics", SOFT_KEYS) +
-    legendGroup("Hard metrics", HARD_KEYS) +
+    legendGroup("Metrics", SOFT_KEYS.concat(HARD_KEYS)) +
     '<p class="cm-legend-note">Each asset raises the metrics shown.</p>';
 
   Array.prototype.forEach.call(panel.querySelectorAll(".cm-legend-item"), function (item) {
