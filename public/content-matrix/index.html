@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Splendid Content Matrix - Splendid Engines</title>
-  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps each type by time and perspective: what it is for, who it is for, and how to measure it." />
+  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps each type by time and perspective, and shows the metrics each one moves." />
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,33 +14,24 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Splendid Content Matrix" />
-  <meta property="og:description" content="Every kind of content has a job. Map any piece by time and perspective, see what it is for, and how to measure it." />
+  <meta property="og:description" content="Every kind of content has a job. Map any piece by time and perspective, and see the metrics it moves." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://splendidengines.com/content-matrix/" />
 
   <style>
     /* ---- The Splendid Content Matrix (page-scoped, cm- prefix) ---- */
+    .cm-top { padding-top: 1.75rem; padding-bottom: 3rem; }
     .cm-h1 { font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 0.5rem; }
-    .cm-head-sub { font-size: 1.05rem; line-height: 1.6; color: var(--muted); max-width: 44rem; margin-bottom: 0; }
+    .cm-head-sub { font-size: 1.05rem; line-height: 1.6; color: var(--muted); max-width: 42rem; margin-bottom: 2rem; }
 
-    /* Controls */
-    .cm-controls { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-    .cm-ctl {
-      font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem;
-      background: transparent; color: var(--lagoon); border: 2px solid var(--line);
-      border-radius: 999px; padding: 0.4rem 1rem; cursor: pointer; transition: all .15s ease;
-    }
-    .cm-ctl:hover { border-color: var(--lagoon); }
-
-    /* Matrix grid: cells, row labels (col 2), rotated axis title (col 1),
+    /* Matrix grid (centered): row labels (col 2), rotated axis title (col 1),
        x ticks on the bottom (row 4), x-axis title (row 5). */
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
     .cm-grid {
       display: grid;
-      grid-template-columns: auto auto repeat(3, minmax(8.5rem, 1fr));
-      grid-template-rows: repeat(3, minmax(6.25rem, auto)) auto auto;
-      gap: 0.6rem; min-width: 42rem; align-items: stretch;
+      grid-template-columns: auto auto repeat(3, minmax(9rem, 12rem));
+      grid-template-rows: repeat(3, minmax(7rem, auto)) auto auto;
+      gap: 0.6rem; min-width: 42rem; max-width: 54rem; margin: 0 auto; align-items: stretch;
     }
     .cm-axis-y-title {
       grid-column: 1; grid-row: 1 / 4;
@@ -67,32 +58,48 @@
 
     .cm-cell {
       text-align: center; background: var(--snow); border: 1.5px solid var(--line);
-      border-radius: 10px; padding: 0.85rem 0.75rem; cursor: pointer; transition: all .15s ease;
-      min-height: 6rem; height: 100%; width: 100%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
+      border-radius: 10px; padding: 0.75rem 0.6rem; cursor: pointer; transition: all .15s ease;
+      min-height: 7rem; height: 100%; width: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
     }
-    .cm-cell:hover { border-color: var(--poppy); transform: translateY(-1px); }
-    .cm-cell-icon { width: 30px; height: 30px; color: var(--poppy); }
+    .cm-cell:hover, .cm-cell.is-active {
+      border-color: var(--poppy); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(21,48,71,0.12);
+    }
+    .cm-cell-icon { width: 26px; height: 26px; color: var(--poppy); }
     .cm-cell-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.05rem; color: var(--lagoon); line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1rem; color: var(--lagoon); line-height: 1.1;
     }
-    .cm-cell[aria-pressed="true"] { background: var(--lagoon); border-color: var(--lagoon); box-shadow: 0 6px 18px rgba(21,48,71,0.18); }
-    .cm-cell[aria-pressed="true"] .cm-cell-name { color: #fff; }
-    .cm-cell[aria-pressed="true"] .cm-cell-icon { color: #fff; }
     .cm-row-tl .cm-cell { border-top: 3px solid var(--poppy); }
 
-    .cm-offgrid { margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem; }
-    .cm-offgrid .cm-cell { max-width: 15rem; min-height: 5.5rem; }
-    .cm-offgrid-note { font-size: 0.85rem; color: var(--muted); max-width: 28rem; }
+    /* Metric chips (arrow-coded). Soft / hard / risk are styled distinctly. */
+    .cm-metrics { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; margin-top: 0.1rem; }
+    .cm-metric {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.02em; border-radius: 999px; padding: 2px 7px; line-height: 1.45;
+    }
+    .cm-metric .cm-arrow { font-weight: 800; font-size: 0.72rem; line-height: 1; }
+    .cm-metric.soft { background: var(--ash); color: var(--lagoon); }
+    .cm-metric.soft .cm-arrow { color: var(--poppy); }
+    .cm-metric.hard { background: var(--lagoon); color: #fff; }
+    .cm-metric.hard .cm-arrow { color: var(--daffodil); }
+    .cm-metric.risk { background: rgba(219,73,55,0.12); color: var(--poppy); }
+    .cm-metric.risk .cm-arrow { color: var(--poppy); }
 
-    .cm-legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .cm-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.85rem; color: var(--muted); }
     .cm-legend b { color: var(--lagoon); }
+    .cm-metric-key { font-size: 0.85rem; color: var(--muted); margin-top: 0.85rem; max-width: 48rem; }
+    .cm-metric-key b { color: var(--lagoon); }
 
-    /* Records */
-    .cm-records { display: grid; grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); gap: 1.25rem; }
-    .cm-empty { color: var(--muted); font-size: 1.05rem; padding: 0.5rem 0; }
-    .cm-card { background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+    /* Hover detail popover (rendered to body, positioned by JS) */
+    .cm-pop {
+      position: fixed; z-index: 1080; width: 22rem; max-width: calc(100vw - 24px);
+      max-height: calc(100vh - 24px); overflow-y: auto; text-align: left;
+      background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px;
+      padding: 1.25rem; box-shadow: 0 16px 40px rgba(21,48,71,0.20);
+      display: flex; flex-direction: column; gap: 0.7rem;
+    }
     .cm-card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
     .cm-card-title { display: flex; align-items: center; gap: 0.5rem; }
     .cm-card-icon { width: 24px; height: 24px; color: var(--poppy); flex: 0 0 auto; }
@@ -106,20 +113,18 @@
       border: 1.5px solid var(--poppy); border-radius: 999px; padding: 0.15rem 0.6rem; white-space: nowrap;
     }
     .cm-coord-pill { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
-    .cm-field { font-size: 0.95rem; line-height: 1.55; }
+    .cm-pop .cm-metrics { justify-content: flex-start; gap: 4px; }
+    .cm-pop .cm-metric { font-size: 0.68rem; padding: 3px 8px; }
+    .cm-field { font-size: 0.92rem; line-height: 1.5; }
     .cm-field .cm-label {
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.15rem;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; color: var(--poppy); margin-bottom: 0.2rem;
     }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .cm-badge { font-size: 0.78rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.25rem 0.7rem; }
     .cm-examples { display: flex; flex-direction: column; gap: 0.3rem; }
-    .cm-examples a { font-weight: 600; font-size: 0.95rem; }
-    .cm-card hr { border: 0; border-top: 1px solid var(--line); margin: 0.25rem 0; }
-
-    @media (max-width: 575.98px) {
-      .cm-card-name { font-size: 1.25rem; }
-    }
+    .cm-examples a { font-weight: 600; font-size: 0.92rem; }
+    .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.25rem 0; width: 100%; }
   </style>
 </head>
 <body>
@@ -155,43 +160,27 @@
 <main>
 
   <!-- THE MATRIX (front and center) -->
-  <section class="section bg-snow">
-    <div class="container">
+  <section class="section cm-top bg-snow">
+    <div class="container text-center">
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
-      <p class="cm-head-sub">Every piece of content has a job. Place any piece with two questions: what time is it about, and how much of your own perspective is in it. Tap a cell to see what it is for, who it is for, and how to measure it.</p>
-
-      <div class="cm-controls mt-4 mb-3">
-        <button class="cm-ctl" id="cm-all" type="button">Toggle all</button>
-        <button class="cm-ctl" id="cm-clear" type="button">Clear all</button>
-      </div>
+      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece with two questions: what time is it about, and how much of your own perspective is in it. Each cell shows the metrics it moves. Hover for the detail.</p>
 
       <div class="cm-scroll">
         <div class="cm-grid" id="cm-grid"></div>
       </div>
-
-      <div class="cm-offgrid" id="cm-offgrid"></div>
 
       <div class="cm-legend">
         <span><b>High perspective:</b> thought leadership. You take a stand and plant a flag.</span>
         <span><b>Medium:</b> you make sense of things, without a personal flag.</span>
         <span><b>Low:</b> just the facts. The data does the talking.</span>
       </div>
-    </div>
-  </section>
-
-  <!-- RECORDS -->
-  <section class="section bg-ash">
-    <div class="container">
-      <span class="eyebrow">The detail</span>
-      <h2 class="mb-4">What each one does</h2>
-      <div class="cm-records" id="cm-records"></div>
-      <p class="cm-empty" id="cm-empty">Tap any cell in the matrix above to see what that content type is for, who it is for, and how to measure it.</p>
+      <p class="cm-metric-key mx-auto">Each cell is tagged with the metrics it moves. Soft signals (<b>Awareness, Understanding, Trust, Affinity</b>) sit alongside hard outcomes (<b>Lead gen, Win rate</b>) and <b>Risk</b>. An up arrow raises the metric; on Risk, a down arrow means the content lowers it.</p>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section bg-snow text-center">
+  <section class="section bg-ash text-center">
     <div class="container container-narrow">
       <span class="eyebrow">Get in touch</span>
       <h2 class="display-5 mb-3">Want help building these?</h2>
@@ -246,11 +235,11 @@
     forecast: '<svg viewBox="0 0 24 24" fill="none"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>',
     history: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
     reporting: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 22a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h2"/><path d="M6 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6z"/><line x1="10" y1="7" x2="18" y2="7"/><line x1="10" y1="11" x2="18" y2="11"/><line x1="10" y1="15" x2="14" y2="15"/></svg>',
-    projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
-    howto: '<svg viewBox="0 0 24 24" fill="none"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><line x1="13" y1="6" x2="21" y2="6"/><line x1="13" y1="12" x2="21" y2="12"/><line x1="13" y1="18" x2="21" y2="18"/></svg>'
+    projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>'
   };
 
-  // The matrix as data. Each cell is a record. Edit here like a database.
+  // metrics: { l: label, d: "up" | "down", t: "soft" | "hard" | "risk" }.
+  // Soft signals + hard outcomes + Risk; an up arrow raises it, a down arrow (Risk) lowers it.
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
       what: "A take that says the accepted story about something is wrong, and offers a better one.",
@@ -259,6 +248,7 @@
       metric: "Minds changed and citations from peers. Not leads.",
       audience: "Peers and informed buyers who hold the old view.",
       difficulty: "High", time_req: "1 to 2 weeks",
+      metrics: [ {l:"Trust",d:"up",t:"soft"}, {l:"Affinity",d:"up",t:"soft"}, {l:"Risk",d:"down",t:"risk"} ],
       examples: [
         { name: "The 1619 Project (The New York Times)", url: "https://www.nytimes.com/interactive/2019/08/14/magazine/1619-america-slavery.html" },
         { name: "Moneyball, Michael Lewis", url: "https://en.wikipedia.org/wiki/Moneyball" }
@@ -270,6 +260,7 @@
       metric: "Shifts in what the right people believe. Shares and replies from believers. Not raw leads.",
       audience: "Buyers and peers who are forming an opinion on the issue.",
       difficulty: "Medium", time_req: "2 to 4 days",
+      metrics: [ {l:"Affinity",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"} ],
       examples: [
         { name: "Scott Galloway, No Mercy / No Malice", url: "https://www.profgalloway.com/" },
         { name: "Paul Graham, Essays", url: "https://www.paulgraham.com/articles.html" }
@@ -281,6 +272,7 @@
       metric: "Whether you are remembered as having called it. Citations and inbound when it lands.",
       audience: "Forward-looking buyers and the press.",
       difficulty: "High", time_req: "3 to 5 days",
+      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Affinity",d:"up",t:"soft"}, {l:"Win rate",d:"up",t:"hard"} ],
       examples: [
         { name: "Ben Thompson, Aggregation Theory (Stratechery)", url: "https://stratechery.com/concept/aggregation-theory/" },
         { name: "Scott Galloway, market calls (No Mercy / No Malice)", url: "https://www.profgalloway.com/" }
@@ -292,6 +284,7 @@
       metric: "Saves, shares, and “I never thought of it that way.” Reach among practitioners.",
       audience: "Curious practitioners.",
       difficulty: "Medium", time_req: "2 to 4 days",
+      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"} ],
       examples: [
         { name: "Hans Rosling, Factfulness / Gapminder", url: "https://www.gapminder.org/" },
         { name: "Malcolm Gladwell, Outliers", url: "https://en.wikipedia.org/wiki/Outliers_(book)" }
@@ -303,6 +296,7 @@
       metric: "Time on page, shares, and inbound questions. Did it make the space click.",
       audience: "Buyers trying to understand a space.",
       difficulty: "Medium", time_req: "2 to 5 days",
+      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Risk",d:"down",t:"risk"}, {l:"Win rate",d:"up",t:"hard"} ],
       examples: [
         { name: "Stratechery, Ben Thompson", url: "https://stratechery.com/" },
         { name: "The Economist", url: "https://www.economist.com/" }
@@ -314,6 +308,7 @@
       metric: "Whether planners use it and cite it. Accuracy over time.",
       audience: "Buyers and analysts who plan ahead.",
       difficulty: "High", time_req: "1 to 2 weeks",
+      metrics: [ {l:"Understanding",d:"up",t:"soft"}, {l:"Trust",d:"up",t:"soft"} ],
       examples: [
         { name: "IMF World Economic Outlook", url: "https://www.imf.org/en/Publications/WEO" },
         { name: "Gartner Hype Cycle", url: "https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" }
@@ -325,6 +320,7 @@
       metric: "Search traffic, references, and reach. Reference value, not persuasion.",
       audience: "Anyone researching the topic.",
       difficulty: "Low", time_req: "1 to 3 days",
+      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Understanding",d:"up",t:"soft"} ],
       examples: [
         { name: "Computer History Museum, Timeline", url: "https://www.computerhistory.org/timeline/" },
         { name: "Encyclopaedia Britannica", url: "https://www.britannica.com/" }
@@ -336,6 +332,7 @@
       metric: "Reach, pickups, and citations. With original data, inbound trust.",
       audience: "The market and the press.",
       difficulty: "Low to High", time_req: "Hours to 2 days",
+      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Lead gen",d:"up",t:"hard"} ],
       examples: [
         { name: "Reuters", url: "https://www.reuters.com/" },
         { name: "Associated Press", url: "https://apnews.com/" }
@@ -347,49 +344,109 @@
       metric: "Use in planning and citations. Accuracy of the numbers.",
       audience: "Planners and analysts.",
       difficulty: "Medium", time_req: "3 to 5 days",
+      metrics: [ {l:"Awareness",d:"up",t:"soft"}, {l:"Understanding",d:"up",t:"soft"} ],
       examples: [
         { name: "U.S. Census Bureau, Population Projections", url: "https://www.census.gov/programs-surveys/popproj.html" },
         { name: "Congressional Budget Office", url: "https://www.cbo.gov/" }
-      ] },
-    { id: "howto", name: "How-to", time: "n/a", weight: "offgrid",
-      what: "A step-by-step guide that teaches the reader to do something, backed by your authority.",
-      solves: "Clarity, trust, and captured demand. Great when people do not understand what you do.",
-      notfor: "Planting a big flag. It is weak if you have no real track record.",
-      metric: "Completion, saves, and inbound from people who tried it. Assisted pipeline, not direct leads.",
-      audience: "Practitioners trying to do the thing you enable.",
-      difficulty: "Medium", time_req: "2 to 4 days",
-      examples: [
-        { name: "James Clear, Atomic Habits", url: "https://jamesclear.com/atomic-habits" },
-        { name: "Tim Ferriss, The 4-Hour Workweek", url: "https://fourhourworkweek.com/" }
       ] }
   ];
 
   var TIMES = ["past", "present", "future"];
   var WEIGHTS = ["high", "mid", "low"];
-  var TIME_LABEL = { past: "Past", present: "Present", future: "Future", "n/a": "Off the grid" };
-  var WEIGHT_LABEL = { high: "High", mid: "Medium", low: "Low", offgrid: "Off-grid" };
-
-  var byId = {};
-  CELLS.forEach(function (c) { byId[c.id] = c; });
-
-  // State: which cells are toggled open.
-  var openOn = {};
+  var TIME_LABEL = { past: "Past", present: "Present", future: "Future" };
+  var WEIGHT_LABEL = { high: "High", mid: "Medium", low: "Low" };
 
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+  function chip(m) {
+    var arrow = m.d === "down" ? "↓" : "↑";
+    return '<span class="cm-metric ' + m.t + '"><span class="cm-arrow">' + arrow + '</span>' + esc(m.l) + '</span>';
+  }
+  function chips(cell) { return cell.metrics.map(chip).join(""); }
+
+  // ---- Hover detail popover ----
+  var pop = document.createElement("div");
+  pop.className = "cm-pop";
+  pop.id = "cm-pop";
+  pop.setAttribute("role", "tooltip");
+  pop.style.display = "none";
+  document.body.appendChild(pop);
+
+  var hideTimer = null, activeAnchor = null;
+  function scheduleHide() { clearTimeout(hideTimer); hideTimer = setTimeout(hidePop, 180); }
+  function cancelHide() { clearTimeout(hideTimer); }
+  function hidePop() {
+    pop.style.display = "none";
+    if (activeAnchor) { activeAnchor.classList.remove("is-active"); activeAnchor = null; }
+  }
+  function positionPop(anchor) {
+    var r = anchor.getBoundingClientRect();
+    var pw = pop.offsetWidth, ph = pop.offsetHeight, gap = 10;
+    var left = r.right + gap;
+    if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left
+    left = Math.max(8, Math.min(window.innerWidth - pw - 8, left));  // clamp
+    var top = r.top + r.height / 2 - ph / 2;
+    top = Math.max(8, Math.min(window.innerHeight - ph - 8, top));
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+  }
+  function showPop(cell, anchor) {
+    cancelHide();
+    if (activeAnchor && activeAnchor !== anchor) activeAnchor.classList.remove("is-active");
+    activeAnchor = anchor; anchor.classList.add("is-active");
+    pop.innerHTML = cardHTML(cell);
+    pop.style.display = "flex";
+    positionPop(anchor);
+  }
+  pop.addEventListener("mouseenter", cancelHide);
+  pop.addEventListener("mouseleave", scheduleHide);
+  window.addEventListener("scroll", hidePop, true);
+  window.addEventListener("resize", hidePop);
+  document.addEventListener("click", function (e) {
+    if (activeAnchor && !activeAnchor.contains(e.target) && !pop.contains(e.target)) hidePop();
+  });
+
+  function cardHTML(cell) {
+    var tl = cell.weight === "high";
+    var coord = TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " perspective";
+    var ex = cell.examples.map(function (e) {
+      return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
+    }).join("");
+    return '' +
+      '<div class="cm-card-head">' +
+        '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
+        (tl ? '<span class="cm-tag">Thought leadership</span>' : '<span class="cm-coord-pill">' + esc(coord) + '</span>') +
+      '</div>' +
+      (tl ? '<div class="cm-coord-pill">' + esc(coord) + '</div>' : '') +
+      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-metrics">' + chips(cell) + '</div></div>' +
+      '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">What it does not do</span>' + esc(cell.notfor) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">How to measure it</span>' + esc(cell.metric) + '</div>' +
+      '<div class="cm-field"><span class="cm-label">Ideal audience</span>' + esc(cell.audience) + '</div>' +
+      '<hr>' +
+      '<div class="cm-meta">' +
+        '<span class="cm-badge">Difficulty: ' + esc(cell.difficulty) + '</span>' +
+        '<span class="cm-badge">Time to produce: ' + esc(cell.time_req) + '</span>' +
+      '</div>' +
+      '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>';
+  }
 
   function cellButton(cell) {
     var b = document.createElement("button");
     b.type = "button";
     b.className = "cm-cell";
-    b.setAttribute("aria-pressed", "false");
     b.dataset.cell = cell.id;
     b.innerHTML = '<span class="splendid-icon cm-cell-icon">' + (IC[cell.id] || "") + '</span>' +
-                  '<span class="cm-cell-name">' + esc(cell.name) + '</span>';
+                  '<span class="cm-cell-name">' + esc(cell.name) + '</span>' +
+                  '<span class="cm-metrics">' + chips(cell) + '</span>';
+    b.addEventListener("mouseenter", function () { showPop(cell, b); });
+    b.addEventListener("mouseleave", scheduleHide);
+    b.addEventListener("focus", function () { showPop(cell, b); });
+    b.addEventListener("blur", scheduleHide);
     b.addEventListener("click", function () {
-      openOn[cell.id] = !openOn[cell.id];
-      render();
-      var rec = document.getElementById("rec-" + cell.id);
-      if (openOn[cell.id] && rec) rec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (activeAnchor === b && pop.style.display !== "none") hidePop();
+      else showPop(cell, b);
     });
     return b;
   }
@@ -397,7 +454,7 @@
   // ---- Build the grid ----
   var grid = document.getElementById("cm-grid");
   var byWT = {};
-  CELLS.forEach(function (c) { if (c.weight !== "offgrid") byWT[c.weight + "-" + c.time] = c; });
+  CELLS.forEach(function (c) { byWT[c.weight + "-" + c.time] = c; });
 
   // Rotated y-axis title (spans the three perspective rows)
   var yTitle = document.createElement("div");
@@ -442,70 +499,6 @@
   xTitle.style.gridColumn = "3 / 6";
   xTitle.style.gridRow = "5";
   grid.appendChild(xTitle);
-
-  // Off-grid How-to
-  var offWrap = document.getElementById("cm-offgrid");
-  offWrap.appendChild(cellButton(byId["howto"]));
-  var note = document.createElement("span");
-  note.className = "cm-offgrid-note";
-  note.textContent = "How-to is thought leadership too, but it teaches a method rather than placing something in time, so it sits off the grid.";
-  offWrap.appendChild(note);
-
-  // ---- Records ----
-  var recordsWrap = document.getElementById("cm-records");
-  var emptyMsg = document.getElementById("cm-empty");
-
-  function card(cell) {
-    var tl = cell.weight === "high" || cell.weight === "offgrid";
-    var coord = cell.weight === "offgrid" ? "Off the grid" : (TIME_LABEL[cell.time] + " · " + WEIGHT_LABEL[cell.weight] + " perspective");
-    var ex = cell.examples.map(function (e) {
-      return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
-    }).join("");
-    return '' +
-      '<article class="cm-card" id="rec-' + cell.id + '">' +
-        '<div class="cm-card-head">' +
-          '<div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div>' +
-          (tl ? '<span class="cm-tag">Thought leadership</span>' : '<span class="cm-coord-pill">' + esc(coord) + '</span>') +
-        '</div>' +
-        (tl ? '<div class="cm-coord-pill">' + esc(coord) + '</div>' : '') +
-        '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
-        '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
-        '<div class="cm-field"><span class="cm-label">What it does not do</span>' + esc(cell.notfor) + '</div>' +
-        '<div class="cm-field"><span class="cm-label">How to measure it</span>' + esc(cell.metric) + '</div>' +
-        '<div class="cm-field"><span class="cm-label">Ideal audience</span>' + esc(cell.audience) + '</div>' +
-        '<hr>' +
-        '<div class="cm-meta">' +
-          '<span class="cm-badge">Difficulty: ' + esc(cell.difficulty) + '</span>' +
-          '<span class="cm-badge">Time to produce: ' + esc(cell.time_req) + '</span>' +
-        '</div>' +
-        '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>' +
-      '</article>';
-  }
-
-  function render() {
-    document.querySelectorAll(".cm-cell").forEach(function (b) {
-      b.setAttribute("aria-pressed", openOn[b.dataset.cell] ? "true" : "false");
-    });
-    var ordered = CELLS.filter(function (c) { return openOn[c.id]; });
-    if (ordered.length === 0) {
-      recordsWrap.innerHTML = "";
-      emptyMsg.style.display = "";
-    } else {
-      emptyMsg.style.display = "none";
-      recordsWrap.innerHTML = ordered.map(card).join("");
-    }
-  }
-
-  document.getElementById("cm-all").addEventListener("click", function () {
-    CELLS.forEach(function (c) { openOn[c.id] = true; });
-    render();
-  });
-  document.getElementById("cm-clear").addEventListener("click", function () {
-    openOn = {};
-    render();
-  });
-
-  render();
 })();
 </script>
 
