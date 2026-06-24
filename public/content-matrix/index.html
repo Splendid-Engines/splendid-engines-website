@@ -26,51 +26,51 @@
     .navbar-brand img, .navbar.scrolled .navbar-brand img { height: 28px; width: 28px; }
 
     .cm-top { padding-top: 1.1rem; padding-bottom: 2.5rem; }
-    .cm-h1 { font-size: clamp(1.7rem, 3.8vw, 2.5rem); margin-bottom: 0.5rem; }
-    .cm-head-sub { font-size: 1.02rem; line-height: 1.55; color: var(--muted); max-width: 42rem; margin-bottom: 1.75rem; }
+    .cm-h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); margin-bottom: 0.6rem; }
+    .cm-head-sub { font-size: 1.12rem; line-height: 1.55; color: var(--muted); max-width: 46rem; margin-bottom: 2rem; }
 
     /* Matrix + right-hand legend sit in one centered row */
-    .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+    .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
     .cm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
 
     /* Matrix grid: lane labels (col 2), rotated axis title (col 1),
        x ticks on the bottom (row 4), x-axis title (row 5). */
     .cm-grid {
       display: grid;
-      grid-template-columns: 2rem 6rem repeat(3, minmax(8.5rem, 10.5rem));
-      grid-template-rows: repeat(3, minmax(6.5rem, auto)) auto auto;
-      gap: 0.55rem; width: max-content; max-width: 100%; align-items: stretch;
+      grid-template-columns: 2.4rem 7.5rem repeat(3, minmax(11rem, 13rem));
+      grid-template-rows: repeat(3, minmax(8rem, auto)) auto auto;
+      gap: 0.7rem; width: max-content; max-width: 100%; align-items: stretch;
     }
     .cm-axis-y-title {
       grid-column: 1; grid-row: 1 / 4;
       writing-mode: vertical-rl; transform: rotate(180deg);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.9rem; color: var(--lagoon);
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 1.05rem; color: var(--lagoon);
     }
     .cm-axis-y {
-      display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; text-align: right;
+      display: flex; align-items: center; justify-content: flex-end; padding-right: 0.65rem; text-align: right;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; line-height: 1.15;
-      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; color: var(--lagoon);
+      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.92rem; color: var(--lagoon);
       cursor: pointer; transition: color .15s ease;
     }
     .cm-axis-y:hover, .cm-axis-y.is-anchor { color: var(--poppy); }
     .cm-axis-x {
-      display: flex; align-items: center; justify-content: center; padding-top: 0.35rem;
+      display: flex; align-items: center; justify-content: center; padding-top: 0.5rem;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.92rem; color: var(--muted);
     }
     .cm-axis-x-title {
-      text-align: center; padding-top: 0.15rem;
+      text-align: center; padding-top: 0.3rem;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.9rem; color: var(--lagoon);
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 1.05rem; color: var(--lagoon);
     }
 
     .cm-cell {
       text-align: center; background: var(--snow); border: 1.5px solid var(--line);
-      border-radius: 10px; padding: 0.7rem 0.55rem; cursor: pointer; transition: all .15s ease;
-      min-height: 6.5rem; height: 100%; width: 100%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
+      border-radius: 12px; padding: 1rem 0.85rem; cursor: pointer; transition: all .15s ease;
+      min-height: 8rem; height: 100%; width: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.45rem;
     }
     .cm-cell:hover, .cm-cell.is-active {
       border-color: var(--poppy); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(21,48,71,0.12);
@@ -78,52 +78,52 @@
     /* Fade the other cells while one cell (or lane) is in focus */
     .cm-grid.cm-dim .cm-cell { opacity: 0.32; }
     .cm-grid.cm-dim .cm-cell.is-active { opacity: 1; }
-    .cm-cell-icon { width: 24px; height: 24px; color: var(--poppy); display: inline-flex; align-items: center; justify-content: center; }
+    .cm-cell-icon { width: 32px; height: 32px; color: var(--poppy); display: inline-flex; align-items: center; justify-content: center; }
     .cm-cell-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.98rem; color: var(--lagoon); line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.2rem; color: var(--lagoon); line-height: 1.1;
     }
-    .cm-row-tl .cm-cell { border-top: 3px solid var(--poppy); }
+    .cm-row-tl .cm-cell { border-top: 4px solid var(--poppy); }
 
     /* Per-cell metric lozenges (small text + arrow) */
-    .cm-cell-metrics { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px; margin-top: 0.15rem; }
+    .cm-cell-metrics { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin-top: 0.25rem; }
     .cm-cell-met {
-      display: inline-flex; align-items: center; gap: 2px;
-      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.55rem;
-      text-transform: uppercase; letter-spacing: 0.01em; border-radius: 999px; padding: 1px 5px; line-height: 1.3;
+      display: inline-flex; align-items: center; gap: 3px;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.01em; border-radius: 999px; padding: 2px 7px; line-height: 1.3;
     }
-    .cm-cell-met .cm-arrow { font-weight: 800; font-size: 0.62rem; line-height: 1; }
+    .cm-cell-met .cm-arrow { font-weight: 800; font-size: 0.78rem; line-height: 1; }
     .cm-cell-met.soft { background: var(--ash); color: var(--lagoon); }
     .cm-cell-met.soft .cm-arrow { color: var(--poppy); }
     .cm-cell-met.hard { background: var(--lagoon); color: #fff; }
     .cm-cell-met.hard .cm-arrow { color: var(--daffodil); }
 
     /* Right-hand legend */
-    .cm-legend-panel { text-align: left; min-width: 10.5rem; }
-    .cm-legend-group + .cm-legend-group { margin-top: 1.25rem; }
+    .cm-legend-panel { text-align: left; min-width: 12.5rem; }
+    .cm-legend-group + .cm-legend-group { margin-top: 1.5rem; }
     .cm-legend-title {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem; color: var(--poppy); margin-bottom: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.9rem; color: var(--poppy); margin-bottom: 0.75rem;
     }
-    .cm-legend-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+    .cm-legend-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
     .cm-legend-item {
-      display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; line-height: 1.1; color: var(--lagoon);
+      display: flex; align-items: center; gap: 0.65rem; font-size: 1.05rem; line-height: 1.1; color: var(--lagoon);
       cursor: pointer; transition: color .15s ease;
     }
     .cm-legend-item:hover, .cm-legend-item.is-anchor { color: var(--poppy); }
-    .cm-legend-ico { width: 18px; height: 18px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
+    .cm-legend-ico { width: 22px; height: 22px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-legend-item.soft .cm-legend-ico { color: var(--lagoon); }
     .cm-legend-item.hard .cm-legend-ico { color: var(--poppy); }
     .cm-legend-item:hover .cm-legend-ico, .cm-legend-item.is-anchor .cm-legend-ico { color: var(--poppy); }
-    .cm-legend-note { font-size: 0.76rem; color: var(--muted); margin-top: 1rem; max-width: 12rem; }
+    .cm-legend-note { font-size: 0.85rem; color: var(--muted); margin-top: 1.1rem; max-width: 14rem; }
 
     /* Hover/click detail popover (rendered to body, positioned by JS) */
     .cm-pop {
-      position: fixed; z-index: 1080; width: 19rem; max-width: calc(100vw - 24px);
+      position: fixed; z-index: 1080; width: 21rem; max-width: calc(100vw - 24px);
       max-height: calc(100vh - 24px); overflow-y: auto; text-align: left;
       background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px;
-      padding: 1rem 1.05rem; box-shadow: 0 16px 40px rgba(21,48,71,0.20);
-      display: flex; flex-direction: column; gap: 0.5rem;
+      padding: 1.15rem 1.25rem; box-shadow: 0 16px 40px rgba(21,48,71,0.20);
+      display: flex; flex-direction: column; gap: 0.6rem;
     }
     .cm-card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
     .cm-card-title { display: flex; align-items: center; gap: 0.45rem; }
@@ -132,7 +132,7 @@
     .cm-card-icon.hard { color: var(--poppy); }
     .cm-card-name {
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.2rem; color: var(--lagoon); margin: 0;
+      text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.35rem; color: var(--lagoon); margin: 0;
     }
     .cm-coord-pill { font-size: 0.72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
     .cm-pop-metrics { display: flex; flex-wrap: wrap; gap: 4px; }
@@ -146,7 +146,7 @@
     .cm-met-ico { width: 13px; height: 13px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
     .cm-met-chip.soft .cm-met-ico { color: var(--poppy); }
     .cm-met-chip.hard .cm-met-ico { color: var(--daffodil); }
-    .cm-field { font-size: 0.85rem; line-height: 1.45; }
+    .cm-field { font-size: 0.92rem; line-height: 1.45; }
     .cm-field .cm-label {
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; color: var(--poppy); margin-bottom: 0.1rem;
@@ -157,7 +157,7 @@
     .cm-examples a { font-weight: 600; font-size: 0.85rem; }
     .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.15rem 0; width: 100%; }
 
-    @media (max-width: 575.98px) { .cm-card-name { font-size: 1.1rem; } }
+    @media (max-width: 575.98px) { .cm-card-name { font-size: 1.2rem; } }
   </style>
 </head>
 <body>
@@ -272,16 +272,16 @@
     projection: '<svg viewBox="0 0 24 24" fill="none"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>'
   };
 
-  // Metric vocabulary. group: soft | hard. dir "down" = the content lowers it (Risk).
+  // Metric vocabulary. group: soft | hard.
   var METRICS = {
     awareness:     { label: "Awareness",     group: "soft", desc: "How many of the right people know you exist.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>' },
     understanding: { label: "Understanding", group: "soft", desc: "Whether people grasp what you do and how it works.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 14c.2-1 .7-1.7 1.5-2.5a4.5 4.5 0 1 0-9 0c.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>' },
     trust:         { label: "Trust",         group: "soft", desc: "Belief that you are credible and will deliver.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>' },
     affinity:      { label: "Affinity",      group: "soft", desc: "How much people like you and lean your way.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>' },
-    risk:          { label: "Risk", dir: "down", group: "soft", desc: "The buyer's sense of risk in choosing you. Good content lowers it.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v6c0 4 3 6.5 7 8 4-1.5 7-4 7-8V6z"/></svg>' },
-    demandgen:     { label: "Demand gen",    group: "hard", desc: "Net-new interest and inbound from people who did not know they needed you.", icon: '<svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>' },
+    demandgen:     { label: "Demand",        group: "hard", desc: "Net-new interest and inbound from people who did not know they needed you.", icon: '<svg viewBox="0 0 24 24" fill="none"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>' },
     winrate:       { label: "Win rate",      group: "hard", desc: "The share of deals you close. Content that frames the decision lifts it.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>' },
-    traffic:       { label: "Traffic",       group: "hard", desc: "Visits to your site from search, shares, and referral links.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>' }
+    traffic:       { label: "Traffic",       group: "hard", desc: "Visits to your site from search, shares, and referral links.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>' },
+    subscribers:   { label: "Subscribers",   group: "hard", desc: "People who opt in to hear from you again, an audience you own.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>' }
   };
 
   // The matrix. metrics = array of METRICS keys. Cell name = the recognizable asset.
@@ -292,7 +292,7 @@
       notfor: "Fast leads. And it falls apart if you cannot actually prove the old view wrong.",
       audience: "Peers and informed buyers who hold the old view.",
       difficulty: "High", time_req: "1 to 2 weeks",
-      metrics: ["trust", "affinity", "risk"],
+      metrics: ["trust", "affinity", "subscribers"],
       examples: [
         { name: "The 1619 Project (The New York Times)", url: "https://www.nytimes.com/interactive/2019/08/14/magazine/1619-america-slavery.html" },
         { name: "Moneyball, Michael Lewis", url: "https://en.wikipedia.org/wiki/Moneyball" }
@@ -303,7 +303,7 @@
       notfor: "Direct lead generation, or readers who want a neutral, both-sides take.",
       audience: "Buyers and peers who are forming an opinion on the issue.",
       difficulty: "Low", time_req: "Hours to 2 days",
-      metrics: ["affinity", "trust", "winrate"],
+      metrics: ["affinity", "trust", "subscribers"],
       examples: [
         { name: "Scott Galloway, No Mercy / No Malice", url: "https://www.profgalloway.com/" },
         { name: "Paul Graham, Essays", url: "https://www.paulgraham.com/articles.html" }
@@ -325,7 +325,7 @@
       notfor: "Planting a bold flag. It persuades with evidence, not opinion.",
       audience: "Buyers in evaluation who need proof before they commit.",
       difficulty: "Medium", time_req: "3 to 5 days",
-      metrics: ["trust", "winrate", "risk"],
+      metrics: ["trust", "winrate"],
       examples: [
         { name: "Harvard Business Review, Case Studies", url: "https://hbr.org/" },
         { name: "McKinsey & Company, Insights", url: "https://www.mckinsey.com/featured-insights" }
@@ -336,7 +336,7 @@
       notfor: "Planting a flag or winning on opinion.",
       audience: "Buyers trying to understand a space.",
       difficulty: "Medium", time_req: "2 to 5 days",
-      metrics: ["understanding", "risk", "winrate"],
+      metrics: ["understanding", "winrate", "subscribers"],
       examples: [
         { name: "Stratechery, Ben Thompson", url: "https://stratechery.com/" },
         { name: "The Economist", url: "https://www.economist.com/" }
@@ -389,8 +389,8 @@
 
   // Lane (row) details, shown when a lane label is hovered/clicked.
   var LANES = {
-    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "winrate"] },
-    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "risk"] },
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"] },
     low:  { name: "Reporting", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"] }
   };
 
@@ -522,7 +522,7 @@
     var M = METRICS[key];
     var grp = M.group === "hard" ? "Hard metric" : "Soft metric";
     return '' +
-      '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon ' + M.group + '">' + M.icon + '</span><h3 class="cm-card-name">' + esc(M.label) + (M.dir === "down" ? " ↓" : "") + '</h3></div><span class="cm-coord-pill">' + grp + '</span></div>' +
+      '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon ' + M.group + '">' + M.icon + '</span><h3 class="cm-card-name">' + esc(M.label) + '</h3></div><span class="cm-coord-pill">' + grp + '</span></div>' +
       '<div class="cm-field">' + esc(M.desc) + '</div>';
   }
 
@@ -607,14 +607,14 @@
   function legendGroup(title, keys) {
     var items = keys.map(function (k) {
       var M = METRICS[k];
-      return '<li class="cm-legend-item ' + M.group + '" data-metric="' + k + '" tabindex="0" role="button"><span class="splendid-icon cm-legend-ico">' + M.icon + '</span>' + esc(M.label) + (M.dir === "down" ? " ↓" : "") + '</li>';
+      return '<li class="cm-legend-item ' + M.group + '" data-metric="' + k + '" tabindex="0" role="button"><span class="splendid-icon cm-legend-ico">' + M.icon + '</span>' + esc(M.label) + '</li>';
     }).join("");
     return '<div class="cm-legend-group"><div class="cm-legend-title">' + title + '</div><ul class="cm-legend-list">' + items + '</ul></div>';
   }
   panel.innerHTML =
-    legendGroup("Soft metrics", ["awareness", "understanding", "trust", "affinity", "risk"]) +
-    legendGroup("Hard metrics", ["demandgen", "winrate", "traffic"]) +
-    '<p class="cm-legend-note">Each asset raises the metrics shown. Risk (↓) is the one it lowers.</p>';
+    legendGroup("Soft metrics", ["awareness", "understanding", "trust", "affinity"]) +
+    legendGroup("Hard metrics", ["traffic", "subscribers", "demandgen", "winrate"]) +
+    '<p class="cm-legend-note">Each asset raises the metrics shown.</p>';
 
   Array.prototype.forEach.call(panel.querySelectorAll(".cm-legend-item"), function (item) {
     var key = item.dataset.metric;
