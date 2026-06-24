@@ -656,7 +656,8 @@
     return '<div class="cm-legend-group"><div class="cm-legend-title">' + title + '</div><ul class="cm-legend-list">' + items + '</ul></div>';
   }
   panel.innerHTML =
-    legendGroup("Metrics", SOFT_KEYS.concat(HARD_KEYS)) +
+    legendGroup("Soft metrics", SOFT_KEYS) +
+    legendGroup("Hard metrics", HARD_KEYS) +
     '<p class="cm-legend-note">Each asset raises the metrics shown.</p>';
 
   Array.prototype.forEach.call(panel.querySelectorAll(".cm-legend-item"), function (item) {
