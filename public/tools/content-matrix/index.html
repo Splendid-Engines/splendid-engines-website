@@ -78,8 +78,18 @@
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
       text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.35rem;
     }
-    .cm-rec-text { font-size: 1.08rem; line-height: 1.5; color: var(--lagoon); margin: 0; }
-    .cm-rec-text strong { font-weight: 800; }
+    .cm-rec-text { font-size: 1.05rem; line-height: 1.5; color: var(--lagoon); margin: 0; }
+    .cm-path { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; padding: 0; list-style: none; }
+    .cm-path-step {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--lagoon);
+      background: var(--snow); border: 1.5px solid var(--line); border-radius: 999px; padding: 0.28rem 0.85rem 0.28rem 0.32rem;
+    }
+    .cm-path-num {
+      display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+      width: 1.3rem; height: 1.3rem; border-radius: 999px; background: var(--poppy); color: #fff;
+      font-family: 'Mulish', sans-serif; font-size: 0.72rem; font-weight: 800;
+    }
     .cm-rec-cta {
       display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
       margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--line);
@@ -288,8 +298,9 @@
       </div>
 
       <div class="cm-rec" id="cm-rec" role="status" aria-live="polite">
-        <span class="cm-rec-label">Start here</span>
+        <span class="cm-rec-label">Critical Path</span>
         <p class="cm-rec-text" id="cm-rec-text"></p>
+        <ol class="cm-path" id="cm-rec-path"></ol>
         <div class="cm-rec-cta">
           <span class="cm-rec-cta-text" id="cm-rec-cta-text"></span>
           <a class="btn-se-primary" href="/contact/">Book a call</a>
@@ -383,28 +394,36 @@
   // CTA lead that ties the answer to booking a call.
   var PAINS = [
     { key: "awareness", label: "Nobody has heard of us",
-      rec: 'Start with a <strong>Survey</strong> or a bold <strong>Prediction</strong>. New data and a sharp call get you cited and seen.',
+      lead: "Make news, then make it the reference.",
+      path: ["Survey", "Prediction", "Timeline"],
       cta: "Want to get known?" },
     { key: "traffic", label: "Our site traffic is low",
-      rec: 'Publish a <strong>Survey</strong> and a <strong>Timeline</strong>. Original data and a solid reference pull in search and shares.',
+      lead: "Win search and shares with original data.",
+      path: ["Survey", "Timeline", "Projection"],
       cta: "Want more traffic?" },
     { key: "understanding", label: "People do not get what we do",
-      rec: 'Lead with an <strong>Explainer</strong>. Make how it works plain, then back it with a <strong>Forecast</strong> or <strong>Projection</strong>.',
+      lead: "Make the how plain, then show where it goes.",
+      path: ["Explainer", "Forecast", "Projection"],
       cta: "Want people to get it?" },
     { key: "trust", label: "People do not trust us yet",
-      rec: 'Show proof. A <strong>Case study</strong> plus a clear <strong>Perspective</strong> proves the result is real and that you know your stuff.',
+      lead: "Lead with proof, then plant your flag.",
+      path: ["Case study", "Perspective", "Reconsideration", "Forecast"],
       cta: "Want to earn trust?" },
     { key: "affinity", label: "We are not winning people over",
-      rec: 'Take a stand. A <strong>Perspective</strong> or a <strong>Reconsideration</strong> makes people feel you are their kind of people.',
+      lead: "Take a stand people want to stand with.",
+      path: ["Perspective", "Reconsideration", "Prediction"],
       cta: "Want people on your side?" },
     { key: "subscribers", label: "We do not own an audience",
-      rec: 'Give people a reason to come back. A regular <strong>Perspective</strong> or <strong>Explainer</strong> builds a list you own.',
+      lead: "Give people a reason to come back.",
+      path: ["Perspective", "Explainer", "Reconsideration"],
       cta: "Want an audience you own?" },
     { key: "demandgen", label: "Our pipeline is thin",
-      rec: 'Run a <strong>Survey</strong>. Fresh data earns coverage and brings in people who did not know they needed you.',
+      lead: "Earn attention that turns into pipeline.",
+      path: ["Survey"],
       cta: "Want a fuller pipeline?" },
     { key: "winrate", label: "We keep losing deals",
-      rec: 'Arm the deal. A <strong>Case study</strong> and an <strong>Explainer</strong> frame the decision so more deals close.',
+      lead: "Frame the decision so more deals close.",
+      path: ["Case study", "Explainer", "Prediction"],
       cta: "Want to win more deals?" }
   ];
 
@@ -768,6 +787,7 @@
   var list = document.getElementById("cm-pain-list");
   var recBox = document.getElementById("cm-rec");
   var recText = document.getElementById("cm-rec-text");
+  var recPath = document.getElementById("cm-rec-path");
   var recCta = document.getElementById("cm-rec-cta-text");
 
   var PAIN_BY_KEY = {};
@@ -846,7 +866,10 @@
     });
     var p = PAIN_BY_KEY[key];
     if (p) {
-      recText.innerHTML = p.rec;
+      recText.textContent = p.lead;
+      recPath.innerHTML = p.path.map(function (step, i) {
+        return '<li class="cm-path-step"><span class="cm-path-num">' + (i + 1) + '</span>' + esc(step) + '</li>';
+      }).join("");
       recCta.textContent = p.cta + " We can build it with you.";
       recBox.classList.add("is-shown");
     }
