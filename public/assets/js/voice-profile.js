@@ -370,10 +370,10 @@
 
     if (n > TOTAL_INPUT_STEPS) regenerate();
 
-    // Scroll the wizard back into view on step change.
-    var card = el('vpb-card');
-    if (card && card.getBoundingClientRect().top < 0) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Within the full-screen takeover, send each new step back to the top.
+    var tk = document.getElementById('vpb-takeover');
+    if (tk && document.body.classList.contains('vpb-wizard-open')) {
+      tk.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
@@ -650,14 +650,29 @@
       showStep(1);
     });
 
-    // "Start" link in the hero jumps to step 1 of the wizard.
-    var startLink = el('vpb-start-link');
-    if (startLink) {
-      startLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        el('vpb-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+    // Landing -> full-screen wizard takeover (and back).
+    var takeover = el('vpb-takeover');
+    var getStarted = el('vpb-get-started');
+    function openWizard() {
+      document.body.classList.add('vpb-wizard-open');
+      if (takeover) {
+        takeover.setAttribute('aria-hidden', 'false');
+        takeover.scrollTop = 0;
+      }
+      showStep(current);
+      if (takeover) { try { takeover.focus(); } catch (e) { /* ignore */ } }
     }
+    function closeWizard() {
+      document.body.classList.remove('vpb-wizard-open');
+      if (takeover) takeover.setAttribute('aria-hidden', 'true');
+      if (getStarted) { try { getStarted.focus(); } catch (e) { /* ignore */ } }
+    }
+    if (getStarted) getStarted.addEventListener('click', openWizard);
+    var closeBtn = el('vpb-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeWizard);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('vpb-wizard-open')) closeWizard();
+    });
 
     showStep(1);
   }
