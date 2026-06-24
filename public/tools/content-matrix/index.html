@@ -162,12 +162,14 @@
     /* Audience: all three tiers shown; the ones that do not apply are faded + struck */
     .cm-aud { display: flex; flex-wrap: wrap; gap: 4px; }
     .cm-aud-tier {
-      display: inline-flex; align-items: center;
+      display: inline-flex; align-items: center; gap: 4px;
       font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.66rem;
       text-transform: uppercase; letter-spacing: 0.02em;
       background: var(--ash); color: var(--lagoon); border-radius: 999px; padding: 2px 8px; line-height: 1.4;
     }
     .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
+    .cm-aud-ico { width: 13px; height: 13px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; color: var(--poppy); }
+    .cm-aud-tier.off .cm-aud-ico { color: var(--muted); }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-badge-press { background: var(--poppy); color: #fff; }
@@ -310,6 +312,11 @@
   };
 
   var AUD_TIERS = ["ICs", "Managers", "Executives"];
+  var AUD_ICONS = {
+    ICs: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    Managers: '<svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    Executives: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M10 21v-4h4v4"/></svg>'
+  };
   var SOFT_KEYS = ["awareness", "understanding", "trust", "affinity"];
   var HARD_KEYS = ["traffic", "subscribers", "demandgen", "winrate"];
 
@@ -537,7 +544,7 @@
     }).join("");
     var aud = AUD_TIERS.map(function (t) {
       var on = cell.audience.indexOf(t) !== -1;
-      return '<span class="cm-aud-tier' + (on ? "" : " off") + '">' + esc(t) + '</span>';
+      return '<span class="cm-aud-tier' + (on ? "" : " off") + '"><span class="splendid-icon cm-aud-ico">' + (AUD_ICONS[t] || "") + '</span>' + esc(t) + '</span>';
     }).join("");
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
