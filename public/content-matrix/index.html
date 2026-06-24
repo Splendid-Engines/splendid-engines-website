@@ -202,7 +202,7 @@
     <div class="container text-center">
       <span class="eyebrow">A Splendid tool</span>
       <h1 class="cm-h1">The Splendid Content Matrix</h1>
-      <p class="cm-head-sub mx-auto">Every piece of content has a job. Place any piece by two questions: what time is it about, and how much of your perspective is in it. Each cell names the asset and the metrics it moves. Hover for the detail, or click to pin it open.</p>
+      <p class="cm-head-sub mx-auto">Every piece of content has a job. Every job solves a problem.</p>
 
       <div class="cm-matrix-row">
         <div class="cm-scroll">
@@ -437,9 +437,9 @@
   function positionPop(anchor, side) {
     var r = anchor.getBoundingClientRect();
     var pw = pop.offsetWidth, ph = pop.offsetHeight, gap = 10, left;
-    if (side === "left") {
+    if (side === "left" || side === "left-strict") {
       left = r.left - gap - pw;
-      if (left < 8) left = r.right + gap;                              // not enough room left, flip right
+      if (left < 8 && side === "left") left = r.right + gap;           // flip right only when not strict
     } else {
       left = r.right + gap;
       if (left + pw > window.innerWidth - 8) left = r.left - gap - pw; // flip left
@@ -563,7 +563,7 @@
     lab.tabIndex = 0;
     lab.setAttribute("role", "button");
     (function (weight) {
-      function show(pin) { showItem(lab, "left", laneCardHTML(weight), laneCellEls[weight], pin, true); }
+      function show(pin) { showItem(lab, "left-strict", laneCardHTML(weight), laneCellEls[weight], pin, true); }
       lab.addEventListener("mouseenter", function () { if (!pinned) show(false); });
       lab.addEventListener("mouseleave", scheduleHide);
       lab.addEventListener("focus", function () { if (!pinned) show(false); });
