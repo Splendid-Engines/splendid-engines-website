@@ -45,7 +45,7 @@
 
     /* Prescriptive recommendation, revealed when a problem is picked */
     .cm-rec {
-      display: none; max-width: 44rem; margin: -1.25rem auto 2.5rem; text-align: left;
+      display: none; max-width: 44rem; margin: 2.75rem auto 0; text-align: left;
       background: var(--ash); border: 1.5px solid var(--line); border-left: 4px solid var(--poppy);
       border-radius: 12px; padding: 1rem 1.25rem;
     }
@@ -251,6 +251,13 @@
         </select>
       </div>
 
+      <div class="cm-matrix-row">
+        <div class="cm-scroll">
+          <div class="cm-grid" id="cm-grid"></div>
+        </div>
+        <aside class="cm-legend-panel" id="cm-legend-panel"></aside>
+      </div>
+
       <div class="cm-rec" id="cm-rec" role="status" aria-live="polite">
         <span class="cm-rec-label">Start here</span>
         <p class="cm-rec-text" id="cm-rec-text"></p>
@@ -258,13 +265,6 @@
           <span class="cm-rec-cta-text" id="cm-rec-cta-text"></span>
           <a class="btn-se-primary" href="/contact/">Book a call</a>
         </div>
-      </div>
-
-      <div class="cm-matrix-row">
-        <div class="cm-scroll">
-          <div class="cm-grid" id="cm-grid"></div>
-        </div>
-        <aside class="cm-legend-panel" id="cm-legend-panel"></aside>
       </div>
     </div>
   </section>
