@@ -148,12 +148,11 @@
       display: inline-flex; align-items: center; gap: 4px;
       font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.66rem;
       text-transform: uppercase; letter-spacing: 0.02em; border-radius: 999px; padding: 2px 8px; line-height: 1.4;
+      background: var(--ash); color: var(--lagoon);
     }
-    .cm-met-chip.soft { background: var(--ash); color: var(--lagoon); }
-    .cm-met-chip.hard { background: var(--lagoon); color: #fff; }
-    .cm-met-ico { width: 13px; height: 13px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
-    .cm-met-chip.soft .cm-met-ico { color: var(--poppy); }
-    .cm-met-chip.hard .cm-met-ico { color: var(--daffodil); }
+    .cm-met-chip.off { opacity: 0.5; text-decoration: line-through; }
+    .cm-met-ico { width: 13px; height: 13px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; color: var(--poppy); }
+    .cm-met-chip.off .cm-met-ico { color: var(--muted); }
     .cm-field { font-size: 0.92rem; line-height: 1.45; }
     .cm-field .cm-label {
       display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
@@ -166,9 +165,9 @@
       display: inline-flex; align-items: center;
       font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.78rem;
       text-transform: uppercase; letter-spacing: 0.02em;
-      background: var(--lagoon); color: #fff; border-radius: 999px; padding: 2px 9px; line-height: 1.45;
+      background: var(--ash); color: var(--lagoon); border-radius: 999px; padding: 2px 9px; line-height: 1.45;
     }
-    .cm-aud-tier.off { background: var(--ash); color: var(--muted); text-decoration: line-through; opacity: 0.7; }
+    .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-badge-press { background: var(--poppy); color: #fff; }
@@ -311,6 +310,8 @@
   };
 
   var AUD_TIERS = ["ICs", "Managers", "Executives"];
+  var SOFT_KEYS = ["awareness", "understanding", "trust", "affinity"];
+  var HARD_KEYS = ["traffic", "subscribers", "demandgen", "winrate"];
 
   // Business problems for the picker; each maps to the metric it is about.
   var PAINS = [
@@ -450,6 +451,15 @@
       return '<span class="cm-met-chip ' + M.group + '"><span class="splendid-icon cm-met-ico">' + M.icon + '</span>' + esc(M.label) + '</span>';
     }).join("");
   }
+  // All metrics in a group, with the ones that do not apply struck through
+  function metricSectionHTML(title, keys, cellKeys) {
+    var chips = keys.map(function (k) {
+      var M = METRICS[k];
+      var on = cellKeys.indexOf(k) !== -1;
+      return '<span class="cm-met-chip' + (on ? "" : " off") + '"><span class="splendid-icon cm-met-ico">' + M.icon + '</span>' + esc(M.label) + '</span>';
+    }).join("");
+    return '<div class="cm-field"><span class="cm-label">' + title + '</span><div class="cm-pop-metrics">' + chips + '</div></div>';
+  }
 
   // ---- Detail popover ----
   var grid = document.getElementById("cm-grid");
@@ -532,8 +542,8 @@
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
       '<div class="cm-field"><span class="cm-label">What it is</span>' + esc(cell.what) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">Metrics it moves</span><div class="cm-pop-metrics">' + popMetricsHTML(cell.metrics) + '</div></div>' +
-      '<div class="cm-field"><span class="cm-label">The problem it solves</span>' + esc(cell.solves) + '</div>' +
+      metricSectionHTML("Soft metrics", SOFT_KEYS, cell.metrics) +
+      metricSectionHTML("Hard metrics", HARD_KEYS, cell.metrics) +
       '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
       '<div class="cm-meta">' +
@@ -648,8 +658,8 @@
     return '<div class="cm-legend-group"><div class="cm-legend-title">' + title + '</div><ul class="cm-legend-list">' + items + '</ul></div>';
   }
   panel.innerHTML =
-    legendGroup("Soft metrics", ["awareness", "understanding", "trust", "affinity"]) +
-    legendGroup("Hard metrics", ["traffic", "subscribers", "demandgen", "winrate"]) +
+    legendGroup("Soft metrics", SOFT_KEYS) +
+    legendGroup("Hard metrics", HARD_KEYS) +
     '<p class="cm-legend-note">Each asset raises the metrics shown.</p>';
 
   Array.prototype.forEach.call(panel.querySelectorAll(".cm-legend-item"), function (item) {
