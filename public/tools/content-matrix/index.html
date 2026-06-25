@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Splendid Content Matrix - Splendid Engines</title>
-  <meta name="description" content="Every kind of content has a job. The Splendid Content Matrix maps the asset that fills each cell by time and perspective, and the metrics each one moves." />
+  <title>Every B2B Problem Has a Content Solution - Splendid Engines</title>
+  <meta name="description" content="Every kind of content has a job. This framework shows which problems each content type does and doesn't solve, mapped by time and perspective, with the metrics each one moves." />
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,13 +13,13 @@
   <link rel="stylesheet" href="/assets/css/custom.css" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Splendid Content Matrix" />
+  <meta property="og:title" content="Every B2B Problem Has a Content Solution" />
   <meta property="og:description" content="Every kind of content has a job. Find the asset that fills each cell by time and perspective, and see the metrics it moves." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://splendidengines.com/tools/content-matrix/" />
 
   <style>
-    /* ---- The Splendid Content Matrix (page-scoped, cm- prefix) ---- */
+    /* ---- Content framework matrix (page-scoped, cm- prefix) ---- */
 
     /* Compact nav on this tool page, to lift the matrix above the fold */
     .navbar, .navbar.scrolled { padding-top: 0.4rem; padding-bottom: 0.4rem; }
@@ -161,6 +161,14 @@
     .cm-aud-tier.off { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
     .cm-aud-ico { width: 13px; height: 13px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; color: var(--poppy); }
     .cm-aud-tier.off .cm-aud-ico { color: var(--muted); }
+    /* Formats: the asset types that live in a lane (shown in the lane flyout) */
+    .cm-formats { display: flex; flex-wrap: wrap; gap: 4px; }
+    .cm-format {
+      display: inline-flex; align-items: center;
+      font-family: 'Mulish', sans-serif; font-weight: 700; font-size: 0.66rem;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      background: var(--ash); color: var(--lagoon); border-radius: 999px; padding: 2px 8px; line-height: 1.4;
+    }
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-badge-press { background: var(--poppy); color: #fff; }
@@ -270,12 +278,12 @@
   <!-- THE MATRIX (front and center) -->
   <section class="section cm-top bg-snow">
     <div class="container text-center">
-      <span class="eyebrow">The Splendid Content Matrix</span>
+      <span class="eyebrow">Content framework</span>
       <h1 class="cm-h1">Every B2B Problem Has a Content <span class="hl">Solution</span></h1>
 
       <div class="cm-intro">
         <div class="cm-intro-item"><span class="cm-intro-k">Why</span>Most content gets made for content&rsquo;s sake. Effective content starts with the problem it solves.</div>
-        <div class="cm-intro-item"><span class="cm-intro-k">What</span>The Splendid Content Matrix is a framework for understanding which problems each content type does and doesn&rsquo;t solve.</div>
+        <div class="cm-intro-item"><span class="cm-intro-k">What</span>A framework for understanding which problems each content type does and doesn&rsquo;t solve.</div>
         <div class="cm-intro-item"><span class="cm-intro-k">How</span>Hover to explore, tap to pin. See what each does, who it&rsquo;s for, and the metrics it impacts.</div>
       </div>
 
@@ -467,9 +475,9 @@
 
   // Lane (row) details, shown when a lane label is hovered/clicked.
   var LANES = {
-    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"] },
-    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"] },
-    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"] }
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"], formats: ["Interview", "Byline article", "Blog post"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"], formats: ["Blog post", "Report", "PDF"] },
+    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"], formats: ["Report", "Blog post", "PDF"] }
   };
 
   var TIMES = ["past", "present", "future"];
@@ -604,9 +612,13 @@
   function laneCardHTML(key) {
     var L = LANES[key];
     var all = SOFT_KEYS.concat(HARD_KEYS);
+    var formats = (L.formats || []).map(function (f) {
+      return '<span class="cm-format">' + esc(f) + '</span>';
+    }).join("");
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div></div>' +
       '<div class="cm-field">' + esc(L.blurb) + '</div>' +
+      (formats ? '<div class="cm-field"><span class="cm-label">Formats</span><div class="cm-formats">' + formats + '</div></div>' : '') +
       metricSectionHTML("Metrics", all, L.metrics);
   }
 
