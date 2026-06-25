@@ -121,7 +121,6 @@
               <div class="md-fade"></div>
             </div>
           </div>
-          <p class="vpb-mock-cap">A sample of what you walk away with.</p>
         </div>
 
       </div>
@@ -129,7 +128,7 @@
   </section>
 
   <!-- WHAT IS A VOICE PROFILE -->
-  <section class="section bg-ash">
+  <section class="section bg-ash" style="padding-top: 2.75rem;">
     <div class="container container-medium">
       <div class="text-center mb-5">
         <span class="eyebrow">The idea</span>
@@ -211,7 +210,10 @@
             </div>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label">Where will you use it?</label>
+            <div class="vpb-label-row">
+              <label class="vpb-label">Where will you use it?</label>
+              <button type="button" class="vpb-clear" id="vpb-formats-all">Select all</button>
+            </div>
             <p class="vpb-hint">Pick the formats and channels this voice is for. The AI adapts to whichever you are writing.</p>
             <div class="vpb-pills" id="vpb-formats"></div>
           </div>
@@ -225,8 +227,7 @@
           </div>
           <div class="vpb-field">
             <div class="vpb-slider-head">
-              <span class="vpb-slider-value" id="vpb-reading-value">Not set</span>
-              <button type="button" class="vpb-clear" id="vpb-reading-clear" hidden>Clear</button>
+              <span class="vpb-slider-value" id="vpb-reading-value">Grade 6</span>
             </div>
             <div class="vpb-range-wrap">
               <input type="range" class="vpb-range" id="vpb-reading-range" min="1" max="11" step="1" value="3" aria-label="Reading level" />
@@ -260,7 +261,7 @@
             <p>Some publishers require a set style guide. Newsrooms and PR wires usually expect AP. Books and journals often want Chicago. If you write for one of these, match it. If not, leave it blank.</p>
           </div>
           <div class="vpb-field">
-            <p class="vpb-hint">Optional. Tap one, or tap it again to clear.</p>
+            <p class="vpb-hint">Optional. Pick the one you write for, or leave it on No preference.</p>
             <div class="vpb-options" id="vpb-manual"></div>
           </div>
         </section>
@@ -273,12 +274,13 @@
           </div>
           <div class="vpb-field">
             <div class="vpb-slider-head">
-              <span class="vpb-slider-value" id="vpb-concision-value">Not set</span>
-              <button type="button" class="vpb-clear" id="vpb-concision-clear" hidden>Clear</button>
+              <span class="vpb-slider-value" id="vpb-concision-value">Concise</span>
             </div>
-            <input type="range" class="vpb-range" id="vpb-concision-range" min="1" max="5" step="1" value="3" aria-label="Concision (concise to expansive)" />
+            <div class="vpb-range-wrap">
+              <input type="range" class="vpb-range" id="vpb-concision-range" min="1" max="5" step="1" value="2" aria-label="Concision (concise to expansive)" />
+              <span class="vpb-rec-marker" aria-hidden="true" style="left:25%;"><span class="vpb-rec-arrow"></span>Recommended</span>
+            </div>
             <div class="vpb-range-ends"><span>Concise</span><span>Expansive</span></div>
-            <p class="vpb-tip">We lean concise. Short sentences get read and understood faster.</p>
             <div class="vpb-preview" id="vpb-concision-preview">
               <div class="vpb-preview-blurb" id="vpb-concision-blurb"></div>
               <div class="vpb-preview-stats">
@@ -314,26 +316,31 @@
             <label class="vpb-label">Name</label>
             <p class="vpb-hint">Address people by first name, last name, or no preference?</p>
             <div class="vpb-seg" id="vpb-name-basis"></div>
+            <p class="vpb-seg-ex" id="vpb-name-basis-ex" style="display:none;"></p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Honorifics</label>
             <p class="vpb-hint">When someone has a title like Dr. or Prof., use it with their last name?</p>
             <div class="vpb-seg" id="vpb-honorifics"></div>
+            <p class="vpb-seg-ex" id="vpb-honorifics-ex" style="display:none;"></p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Jargon</label>
             <p class="vpb-hint">Use industry jargon, or keep it plain?</p>
             <div class="vpb-seg" id="vpb-jargon"></div>
+            <p class="vpb-seg-ex" id="vpb-jargon-ex" style="display:none;"></p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Abbreviations</label>
             <p class="vpb-hint">Short forms like TBD and WFH, or spell everything out?</p>
             <div class="vpb-seg" id="vpb-abbreviations"></div>
+            <p class="vpb-seg-ex" id="vpb-abbreviations-ex" style="display:none;"></p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Conversational phrasing</label>
             <p class="vpb-hint">Write the way people talk, or use full sentences?</p>
             <div class="vpb-seg" id="vpb-conversational"></div>
+            <p class="vpb-seg-ex" id="vpb-conversational-ex" style="display:none;"></p>
           </div>
         </section>
 

@@ -90,6 +90,7 @@
   ];
 
   var MANUALS = [
+    { value: '', label: 'No preference', desc: 'No specific style guide.' },
     { value: 'ap', label: 'AP style', desc: 'Newsrooms, PR, and most marketing.', name: 'the Associated Press (AP) style guide' },
     { value: 'chicago_manual_of_style', label: 'Chicago', desc: 'Books, long form, and academic work.', name: 'the Chicago Manual of Style' },
     { value: 'other', label: 'Other / house style', desc: 'Your own in-house style guide.', name: 'your own house style guide' }
@@ -141,7 +142,7 @@
     { value: 'hello', label: 'Hello', example: '"Hello {first name},"' },
     { value: 'hey', label: 'Hey', example: '"Hey {first name},"' },
     { value: 'dear', label: 'Dear', example: '"Dear {first name}," (formal)' },
-    { value: 'name_only', label: 'Name only', example: 'lead with the name and no greeting word ("{first name},")' },
+    { value: 'name_only', label: '(Name only)', example: 'lead with the name and no greeting word ("{first name},")' },
     { value: 'hi_there', label: 'Hi there', example: '"Hi there," (a greeting with no name)' }
   ];
   // Greetings that fit each tone (auto-applied unless the user edits greetings).
@@ -165,7 +166,7 @@
     }
   };
   var JARGON = {
-    choices: [{ value: '', label: 'No preference' }, { value: 'use', label: 'Use jargon' }, { value: 'avoid', label: 'Plain language' }],
+    choices: [{ value: '', label: 'No preference' }, { value: 'use', label: 'Use jargon' }, { value: 'avoid', label: 'Avoid jargon' }],
     guidance: {
       use: 'Jargon: use industry jargon and technical terms freely. The audience knows them.',
       avoid: 'Jargon: avoid industry jargon. Explain ideas in plain language anyone can follow.'
@@ -181,6 +182,15 @@
     { value: 'off', label: 'Off' },
     { value: 'on', label: 'On' }
   ];
+
+  // Short examples shown under each phrasing toggle.
+  var PHRASING_EXAMPLES = {
+    name_basis: { first: 'Brandon', last: 'Mr. Gaulin' },
+    honorifics: { on: 'Dr. Gaulin', off: 'No title, just the name' },
+    jargon: { use: 'Let’s align on the funnel KPIs.', avoid: 'Let’s agree on the numbers we track.' },
+    abbreviations: { use: 'WFH until EOD.', avoid: 'Working from home until end of day.' },
+    conversational: { use: 'Would be great to connect.', avoid: 'It would be great to connect.' }
+  };
 
   var FORMATS = [
     { value: 'email', label: 'Email', icon: ICON.mail },
@@ -319,10 +329,10 @@
       industry: '',
       job_function: '',
       formats: [],
-      reading_level: '',
+      reading_level: 'grade_6',
       tone: '',
       manual: '',
-      concision: '',
+      concision: 'concise',
       greetings: [],
       greetings_touched: false,
       name_basis: '',
@@ -478,6 +488,14 @@
       });
       box.appendChild(btn);
     });
+    if (opts.exampleId) {
+      var exEl = el(opts.exampleId);
+      if (exEl) {
+        var ex = opts.examples ? opts.examples[state[key]] : null;
+        if (ex) { exEl.style.display = ''; exEl.textContent = 'Example: ' + ex; }
+        else { exEl.style.display = 'none'; }
+      }
+    }
   }
 
   // Hard rules: one set of toggle lozenges (presets + customs) above a custom
@@ -518,24 +536,17 @@
     renderHardRules();
   }
 
-  /* ---------- Sliders ---------- */
+  /* ---------- Sliders (always set: reading defaults to Grade 6, concision to Concise) ---------- */
   function renderReading() {
     var range = el('vpb-reading-range');
-    var lvl = byValue(READING_LEVELS, state.reading_level);
-    var isSet = !!lvl;
-    if (!lvl) lvl = byStep(READING_LEVELS, READING_RECOMMENDED_STEP);
+    var lvl = byValue(READING_LEVELS, state.reading_level) || byStep(READING_LEVELS, READING_RECOMMENDED_STEP);
     range.value = lvl.step;
-    range.classList.toggle('is-unset', !isSet);
-    el('vpb-reading-value').textContent = isSet ? lvl.label : 'Not set';
-    el('vpb-reading-clear').hidden = !isSet;
-    var preview = el('vpb-reading-preview');
-    preview.classList.toggle('is-unset', !isSet);
-    el('vpb-reading-blurb').innerHTML = isSet
-      ? '<b>' + lvl.label + (lvl.recommended ? ' (recommended)' : '') + ':</b> ' + lvl.blurb
-      : 'Drag to set a reading level.';
+    el('vpb-reading-value').textContent = lvl.label;
+    el('vpb-reading-blurb').innerHTML =
+      '<b>' + lvl.label + (lvl.recommended ? ' (recommended)' : '') + ':</b> ' + lvl.blurb;
     el('vpb-reading-example').textContent = '“' + lvl.example + '”';
     var note = el('vpb-reading-note');
-    if (isSet && lvl.step > READING_RECOMMENDED_STEP) {
+    if (lvl.step > READING_RECOMMENDED_STEP) {
       note.style.display = '';
       note.textContent = 'Above our Grade 6 recommendation. Fewer people will read it with ease.';
     } else {
@@ -545,21 +556,14 @@
 
   function renderConcision() {
     var range = el('vpb-concision-range');
-    var lvl = byValue(CONCISION, state.concision);
-    var isSet = !!lvl;
-    if (!lvl) lvl = CONCISION[2];
+    var lvl = byValue(CONCISION, state.concision) || CONCISION[1]; // default: Concise
     range.value = lvl.step;
-    range.classList.toggle('is-unset', !isSet);
-    el('vpb-concision-value').textContent = isSet ? lvl.label : 'Not set';
-    el('vpb-concision-clear').hidden = !isSet;
-    el('vpb-concision-preview').classList.toggle('is-unset', !isSet);
-    el('vpb-concision-blurb').innerHTML = isSet
-      ? '<b>' + lvl.label + ':</b> ' + lvl.blurb
-      : 'Drag to set how lean or expansive the writing is.';
+    el('vpb-concision-value').textContent = lvl.label;
+    el('vpb-concision-blurb').innerHTML = '<b>' + lvl.label + ':</b> ' + lvl.blurb;
     el('vpb-cp-sentence').textContent = lvl.sentence;
     el('vpb-cp-linkedin').textContent = lvl.linkedin;
     el('vpb-cp-email').textContent = lvl.email;
-    var ex = concisionExample(isSet ? lvl.value : '');
+    var ex = concisionExample(lvl.value);
     var exEl = el('vpb-concision-example');
     if (ex) { exEl.style.display = ''; exEl.textContent = '“' + ex + '”'; }
     else { exEl.style.display = 'none'; }
@@ -669,7 +673,7 @@
     var t = byValue(TONES, state.tone);
     if (state.tone && t) style.push('- **Tone:** ' + t.label + '. ' + t.desc);
     var m = byValue(MANUALS, state.manual);
-    if (m) style.push('- **Style guide:** Follow ' + m.name + '.');
+    if (state.manual && m && m.name) style.push('- **Style guide:** Follow ' + m.name + '.');
     var c = byValue(CONCISION, state.concision);
     if (c) style.push('- **Concision:** ' + c.label + '. ' + c.blurb + ' Aim for sentences of ' + c.sentence + '. A short message (such as LinkedIn) runs ' + c.linkedin + '; an email runs ' + c.email + '.');
     if (style.length) { lines.push('## Style'); lines = lines.concat(style); lines.push(''); }
@@ -794,19 +798,29 @@
     onChange: syncGreetingsToTone
   };
 
+  function renderFormats() {
+    renderPills('vpb-formats', FORMATS, 'formats', { onChange: updateFormatsAllBtn });
+    updateFormatsAllBtn();
+  }
+  function updateFormatsAllBtn() {
+    var btn = el('vpb-formats-all');
+    if (!btn) return;
+    btn.textContent = state.formats.length === FORMATS.length ? 'Clear all' : 'Select all';
+  }
+
   function renderAll() {
     renderSelectValues();
-    renderPills('vpb-formats', FORMATS, 'formats');
+    renderFormats();
     renderReading();
     renderOptions('vpb-tones', TONES, 'tone', toneOpts);
     renderOptions('vpb-manual', MANUALS, 'manual');
     renderConcision();
     renderGreetings();
-    renderSegmented('vpb-name-basis', NAME_BASIS_CHOICES, 'name_basis');
-    renderSegmented('vpb-honorifics', HONORIFIC_CHOICES, 'honorifics');
-    renderSegmented('vpb-jargon', JARGON.choices, 'jargon');
-    renderSegmented('vpb-abbreviations', ABBREVIATIONS.choices, 'abbreviations');
-    renderSegmented('vpb-conversational', CONVERSATIONAL.choices, 'conversational');
+    renderSegmented('vpb-name-basis', NAME_BASIS_CHOICES, 'name_basis', { examples: PHRASING_EXAMPLES.name_basis, exampleId: 'vpb-name-basis-ex' });
+    renderSegmented('vpb-honorifics', HONORIFIC_CHOICES, 'honorifics', { examples: PHRASING_EXAMPLES.honorifics, exampleId: 'vpb-honorifics-ex' });
+    renderSegmented('vpb-jargon', JARGON.choices, 'jargon', { examples: PHRASING_EXAMPLES.jargon, exampleId: 'vpb-jargon-ex' });
+    renderSegmented('vpb-abbreviations', ABBREVIATIONS.choices, 'abbreviations', { examples: PHRASING_EXAMPLES.abbreviations, exampleId: 'vpb-abbreviations-ex' });
+    renderSegmented('vpb-conversational', CONVERSATIONAL.choices, 'conversational', { examples: PHRASING_EXAMPLES.conversational, exampleId: 'vpb-conversational-ex' });
     renderHardRules();
   }
   function renderSelectValues() {
@@ -833,13 +847,18 @@
       renderConcision();
     });
 
+    var fmtAll = el('vpb-formats-all');
+    if (fmtAll) fmtAll.addEventListener('click', function () {
+      state.formats = state.formats.length === FORMATS.length ? [] : FORMATS.map(function (f) { return f.value; });
+      save();
+      renderFormats();
+    });
+
     var readingRange = el('vpb-reading-range');
     readingRange.addEventListener('input', function () { state.reading_level = byStep(READING_LEVELS, Number(readingRange.value)).value; save(); renderReading(); });
-    el('vpb-reading-clear').addEventListener('click', function () { state.reading_level = ''; save(); renderReading(); });
 
     var concRange = el('vpb-concision-range');
     concRange.addEventListener('input', function () { state.concision = byStep(CONCISION, Number(concRange.value)).value; save(); renderConcision(); });
-    el('vpb-concision-clear').addEventListener('click', function () { state.concision = ''; save(); renderConcision(); });
 
     var ruleInput = el('vpb-rules-input');
     ruleInput.addEventListener('keydown', function (e) {

@@ -97,6 +97,15 @@
   line-height: 1.45;
   margin: 0 0 0.7rem;
 }
+/* Label with a small action (e.g. Select all) on the same line. */
+.vpb-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+.vpb-label-row .vpb-label { margin-bottom: 0; }
 
 /* ---------- Text inputs ---------- */
 .vpb-input,
@@ -250,6 +259,15 @@
 .vpb-seg-btn:last-child { border-right: 0; }
 .vpb-seg-btn:hover { color: var(--lagoon); }
 .vpb-seg-btn.is-on { background: var(--lagoon); color: #fff; }
+/* Example line shown under a segmented control (phrasing). */
+.vpb-seg-ex {
+  margin: 0.5rem 0 0;
+  font-family: 'Mulish', sans-serif;
+  font-size: 0.84rem;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.45;
+}
 
 /* ---------- Sliders (reading level + concision) ---------- */
 .vpb-slider-head {
@@ -528,14 +546,9 @@
 /* ====================================================================== */
 
 /* ---------- Split landing hero ---------- */
-.vpb-hero-split { padding: 2.5rem 0; }
+.vpb-hero-split { padding: 1.5rem 0 1.75rem; }
 @media (min-width: 992px) {
-  .vpb-hero-split {
-    min-height: calc(100vh - 72px);   /* fill the screen under the sticky nav */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  .vpb-hero-split { padding: 2rem 0 2.25rem; }
 }
 .vpb-landing-copy .hero-headline {
   font-size: clamp(2.25rem, 4vw, 3.5rem);
@@ -652,13 +665,6 @@
   height: 2rem;
   background: linear-gradient(to bottom, rgba(255,255,255,0), var(--snow));
   pointer-events: none;
-}
-.vpb-mock-cap {
-  text-align: center;
-  font-family: 'Mulish', sans-serif;
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin: 0.85rem 0 0;
 }
 @media (max-width: 991.98px) {
   .vpb-file-mock { margin-top: 0.5rem; }
@@ -815,14 +821,6 @@ body.vpb-wizard-open .site-footer { display: none; }
   line-height: 1.5;
 }
 
-/* Recommendation tip under a slider (reading level, concision). */
-.vpb-tip {
-  margin: 0.6rem 0 0;
-  font-family: 'Mulish', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--poppy);
-}
 /* Soft caution inside a preview (e.g. above the Grade 6 recommendation). */
 .vpb-preview-note {
   margin: 0.6rem 0 0;
