@@ -240,7 +240,7 @@
       .cm-scroll { width: 100%; }
       .cm-grid {
         width: 100%;
-        grid-template-columns: 1.7rem 5rem repeat(3, minmax(7rem, 1fr));
+        grid-template-columns: 1.6rem 4.5rem repeat(3, minmax(6rem, 1fr));
         grid-template-rows: repeat(3, minmax(7.25rem, auto)) auto auto;
         gap: 0.5rem;
       }
@@ -258,7 +258,7 @@
     }
     @media (max-width: 480px) {
       .cm-grid {
-        grid-template-columns: 1.4rem 3.7rem repeat(3, minmax(5.75rem, 1fr));
+        grid-template-columns: 1.3rem 3.4rem repeat(3, minmax(5.25rem, 1fr));
         grid-template-rows: repeat(3, minmax(6.5rem, auto)) auto auto;
         gap: 0.4rem;
       }
@@ -632,6 +632,9 @@
   document.body.appendChild(pop);
 
   var hideTimer = null, activeAnchor = null, activeSide = "right", pinned = false;
+  // Hover-capable (mouse) vs touch. On touch we skip the hover/focus preview so
+  // a tap goes straight to the click handler and pins the tooltip reliably.
+  var HOVER = !!(window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   function cancelHide() { clearTimeout(hideTimer); }
   function scheduleHide() { if (pinned) return; clearTimeout(hideTimer); hideTimer = setTimeout(hide, 160); }
   function clearActive() {
@@ -741,10 +744,12 @@
     // Always open left so the popover never covers the right-hand legend.
     var side = "left";
     function show(pin) { showItem(b, side, cardHTML(cell), [b], pin, true); }
-    b.addEventListener("mouseenter", function () { if (!pinned) show(false); });
-    b.addEventListener("mouseleave", scheduleHide);
-    b.addEventListener("focus", function () { if (!pinned) show(false); });
-    b.addEventListener("blur", scheduleHide);
+    if (HOVER) {
+      b.addEventListener("mouseenter", function () { if (!pinned) show(false); });
+      b.addEventListener("mouseleave", scheduleHide);
+      b.addEventListener("focus", function () { if (!pinned) show(false); });
+      b.addEventListener("blur", scheduleHide);
+    }
     b.addEventListener("click", function () { if (pinned && activeAnchor === b) hide(); else show(true); });
     return b;
   }
@@ -770,10 +775,12 @@
     lab.setAttribute("role", "button");
     (function (weight) {
       function show(pin) { showItem(lab, "right", laneCardHTML(weight), laneCellEls[weight], pin, true); }
-      lab.addEventListener("mouseenter", function () { if (!pinned) show(false); });
-      lab.addEventListener("mouseleave", scheduleHide);
-      lab.addEventListener("focus", function () { if (!pinned) show(false); });
-      lab.addEventListener("blur", scheduleHide);
+      if (HOVER) {
+        lab.addEventListener("mouseenter", function () { if (!pinned) show(false); });
+        lab.addEventListener("mouseleave", scheduleHide);
+        lab.addEventListener("focus", function () { if (!pinned) show(false); });
+        lab.addEventListener("blur", scheduleHide);
+      }
       lab.addEventListener("click", function () { if (pinned && activeAnchor === lab) hide(); else show(true); });
       lab.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (pinned && activeAnchor === lab) hide(); else show(true); }
@@ -825,10 +832,12 @@
   Array.prototype.forEach.call(panel.querySelectorAll(".cm-legend-item"), function (item) {
     var key = item.dataset.metric;
     function show(pin) { showItem(item, "left", metricCardHTML(key), [], pin, false); }
-    item.addEventListener("mouseenter", function () { if (!pinned) show(false); });
-    item.addEventListener("mouseleave", scheduleHide);
-    item.addEventListener("focus", function () { if (!pinned) show(false); });
-    item.addEventListener("blur", scheduleHide);
+    if (HOVER) {
+      item.addEventListener("mouseenter", function () { if (!pinned) show(false); });
+      item.addEventListener("mouseleave", scheduleHide);
+      item.addEventListener("focus", function () { if (!pinned) show(false); });
+      item.addEventListener("blur", scheduleHide);
+    }
     item.addEventListener("click", function () { if (pinned && activeAnchor === item) hide(); else show(true); });
     item.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (pinned && activeAnchor === item) hide(); else show(true); }
