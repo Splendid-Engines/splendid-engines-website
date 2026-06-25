@@ -168,6 +168,20 @@
     .cm-examples a { font-weight: 600; font-size: 0.85rem; }
     .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.15rem 0; width: 100%; }
 
+    /* ---- Motion: arrival on load + pin feedback ---- */
+    @keyframes cm-arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes cm-pin-pop {
+      0%   { transform: scale(0.96); border-color: var(--poppy); box-shadow: 0 0 0 3px rgba(219,73,55,0.35), 0 16px 40px rgba(21,48,71,0.20); }
+      100% { transform: scale(1);    border-color: var(--line);  box-shadow: 0 0 0 0 rgba(219,73,55,0), 0 16px 40px rgba(21,48,71,0.20); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .cm-top .eyebrow  { animation: cm-arrive .5s ease-out both; }
+      .cm-top .cm-h1    { animation: cm-arrive .5s ease-out .08s both; }
+      .cm-intro         { animation: cm-arrive .5s ease-out .16s both; }
+      .cm-matrix-row    { animation: cm-arrive .6s ease-out .26s both; }
+      .cm-pop.cm-pinned { animation: cm-pin-pop .3s ease-out; }
+    }
+
     /* ---- Responsive / mobile ---- */
     @media (max-width: 768px) {
       .cm-top { padding-top: 0.5rem; padding-bottom: 1.5rem; }
@@ -260,7 +274,7 @@
       <div class="cm-intro">
         <div class="cm-intro-item"><span class="cm-intro-k">Why</span>Most content gets made without a clear job. So it moves nothing.</div>
         <div class="cm-intro-item"><span class="cm-intro-k">How</span>Every type sits by time, and by how strong a view it takes.</div>
-        <div class="cm-intro-item"><span class="cm-intro-k">What</span>Tap any cell for what it does, who it reaches, and the metrics it moves.</div>
+        <div class="cm-intro-item"><span class="cm-intro-k">What</span>Hover to explore, tap to pin: what each does, who it reaches, what it moves.</div>
       </div>
 
       <div class="cm-matrix-row">
@@ -538,6 +552,9 @@
     pop.innerHTML = html;
     pop.style.display = "flex";
     positionPop(anchor, side);
+    // A small pop when pinning, for tactile feedback on click/tap.
+    pop.classList.remove("cm-pinned");
+    if (pin) { void pop.offsetWidth; pop.classList.add("cm-pinned"); }
   }
   function hide() {
     pop.style.display = "none";
