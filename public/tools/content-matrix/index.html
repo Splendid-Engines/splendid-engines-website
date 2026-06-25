@@ -272,7 +272,7 @@
       <h1 class="cm-h1">Every Problem Has a Content Solution</h1>
 
       <div class="cm-intro">
-        <div class="cm-intro-item"><span class="cm-intro-k">Why</span>Most content gets made without a clear job. So it moves nothing.</div>
+        <div class="cm-intro-item"><span class="cm-intro-k">Why</span>Most content gets made for its own sake. The skill is matching each problem to the right content.</div>
         <div class="cm-intro-item"><span class="cm-intro-k">How</span>Every type sits by time, and by how strong a view it takes.</div>
         <div class="cm-intro-item"><span class="cm-intro-k">What</span>Hover to explore, tap to pin: what each does, who it reaches, what it moves.</div>
       </div>
@@ -601,11 +601,12 @@
 
   function laneCardHTML(key) {
     var L = LANES[key];
+    var all = SOFT_KEYS.concat(HARD_KEYS);
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div></div>' +
       '<div class="cm-field">' + esc(L.blurb) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">Primary metrics</span><div class="cm-pop-metrics">' + popMetricsHTML(L.primary) + '</div></div>' +
-      '<div class="cm-field"><span class="cm-label">Secondary metrics</span><div class="cm-pop-metrics">' + popMetricsHTML(L.secondary) + '</div></div>';
+      metricSectionHTML("Primary metrics", all, L.primary) +
+      metricSectionHTML("Secondary metrics", all, L.secondary);
   }
 
   function metricCardHTML(key) {
