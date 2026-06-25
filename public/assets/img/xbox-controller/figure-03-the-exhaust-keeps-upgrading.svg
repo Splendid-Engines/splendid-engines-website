@@ -1,0 +1,55 @@
+<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" font-family="'Big Shoulders Display', 'Hanley Pro', sans-serif">
+  <title>Figure 03: The exhaust keeps upgrading</title>
+  <rect width="1200" height="520" fill="#FFFFFF"/>
+  <text x="600" y="35" text-anchor="middle" font-weight="800" font-size="12" letter-spacing="4" fill="#DB4937">FIG. 03</text>
+  <text x="600" y="65" text-anchor="middle" font-weight="800" font-size="22" letter-spacing="3" fill="#153047">THE EXHAUST KEEPS UPGRADING</text>
+  <text x="600" y="92" text-anchor="middle" font-family="Mulish, sans-serif" font-style="italic" font-size="13" fill="#153047">Speed up one part of a system, and you find the next slow part.</text>
+  <g transform="translate(180, 260)">
+    <text x="0" y="-90" text-anchor="middle" font-weight="800" font-size="14" letter-spacing="3" fill="#153047">ERA 1: PENCIL</text>
+    <rect x="-50" y="-30" width="80" height="60" fill="#FFFFFF" stroke="#153047" stroke-width="2.5" stroke-linejoin="miter"/>
+    <line x1="-40" y1="-15" x2="20" y2="-15" stroke="#153047" stroke-width="1.5"/>
+    <line x1="-40" y1="0" x2="10" y2="0" stroke="#153047" stroke-width="1.5"/>
+    <line x1="-40" y1="15" x2="18" y2="15" stroke="#153047" stroke-width="1.5"/>
+    <g transform="translate(40, -65) rotate(40)">
+      <line x1="0" y1="0" x2="0" y2="65" stroke="#153047" stroke-width="4" stroke-linecap="square"/>
+      <polygon points="-3,65 3,65 0,75" fill="#153047"/>
+      <rect x="-5" y="-8" width="10" height="8" fill="#DB4937" stroke="#153047" stroke-width="2"/>
+    </g>
+    <text x="0" y="80" text-anchor="middle" font-family="Mulish, sans-serif" font-size="12" font-style="italic" fill="#153047">"my handwriting was a disaster"</text>
+    <text x="0" y="105" text-anchor="middle" font-weight="800" font-size="11" letter-spacing="3" fill="#DB4937">BOTTLENECK: THE HAND</text>
+  </g>
+  <g transform="translate(330, 270)">
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#153047" stroke-width="2.5" stroke-linecap="square"/>
+    <polyline points="88,-8 100,0 88,8" fill="none" stroke="#153047" stroke-width="2.5" stroke-linejoin="miter"/>
+  </g>
+  <g transform="translate(560, 260)">
+    <text x="0" y="-90" text-anchor="middle" font-weight="800" font-size="14" letter-spacing="3" fill="#153047">ERA 2: KEYBOARD</text>
+    <rect x="-65" y="-30" width="130" height="65" rx="5" fill="#FFFFFF" stroke="#153047" stroke-width="2.5" stroke-linejoin="miter"/>
+    <g fill="#153047">
+      <circle cx="-50" cy="-18" r="3"/><circle cx="-35" cy="-18" r="3"/><circle cx="-20" cy="-18" r="3"/><circle cx="-5" cy="-18" r="3"/><circle cx="10" cy="-18" r="3"/><circle cx="25" cy="-18" r="3"/><circle cx="40" cy="-18" r="3"/><circle cx="50" cy="-18" r="3"/>
+      <circle cx="-46" cy="-2" r="3"/><circle cx="-31" cy="-2" r="3"/><circle cx="-16" cy="-2" r="3"/><circle cx="-1" cy="-2" r="3"/><circle cx="14" cy="-2" r="3"/><circle cx="29" cy="-2" r="3"/><circle cx="44" cy="-2" r="3"/>
+    </g>
+    <rect x="-30" y="15" width="60" height="10" fill="#FFFFFF" stroke="#153047" stroke-width="2"/>
+    <text x="0" y="80" text-anchor="middle" font-family="Mulish, sans-serif" font-size="12" font-style="italic" fill="#153047">"grades jumped"</text>
+    <text x="0" y="105" text-anchor="middle" font-weight="800" font-size="11" letter-spacing="3" fill="#DB4937">BOTTLENECK: THE FINGERS</text>
+  </g>
+  <g transform="translate(710, 270)">
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#153047" stroke-width="2.5" stroke-linecap="square"/>
+    <polyline points="88,-8 100,0 88,8" fill="none" stroke="#153047" stroke-width="2.5" stroke-linejoin="miter"/>
+  </g>
+  <g transform="translate(940, 260)">
+    <text x="0" y="-90" text-anchor="middle" font-weight="800" font-size="14" letter-spacing="3" fill="#153047">ERA 3: VOICE + AI</text>
+    <path d="M -32 -45 Q 0 -78 32 -45" fill="none" stroke="#153047" stroke-width="2.5"/>
+    <ellipse cx="-32" cy="-38" rx="9" ry="13" fill="#DB4937" stroke="#153047" stroke-width="2.5"/>
+    <ellipse cx="32" cy="-38" rx="9" ry="13" fill="#DB4937" stroke="#153047" stroke-width="2.5"/>
+    <g transform="translate(0, 10)">
+      <path d="M -22 -10 Q -22 -18 -14 -18 L 14 -18 Q 22 -18 22 -10 Q 28 -3 26 8 Q 23 22 14 22 Q 4 17 4 6 L -4 6 Q -4 17 -14 22 Q -23 22 -26 8 Q -28 -3 -22 -10 Z" fill="#FFFFFF" stroke="#153047" stroke-width="2.5" stroke-linejoin="miter"/>
+      <circle cx="-12" cy="-4" r="3" fill="#153047"/>
+      <circle cx="12" cy="2" r="3" fill="#153047"/>
+      <circle cx="14" cy="-8" r="2" fill="#DB4937"/>
+    </g>
+    <text x="0" y="80" text-anchor="middle" font-family="Mulish, sans-serif" font-size="12" font-style="italic" fill="#153047">"10x done, walking the kitchen"</text>
+    <text x="0" y="105" text-anchor="middle" font-weight="800" font-size="11" letter-spacing="3" fill="#DB4937">BOTTLENECK: ???</text>
+  </g>
+  <text x="600" y="475" text-anchor="middle" font-family="Mulish, sans-serif" font-size="13" font-style="italic" fill="#153047">The intake was never the problem. The exhaust just keeps getting wider.</text>
+</svg>
