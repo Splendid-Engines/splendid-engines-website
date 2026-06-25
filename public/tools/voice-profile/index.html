@@ -194,15 +194,25 @@
         <section class="vpb-step is-active" data-step="1">
           <div class="vpb-step-head">
             <h2>Name your voice</h2>
-            <p>Telling the AI where you will use the voice helps it fit the medium. A quick DM and a case study should not read the same.</p>
+            <p>Your role and industry let us tailor the examples and the profile to your world. A quick sales DM and an engineering deep dive should not read the same. Everything here is optional.</p>
           </div>
           <div class="vpb-field">
             <label class="vpb-label" for="vpb-name">Name</label>
             <input type="text" id="vpb-name" class="vpb-input" placeholder="e.g. My LinkedIn voice" autocomplete="off" />
           </div>
+          <div class="vpb-field-row">
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-job-function">Your role</label>
+              <select class="vpb-select" id="vpb-job-function"></select>
+            </div>
+            <div class="vpb-field">
+              <label class="vpb-label" for="vpb-industry">Your industry</label>
+              <select class="vpb-select" id="vpb-industry"></select>
+            </div>
+          </div>
           <div class="vpb-field">
             <label class="vpb-label">Where will you use it?</label>
-            <p class="vpb-hint">Pick the formats and channels this voice is for. The AI adapts to whichever you are writing. Everything here is optional.</p>
+            <p class="vpb-hint">Pick the formats and channels this voice is for. The AI adapts to whichever you are writing.</p>
             <div class="vpb-pills" id="vpb-formats"></div>
           </div>
         </section>
@@ -211,16 +221,18 @@
         <section class="vpb-step" data-step="2">
           <div class="vpb-step-head">
             <h2>Reading level</h2>
-            <p>Most people read fast at a low grade level. Higher levels sound expert but lose readers. Pick the level your audience reads with ease.</p>
+            <p>Plain, easy-to-scan writing gets read and understood by more people. The lower the reading level, the wider the audience that will actually read it.</p>
           </div>
           <div class="vpb-field">
             <div class="vpb-slider-head">
               <span class="vpb-slider-value" id="vpb-reading-value">Not set</span>
               <button type="button" class="vpb-clear" id="vpb-reading-clear" hidden>Clear</button>
             </div>
-            <input type="range" class="vpb-range" id="vpb-reading-range" min="1" max="11" step="1" value="3" aria-label="Reading level" />
+            <div class="vpb-range-wrap">
+              <input type="range" class="vpb-range" id="vpb-reading-range" min="1" max="11" step="1" value="3" aria-label="Reading level" />
+              <span class="vpb-rec-marker" aria-hidden="true"><span class="vpb-rec-arrow"></span>Recommended</span>
+            </div>
             <div class="vpb-range-ends"><span>Grade 4</span><span>Graduate</span></div>
-            <p class="vpb-tip">We recommend Grade 6 or lower. Most people read it fastest.</p>
             <div class="vpb-preview" id="vpb-reading-preview">
               <div class="vpb-preview-blurb" id="vpb-reading-blurb"></div>
               <p class="vpb-preview-example" id="vpb-reading-example"></p>
@@ -236,7 +248,6 @@
             <p>Tone is the first thing people feel. The same point can sound warm, sharp, or flat. Pick the one that fits you and your reader.</p>
           </div>
           <div class="vpb-field">
-            <p class="vpb-hint">Pick the one that fits. Tap it again to clear.</p>
             <div class="vpb-options" id="vpb-tones"></div>
             <div class="vpb-example" id="vpb-tone-example" style="display:none;"></div>
           </div>
@@ -278,6 +289,7 @@
               <p class="vpb-preview-example" id="vpb-concision-example"></p>
             </div>
           </div>
+          <blockquote class="vpb-quote">“Omit needless words.”<cite>Strunk &amp; White, The Elements of Style, rule 17</cite></blockquote>
         </section>
 
         <!-- Step 6: Greetings -->
@@ -287,8 +299,8 @@
             <p>The opening word sets the mood fast. "Hey" feels casual. "Dear" feels formal. Pick the ones that fit so the AI does not guess.</p>
           </div>
           <div class="vpb-field">
-            <p class="vpb-hint">Pick any. Leave all off for no preference.</p>
             <div class="vpb-pills" id="vpb-greetings"></div>
+            <p class="vpb-note" id="vpb-greetings-note" style="display:none;"></p>
           </div>
         </section>
 
@@ -300,7 +312,7 @@
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Name</label>
-            <p class="vpb-hint">Address people by first name or last name?</p>
+            <p class="vpb-hint">Address people by first name, last name, or no preference?</p>
             <div class="vpb-seg" id="vpb-name-basis"></div>
           </div>
           <div class="vpb-field">
@@ -320,7 +332,7 @@
           </div>
           <div class="vpb-field">
             <label class="vpb-label">Conversational phrasing</label>
-            <p class="vpb-hint">Write the way people talk ("Would be great to connect"), or use full sentences?</p>
+            <p class="vpb-hint">Write the way people talk, or use full sentences?</p>
             <div class="vpb-seg" id="vpb-conversational"></div>
           </div>
         </section>
@@ -332,13 +344,13 @@
             <p>Hard rules are the lines the AI must never cross. Bans like em-dashes or emoji get followed every time.</p>
           </div>
           <div class="vpb-field">
-            <label class="vpb-label" for="vpb-rules-input">Never do these</label>
-            <p class="vpb-hint">Words, clichés, or punctuation to ban. Type one and press Enter.</p>
-            <div class="vpb-tags" id="vpb-rules-tags"></div>
-            <input type="text" id="vpb-rules-input" class="vpb-input" placeholder="e.g. No em-dashes" autocomplete="off" />
-            <p class="vpb-suggest">Common ones, tap to add:</p>
-            <div class="vpb-suggest-pills" id="vpb-rules-suggest"></div>
+            <label class="vpb-label">Turn on the rules you want</label>
+            <p class="vpb-hint">Tap a rule to switch it on. A checkmark means it is on.</p>
+            <div class="vpb-pills" id="vpb-rules-pills"></div>
+            <label class="vpb-label" for="vpb-rules-input" style="margin-top:1.1rem;">Add your own</label>
+            <input type="text" id="vpb-rules-input" class="vpb-input" placeholder="Type a rule and press Enter" autocomplete="off" />
           </div>
+          <blockquote class="vpb-quote">“Never use a metaphor, simile, or other figure of speech which you are used to seeing in print.”<cite>George Orwell, Politics and the English Language, 1946</cite></blockquote>
         </section>
 
         <!-- Step 9: Result -->
@@ -347,21 +359,21 @@
             <h2>Your voice profile</h2>
             <p>Here is your profile. Copy it or download it, then hand it to your AI.</p>
           </div>
-          <p class="vpb-result-intro">This is plain markdown. It works in any AI chat. Edit it any time by going back through the steps.</p>
+          <p class="vpb-result-intro">This is a markdown file with a short front-matter header, so it drops straight in as a Claude skill or works as a paste-in prompt for any AI.</p>
           <div class="vpb-output">
             <pre id="vpb-output-text"></pre>
           </div>
           <div class="vpb-result-actions">
             <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-copy">Copy markdown</button>
             <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-download">Download .md</button>
-            <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-startover">Start over</button>
+            <button type="button" class="vpb-btn vpb-btn-ghost" id="vpb-startover">Create another voice</button>
             <span class="vpb-copy-flag" id="vpb-copy-flag">Copied to clipboard</span>
           </div>
           <div class="vpb-howto">
             <h3>How to use it</h3>
             <ol>
               <li>Open a new chat in ChatGPT, Claude, or any AI you like.</li>
-              <li>Paste this profile as your first message, or add it to the system prompt or custom instructions.</li>
+              <li>Paste this profile as your first message, or save it as a Claude skill (<code>SKILL.md</code>).</li>
               <li>Then ask for what you need. The AI will write in your voice.</li>
             </ol>
           </div>
@@ -376,7 +388,7 @@
         </div>
         <div class="vpb-nav-right" style="display:flex; gap:0.7rem;">
           <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-next">Next</button>
-          <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-finish" hidden>See my profile</button>
+          <button type="button" class="vpb-btn vpb-btn-primary" id="vpb-finish" hidden>Get your voice</button>
         </div>
       </div>
 
