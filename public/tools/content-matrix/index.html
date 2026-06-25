@@ -150,6 +150,7 @@
       text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.66rem; color: var(--poppy); margin-bottom: 0.1rem;
     }
     .cm-success { font-style: italic; color: var(--lagoon); }
+    .cm-headline { display: block; font-style: italic; color: var(--lagoon); font-size: 0.98rem; line-height: 1.4; }
     /* Audience: all three tiers shown; the ones that do not apply are faded + struck */
     .cm-aud { display: flex; flex-wrap: wrap; gap: 4px; }
     .cm-aud-tier {
@@ -383,6 +384,7 @@
   var CELLS = [
     { id: "reconsideration", name: "Reconsideration", time: "past", weight: "high",
       what: "A take that says the accepted story about something is wrong, and offers a better one.",
+      headline: "The Sales Funnel Is Dead, and the Data Proves It",
       solves: "Differentiation and authority. You become the one who saw what everyone else missed.",
       audience: ["Executives"],
       difficulty: "High", time_req: "1 to 2 weeks",
@@ -393,6 +395,7 @@
       ] },
     { id: "position", name: "Perspective", time: "present", weight: "high",
       what: "A sharp, clearly-argued opinion on something happening right now.",
+      headline: "Your Company Doesn't Need an AI Strategy. It Needs a Data Strategy.",
       solves: "Trust, attention, and differentiation. It plants your flag.",
       audience: ["Managers", "Executives"],
       difficulty: "Low", time_req: "Hours to 2 days",
@@ -403,6 +406,7 @@
       ] },
     { id: "prediction", name: "Prediction", time: "future", weight: "high",
       what: "A specific, falsifiable claim about what will happen, backed by a mechanism.",
+      headline: "By 2027, Most B2B Software Will Be Bought Without a Sales Rep",
       solves: "Authority and attention. It puts you ahead of the curve.",
       audience: ["Executives"],
       difficulty: "High", time_req: "3 to 5 days",
@@ -413,6 +417,7 @@
       ] },
     { id: "reframing", name: "Case study", time: "past", weight: "mid",
       what: "An evidence-based look at a real example, drawing out why it worked.",
+      headline: "How Figma Turned Its Users Into Its Growth Engine",
       solves: "Proof. It shows the result is real and repeatable, which moves deals.",
       audience: ["Managers", "Executives"],
       difficulty: "Medium", time_req: "3 to 5 days",
@@ -423,6 +428,7 @@
       ] },
     { id: "analysis", name: "Explainer", time: "present", weight: "mid",
       what: "A clear, evidence-based explanation of how or why something works now.",
+      headline: "How RAG Actually Works, Without the Jargon",
       solves: "Clarity, so people finally get what you do, plus credibility through usefulness.",
       audience: ["ICs", "Managers"],
       difficulty: "Medium", time_req: "2 to 5 days",
@@ -433,6 +439,7 @@
       ] },
     { id: "forecast", name: "Forecast", time: "future", weight: "mid",
       what: "A future estimate built on a model or a trend, not on your gut.",
+      headline: "Our 2027 Forecast for B2B Marketing Budgets",
       solves: "Planning value and credibility through rigor.",
       audience: ["Managers", "Executives"],
       difficulty: "High", time_req: "1 to 2 weeks",
@@ -443,6 +450,7 @@
       ] },
     { id: "history", name: "History", time: "past", weight: "low",
       what: "A factual record of what happened, laid out in order.",
+      headline: "A Complete Timeline of Email Marketing, 1978 to Today",
       solves: "Reference value, search traffic, and trust through being thorough.",
       audience: ["ICs", "Managers"],
       difficulty: "Low", time_req: "1 to 3 days",
@@ -453,6 +461,7 @@
       ] },
     { id: "reporting", name: "Survey", time: "present", weight: "low",
       what: "Original data on the current state of your market, reported straight.",
+      headline: "The 2026 State of B2B Content Marketing",
       solves: "Awareness and trust. New data earns coverage, links, and leads.",
       audience: ["Managers", "Executives"],
       difficulty: "Medium to High", time_req: "1 to 3 weeks",
@@ -463,6 +472,7 @@
       ] },
     { id: "projection", name: "Projection", time: "future", weight: "low",
       what: "A numbers-based extrapolation of a trend, with little interpretation.",
+      headline: "Projected SaaS Market Size Through 2030",
       solves: "A planning input and credibility through data.",
       audience: ["Managers", "Executives"],
       difficulty: "Medium", time_req: "3 to 5 days",
@@ -475,9 +485,9 @@
 
   // Lane (row) details, shown when a lane label is hovered/clicked.
   var LANES = {
-    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"], formats: ["Interview", "Byline article", "Blog post"] },
-    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"], formats: ["Blog post", "Report", "PDF"] },
-    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"], formats: ["Report", "Blog post", "PDF"] }
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["awareness", "trust", "affinity", "subscribers", "winrate"], formats: ["Interview", "Byline article", "Blog post"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["awareness", "understanding", "trust", "traffic", "winrate"], formats: ["Blog post", "Report", "PDF"] },
+    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "understanding", "trust", "traffic", "subscribers", "demandgen"], formats: ["Report", "Blog post", "PDF"] }
   };
 
   var TIMES = ["past", "present", "future"];
@@ -599,6 +609,7 @@
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><span class="splendid-icon cm-card-icon">' + (IC[cell.id] || "") + '</span><h3 class="cm-card-name">' + esc(cell.name) + '</h3></div></div>' +
       '<div class="cm-field">' + esc(cell.what) + '</div>' +
+      (cell.headline ? '<div class="cm-field"><span class="cm-label">Example headline</span><span class="cm-headline">&ldquo;' + esc(cell.headline) + '&rdquo;</span></div>' : '') +
       metricSectionHTML("Metrics", SOFT_KEYS.concat(HARD_KEYS), cell.metrics) +
       '<div class="cm-field"><span class="cm-label">Audience</span><div class="cm-aud">' + aud + '</div></div>' +
       '<hr>' +
