@@ -164,7 +164,9 @@
     .cm-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .cm-badge { font-size: 0.72rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.2rem 0.6rem; }
     .cm-badge-press { background: var(--poppy); color: #fff; }
-    .cm-examples { display: flex; flex-direction: column; gap: 0.25rem; }
+    .cm-examples { list-style: disc; margin: 0; padding: 0 0 0 1.15rem; }
+    .cm-examples li + li { margin-top: 0.25rem; }
+    .cm-examples li::marker { color: var(--poppy); }
     .cm-examples a { font-weight: 600; font-size: 0.85rem; }
     .cm-pop hr { border: 0; border-top: 1px solid var(--line); margin: 0.15rem 0; width: 100%; }
 
@@ -347,7 +349,7 @@
 
   // Metric vocabulary. group: soft | hard.
   var METRICS = {
-    awareness:     { label: "Awareness",     group: "soft", success: "Yeah, I've heard of you guys.", desc: "How many of the right people know you exist.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>' },
+    awareness:     { label: "Awareness",     group: "soft", success: "Oh yeah, I've heard of you.", desc: "How many of the right people know you exist.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>' },
     understanding: { label: "Understanding", group: "soft", success: "Oh, now I get what you do.", desc: "Whether people grasp what you do and how it works.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 14c.2-1 .7-1.7 1.5-2.5a4.5 4.5 0 1 0-9 0c.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>' },
     trust:         { label: "Trust",         group: "soft", success: "If you say so, I believe it.", desc: "Belief that you are credible and will deliver.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25H21"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>' },
     affinity:      { label: "Affinity",      group: "soft", success: "You're my kind of people.", desc: "How much people like you and lean your way.", icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>' },
@@ -465,9 +467,9 @@
 
   // Lane (row) details, shown when a lane label is hovered/clicked.
   var LANES = {
-    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", primary: ["trust", "affinity", "subscribers"], secondary: ["awareness", "winrate"] },
-    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", primary: ["understanding", "trust", "subscribers"], secondary: ["winrate", "traffic"] },
-    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", primary: ["awareness", "demandgen", "traffic"], secondary: ["trust", "subscribers"] }
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"] },
+    low:  { name: "Brand Journalism", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"] }
   };
 
   var TIMES = ["past", "present", "future"];
@@ -580,7 +582,7 @@
 
   function cardHTML(cell) {
     var ex = cell.examples.map(function (e) {
-      return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a>';
+      return '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.name) + '</a></li>';
     }).join("");
     var aud = AUD_TIERS.map(function (t) {
       var on = cell.audience.indexOf(t) !== -1;
@@ -596,7 +598,7 @@
         (PRESS_WORTHY[cell.id] ? '<span class="cm-badge cm-badge-press">Press-worthy</span>' : '<span class="cm-badge">Not press-worthy</span>') +
         '<span class="cm-badge">Expertise: ' + esc(cell.difficulty) + '</span>' +
       '</div>' +
-      '<div class="cm-field"><span class="cm-label">Examples</span><div class="cm-examples">' + ex + '</div></div>';
+      '<div class="cm-field"><span class="cm-label">Examples</span><ul class="cm-examples">' + ex + '</ul></div>';
   }
 
   function laneCardHTML(key) {
@@ -605,8 +607,7 @@
     return '' +
       '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div></div>' +
       '<div class="cm-field">' + esc(L.blurb) + '</div>' +
-      metricSectionHTML("Primary metrics", all, L.primary) +
-      metricSectionHTML("Secondary metrics", all, L.secondary);
+      metricSectionHTML("Metrics", all, L.metrics);
   }
 
   function metricCardHTML(key) {
