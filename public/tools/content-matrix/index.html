@@ -28,75 +28,10 @@
     .cm-top { padding-top: 1.1rem; padding-bottom: 2.5rem; }
     .cm-h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); margin-bottom: 0.6rem; }
 
-    /* Problem picker */
-    .cm-pain-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.85rem; margin: 0.75rem auto 2.5rem; }
-    .cm-lead { font-family: 'Mulish', sans-serif; font-weight: 600; font-size: 1.12rem; line-height: 1.4; color: var(--lagoon); margin: 0; }
-    /* Custom problem picker: no native select UI, an icon on the trigger + every option */
-    .cm-select { position: relative; display: inline-block; text-align: left; }
-    .cm-select-trigger {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--lagoon);
-      background-color: var(--snow); border: 1.5px solid var(--line); border-radius: 999px;
-      padding: 0.5rem 1.1rem; cursor: pointer; transition: border-color .15s ease;
-    }
-    .cm-select-trigger:hover { border-color: var(--poppy); }
-    .cm-select-trigger:focus-visible { outline: none; border-color: var(--poppy); box-shadow: 0 0 0 3px rgba(219,73,55,0.18); }
-    .cm-select.is-open .cm-select-trigger { border-color: var(--poppy); }
-    .cm-select-ico { width: 18px; height: 18px; flex: 0 0 auto; color: var(--lagoon); display: inline-flex; align-items: center; justify-content: center; }
-    .cm-select.has-value .cm-select-trigger .cm-select-ico { color: var(--poppy); }
-    .cm-select-text { white-space: nowrap; }
-    .cm-select-chev { width: 15px; height: 15px; flex: 0 0 auto; color: var(--lagoon); display: inline-flex; align-items: center; justify-content: center; margin-left: 0.1rem; transition: transform .15s ease; }
-    .cm-select.is-open .cm-select-chev { transform: rotate(180deg); }
-    .cm-select-list {
-      position: absolute; z-index: 1090; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-      min-width: 100%; max-width: calc(100vw - 24px); margin: 0; padding: 0.4rem; list-style: none;
-      max-height: 20rem; overflow-y: auto; background: var(--snow);
-      border: 1.5px solid var(--line); border-radius: 14px; box-shadow: 0 16px 40px rgba(21,48,71,0.20); display: none;
-    }
-    .cm-select.is-open .cm-select-list { display: block; }
-    .cm-select-opt {
-      display: flex; align-items: center; gap: 0.6rem; white-space: nowrap;
-      font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--lagoon);
-      padding: 0.5rem 0.7rem; border-radius: 9px; cursor: pointer;
-    }
-    .cm-select-opt:hover, .cm-select-opt.is-focus { background: var(--ash); }
-    .cm-select-opt.is-selected { color: var(--poppy); }
-    .cm-select-opt .cm-select-ico { color: var(--lagoon); }
-    .cm-select-opt:hover .cm-select-ico, .cm-select-opt.is-focus .cm-select-ico, .cm-select-opt.is-selected .cm-select-ico { color: var(--poppy); }
-    .cm-grid.cm-pain-active .cm-cell { opacity: 0.3; }
-    .cm-grid.cm-pain-active .cm-cell.cm-pain-on { opacity: 1; border-color: var(--poppy); box-shadow: 0 6px 18px rgba(21,48,71,0.12); }
-
-    /* Prescriptive recommendation, revealed when a problem is picked */
-    .cm-rec {
-      display: none; max-width: 44rem; margin: 2.75rem auto 0; text-align: left;
-      background: var(--ash); border: 1.5px solid var(--line); border-left: 4px solid var(--poppy);
-      border-radius: 12px; padding: 1rem 1.25rem;
-    }
-    .cm-rec.is-shown { display: block; }
-    .cm-rec-label {
-      display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.35rem;
-    }
-    .cm-rec-text { font-size: 1.05rem; line-height: 1.5; color: var(--lagoon); margin: 0; }
-    .cm-path { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.7rem 0 0; padding: 0; list-style: none; }
-    .cm-path-step {
-      display: flex; align-items: flex-start; gap: 0.65rem;
-      background: var(--snow); border: 1.5px solid var(--line); border-radius: 12px; padding: 0.6rem 0.8rem;
-    }
-    .cm-path-num {
-      display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; margin-top: 0.1rem;
-      width: 1.4rem; height: 1.4rem; border-radius: 999px; background: var(--poppy); color: #fff;
-      font-family: 'Mulish', sans-serif; font-size: 0.74rem; font-weight: 800;
-    }
-    .cm-path-body { display: flex; flex-direction: column; gap: 0.12rem; }
-    .cm-path-asset { font-family: 'Mulish', sans-serif; font-weight: 800; font-size: 0.92rem; color: var(--lagoon); }
-    .cm-path-detail { font-size: 0.85rem; line-height: 1.4; color: var(--muted); }
-    .cm-rec-cta {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem;
-      margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--line);
-    }
-    .cm-rec-cta-text { font-size: 0.95rem; font-weight: 600; color: var(--lagoon); }
-    .cm-rec-cta .btn-se-primary { margin-left: auto; white-space: nowrap; }
+    /* Why / How / What intro strip */
+    .cm-intro { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.75rem; max-width: 52rem; margin: 0.75rem auto 2.25rem; text-align: left; }
+    .cm-intro-item { flex: 1 1 13rem; max-width: 16rem; font-size: 0.98rem; line-height: 1.4; color: var(--lagoon); }
+    .cm-intro-k { display: block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--poppy); margin-bottom: 0.2rem; }
 
     /* Matrix + right-hand legend sit in one centered row */
     .cm-matrix-row { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
@@ -118,12 +53,13 @@
       text-transform: uppercase; letter-spacing: 0.14em; font-size: 1.05rem; color: var(--lagoon);
     }
     .cm-axis-y {
-      display: flex; align-items: center; justify-content: flex-end; padding-right: 0.65rem; text-align: right;
+      display: flex; align-items: center; justify-content: center; text-align: center; padding: 0.5rem 0.55rem;
+      background: var(--ash); border-radius: 10px;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700; line-height: 1.15;
       text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.92rem; color: var(--lagoon);
-      cursor: pointer; transition: color .15s ease;
+      cursor: pointer; transition: color .15s ease, background .15s ease;
     }
-    .cm-axis-y:hover, .cm-axis-y.is-anchor { color: var(--poppy); }
+    .cm-axis-y:hover, .cm-axis-y.is-anchor { color: var(--poppy); background: #dceaf1; }
     .cm-axis-x {
       display: flex; align-items: center; justify-content: center; padding-top: 0.5rem;
       font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
@@ -247,7 +183,7 @@
       .cm-cell { min-height: 7.25rem; padding: 0.8rem 0.55rem; }
       .cm-cell-icon { width: 30px; height: 30px; }
       .cm-cell-name { font-size: 1.05rem; }
-      .cm-axis-y { font-size: 0.78rem; padding-right: 0.4rem; }
+      .cm-axis-y { font-size: 0.78rem; padding: 0.45rem 0.4rem; }
       .cm-axis-y-title { font-size: 0.92rem; }
       .cm-axis-x { font-size: 0.82rem; }
       .cm-axis-x-title { font-size: 0.92rem; }
@@ -268,14 +204,11 @@
       .cm-cell-metrics { gap: 4px; margin-top: 0.15rem; }
       .cm-cell-metric { width: 14px; height: 14px; }
       .cm-cell-up { width: 12px; height: 12px; }
-      .cm-axis-y { font-size: 0.62rem; padding-right: 0.3rem; letter-spacing: 0.02em; }
+      .cm-axis-y { font-size: 0.62rem; padding: 0.4rem 0.3rem; letter-spacing: 0.02em; }
       .cm-axis-y-title { font-size: 0.8rem; letter-spacing: 0.08em; }
       .cm-axis-x { font-size: 0.7rem; }
       .cm-axis-x-title { font-size: 0.8rem; }
       .cm-pop { width: calc(100vw - 20px); padding: 1rem 1.05rem; }
-      .cm-rec { padding: 0.9rem 1rem; }
-      .cm-rec-cta { flex-direction: column; align-items: stretch; }
-      .cm-rec-cta .btn-se-primary { margin-left: 0; text-align: center; }
       .cm-card-name { font-size: 1.2rem; }
     }
   </style>
@@ -322,18 +255,12 @@
   <section class="section cm-top bg-snow">
     <div class="container text-center">
       <span class="eyebrow">The Splendid Content Matrix</span>
-      <h1 class="cm-h1">Good Content Solves Problems</h1>
+      <h1 class="cm-h1">Every piece of content has a job</h1>
 
-      <div class="cm-pain-wrap">
-        <span class="cm-lead" id="cm-pain-label">Pick a problem. Get a plan.</span>
-        <div class="cm-select" id="cm-pain">
-          <button type="button" class="cm-select-trigger" id="cm-pain-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="cm-pain-list" aria-labelledby="cm-pain-label cm-pain-text">
-            <span class="splendid-icon cm-select-ico" id="cm-pain-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
-            <span class="cm-select-text" id="cm-pain-text">Pick your problem&hellip;</span>
-            <span class="splendid-icon cm-select-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9"/></svg></span>
-          </button>
-          <ul class="cm-select-list" id="cm-pain-list" role="listbox" tabindex="-1" aria-labelledby="cm-pain-label"></ul>
-        </div>
+      <div class="cm-intro">
+        <div class="cm-intro-item"><span class="cm-intro-k">Why</span>Most content gets made without a clear job. So it moves nothing.</div>
+        <div class="cm-intro-item"><span class="cm-intro-k">How</span>Every type sits by time, and by how strong a view it takes.</div>
+        <div class="cm-intro-item"><span class="cm-intro-k">What</span>Tap any cell for what it does, who it reaches, and the metrics it moves.</div>
       </div>
 
       <div class="cm-matrix-row">
@@ -341,16 +268,6 @@
           <div class="cm-grid" id="cm-grid"></div>
         </div>
         <aside class="cm-legend-panel" id="cm-legend-panel"></aside>
-      </div>
-
-      <div class="cm-rec" id="cm-rec" role="status" aria-live="polite">
-        <span class="cm-rec-label">Critical Path</span>
-        <p class="cm-rec-text" id="cm-rec-text"></p>
-        <ol class="cm-path" id="cm-rec-path"></ol>
-        <div class="cm-rec-cta">
-          <span class="cm-rec-cta-text" id="cm-rec-cta-text"></span>
-          <a class="btn-se-primary" href="/contact/">Get In Touch</a>
-        </div>
       </div>
     </div>
   </section>
@@ -434,57 +351,6 @@
   };
   var SOFT_KEYS = ["awareness", "understanding", "trust", "affinity"];
   var HARD_KEYS = ["traffic", "subscribers", "demandgen", "winrate"];
-
-  // Business problems for the picker. Each maps to the metric it is about,
-  // a one-line recommendation (names the assets that light up), and a short
-  // CTA lead that ties the answer to booking a call.
-  var PAINS = [
-    { key: "awareness", label: "Nobody has heard of us",
-      lead: "Make news, then make it the reference.",
-      path: ["Survey", "Prediction", "History"],
-      cta: "Want to get known?" },
-    { key: "traffic", label: "Our site traffic is low",
-      lead: "Win search and shares with original data.",
-      path: ["Survey", "History", "Projection"],
-      cta: "Want more traffic?" },
-    { key: "understanding", label: "People do not get what we do",
-      lead: "Make the how plain, then show where it goes.",
-      path: ["Explainer", "Forecast", "Projection"],
-      cta: "Want people to get it?" },
-    { key: "trust", label: "People do not trust us yet",
-      lead: "Lead with proof, then plant your flag.",
-      path: ["Case study", "Perspective", "Reconsideration", "Forecast"],
-      cta: "Want to earn trust?" },
-    { key: "affinity", label: "We are not winning people over",
-      lead: "Take a stand people want to stand with.",
-      path: ["Perspective", "Reconsideration", "Prediction"],
-      cta: "Want people on your side?" },
-    { key: "subscribers", label: "We do not own an audience",
-      lead: "Give people a reason to come back.",
-      path: ["Perspective", "Explainer", "Reconsideration"],
-      cta: "Want an audience you own?" },
-    { key: "demandgen", label: "Our pipeline is thin",
-      lead: "Earn attention that turns into pipeline.",
-      path: ["Survey"],
-      cta: "Want a fuller pipeline?" },
-    { key: "winrate", label: "We keep losing deals",
-      lead: "Frame the decision so more deals close.",
-      path: ["Case study", "Explainer", "Prediction"],
-      cta: "Want to win more deals?" }
-  ];
-
-  // One-line "how to make it" for each asset, shown under each Critical Path step.
-  var STEP_DETAIL = {
-    "Reconsideration": "Challenge the accepted story and make the case for a better one.",
-    "Perspective": "Stake a clear, honest opinion on something happening right now.",
-    "Prediction": "Make one specific call about what happens next, and show why.",
-    "Case study": "Walk through one real result and show why it worked.",
-    "Explainer": "Explain how it works in plain language, step by step.",
-    "Forecast": "Model where the market is heading and show your assumptions.",
-    "History": "Lay out how the space got here, as the record people cite.",
-    "Survey": "Run an original survey of your market and publish the numbers.",
-    "Projection": "Extend the trend with numbers, light on opinion."
-  };
 
   // Which assets are press-worthy (earn media coverage and citations).
   var PRESS_WORTHY = { reconsideration: true, position: true, prediction: true, forecast: true, reporting: true, projection: true };
@@ -585,9 +451,9 @@
 
   // Lane (row) details, shown when a lane label is hovered/clicked.
   var LANES = {
-    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", metrics: ["trust", "affinity", "subscribers"] },
-    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", metrics: ["understanding", "trust", "subscribers"] },
-    low:  { name: "Reporting", blurb: "Just the facts. The data does the talking, with little or no interpretation.", metrics: ["awareness", "demandgen", "traffic"] }
+    high: { name: "Thought leadership", blurb: "You take a stand and plant a flag. A strong point of view, built to shift what people believe and to set you apart.", primary: ["trust", "affinity", "subscribers"], secondary: ["awareness", "winrate"] },
+    mid:  { name: "Analysis", blurb: "You make sense of things with evidence and no personal flag. Built to clarify and to earn trust through being useful.", primary: ["understanding", "trust", "subscribers"], secondary: ["winrate", "traffic"] },
+    low:  { name: "Reporting", blurb: "Just the facts. The data does the talking, with little or no interpretation.", primary: ["awareness", "demandgen", "traffic"], secondary: ["trust", "subscribers"] }
   };
 
   var TIMES = ["past", "present", "future"];
@@ -719,9 +585,10 @@
   function laneCardHTML(key) {
     var L = LANES[key];
     return '' +
-      '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div><span class="cm-coord-pill">Lane</span></div>' +
+      '<div class="cm-card-head"><div class="cm-card-title"><h3 class="cm-card-name">' + esc(L.name) + '</h3></div></div>' +
       '<div class="cm-field">' + esc(L.blurb) + '</div>' +
-      '<div class="cm-field"><span class="cm-label">Tends to move</span><div class="cm-pop-metrics">' + popMetricsHTML(L.metrics) + '</div></div>';
+      '<div class="cm-field"><span class="cm-label">Primary metrics</span><div class="cm-pop-metrics">' + popMetricsHTML(L.primary) + '</div></div>' +
+      '<div class="cm-field"><span class="cm-label">Secondary metrics</span><div class="cm-pop-metrics">' + popMetricsHTML(L.secondary) + '</div></div>';
   }
 
   function metricCardHTML(key) {
@@ -844,135 +711,6 @@
     });
   });
 
-  // ---- Problem picker: a custom dropdown (no native select UI) with an icon on
-  //      every option. Picking a problem highlights the assets that solve it and
-  //      surfaces a one-line recommendation + a CTA toward booking a call. ----
-  var GRID_ICON = '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>';
-  var selWrap = document.getElementById("cm-pain");
-  var trigger = document.getElementById("cm-pain-trigger");
-  var triggerIco = document.getElementById("cm-pain-ico");
-  var triggerText = document.getElementById("cm-pain-text");
-  var list = document.getElementById("cm-pain-list");
-  var recBox = document.getElementById("cm-rec");
-  var recText = document.getElementById("cm-rec-text");
-  var recPath = document.getElementById("cm-rec-path");
-  var recCta = document.getElementById("cm-rec-cta-text");
-
-  var PAIN_BY_KEY = {};
-  PAINS.forEach(function (p) { PAIN_BY_KEY[p.key] = p; });
-  // "Show everything" first, then one option per problem. Each problem reuses
-  // the icon of the metric it maps to, so the picker matches the cells + legend.
-  var OPTIONS = [{ key: "", label: "Show everything", icon: GRID_ICON }].concat(
-    PAINS.map(function (p) { return { key: p.key, label: p.label, icon: METRICS[p.key].icon }; })
-  );
-
-  OPTIONS.forEach(function (o, i) {
-    var li = document.createElement("li");
-    li.className = "cm-select-opt" + (i === 0 ? " is-selected" : "");
-    li.id = "cm-pain-opt-" + i;
-    li.setAttribute("role", "option");
-    li.setAttribute("aria-selected", i === 0 ? "true" : "false");
-    li.dataset.value = o.key;
-    li.innerHTML = '<span class="splendid-icon cm-select-ico" aria-hidden="true">' + o.icon + '</span><span>' + esc(o.label) + '</span>';
-    li.addEventListener("click", function () { choose(o.key); closeMenu(true); });
-    li.addEventListener("mousemove", function () { if (focusIdx !== i) setFocus(i); });
-    list.appendChild(li);
-  });
-  var opts = Array.prototype.slice.call(list.children);
-  var focusIdx = 0;
-  var currentKey = "";
-
-  function setFocus(i) {
-    i = Math.max(0, Math.min(opts.length - 1, i));
-    opts[focusIdx].classList.remove("is-focus");
-    focusIdx = i;
-    opts[focusIdx].classList.add("is-focus");
-    list.setAttribute("aria-activedescendant", opts[focusIdx].id);
-    opts[focusIdx].scrollIntoView({ block: "nearest" });
-  }
-  function openMenu() {
-    selWrap.classList.add("is-open");
-    trigger.setAttribute("aria-expanded", "true");
-    var selIdx = 0;
-    opts.forEach(function (el, idx) { if (el.dataset.value === currentKey) selIdx = idx; });
-    setFocus(selIdx);
-    list.focus();
-  }
-  function closeMenu(returnFocus) {
-    selWrap.classList.remove("is-open");
-    trigger.setAttribute("aria-expanded", "false");
-    if (returnFocus) trigger.focus({ preventScroll: true });
-  }
-  function toggleMenu() { if (selWrap.classList.contains("is-open")) closeMenu(true); else openMenu(); }
-
-  function choose(key) {
-    var o = null;
-    OPTIONS.forEach(function (x) { if (x.key === key) o = x; });
-    if (!o) return;
-    currentKey = key;
-    triggerIco.innerHTML = o.icon;
-    triggerText.textContent = o.label;
-    selWrap.classList.toggle("has-value", !!key);
-    opts.forEach(function (el) {
-      var on = el.dataset.value === key;
-      el.classList.toggle("is-selected", on);
-      el.setAttribute("aria-selected", on ? "true" : "false");
-    });
-    applyPain(key);
-    if (key) scrollToMatrix();
-  }
-
-  // After a problem is picked, slide the matrix to the top of the viewport so
-  // the highlighted grid and the plan beneath it are both in view.
-  function scrollToMatrix() {
-    var el = document.querySelector(".cm-matrix-row");
-    if (!el) return;
-    var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 16;
-    window.scrollTo({ top: y < 0 ? 0 : y, behavior: "smooth" });
-  }
-
-  function applyPain(key) {
-    Array.prototype.forEach.call(grid.querySelectorAll(".cm-pain-on"), function (el) { el.classList.remove("cm-pain-on"); });
-    if (!key) {
-      grid.classList.remove("cm-pain-active");
-      recBox.classList.remove("is-shown");
-      return;
-    }
-    grid.classList.add("cm-pain-active");
-    CELLS.forEach(function (c) {
-      if (c.metrics.indexOf(key) !== -1 && cellEls[c.id]) cellEls[c.id].classList.add("cm-pain-on");
-    });
-    var p = PAIN_BY_KEY[key];
-    if (p) {
-      recText.textContent = p.lead;
-      recPath.innerHTML = p.path.map(function (step, i) {
-        var detail = STEP_DETAIL[step] || "";
-        return '<li class="cm-path-step"><span class="cm-path-num">' + (i + 1) + '</span>' +
-          '<span class="cm-path-body"><span class="cm-path-asset">' + esc(step) + '</span>' +
-          (detail ? '<span class="cm-path-detail">' + esc(detail) + '</span>' : '') +
-          '</span></li>';
-      }).join("");
-      recCta.textContent = p.cta + " We can build it with you.";
-      recBox.classList.add("is-shown");
-    }
-  }
-
-  trigger.addEventListener("click", function (e) { e.stopPropagation(); toggleMenu(); });
-  trigger.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") { e.preventDefault(); openMenu(); }
-  });
-  list.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowDown") { e.preventDefault(); setFocus(focusIdx + 1); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); setFocus(focusIdx - 1); }
-    else if (e.key === "Home") { e.preventDefault(); setFocus(0); }
-    else if (e.key === "End") { e.preventDefault(); setFocus(opts.length - 1); }
-    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(opts[focusIdx].dataset.value); closeMenu(true); }
-    else if (e.key === "Escape") { e.preventDefault(); closeMenu(true); }
-    else if (e.key === "Tab") { closeMenu(false); }
-  });
-  document.addEventListener("click", function (e) {
-    if (!selWrap.contains(e.target)) closeMenu(false);
-  });
 })();
 </script>
 
