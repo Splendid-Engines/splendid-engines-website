@@ -19,7 +19,8 @@
     /* Gallery chrome only. Page-scoped on purpose so it never touches the shared
        module CSS. The live demos below render with the real shared styles. */
     .gallery-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
-    .gallery-layout { display: grid; grid-template-columns: 220px 1fr; gap: 2.5rem; align-items: start; }
+    .gallery-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+    .gallery-layout > * { min-width: 0; }   /* let the content column shrink so wide code/quotes scroll inside, not overflow the page */
     .gallery-toc { position: sticky; top: 90px; font-family: 'Mulish', sans-serif; }
     .gallery-toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
     .gallery-toc a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
@@ -38,6 +39,9 @@
     .module-demo.on-ash { background: var(--ash); }
     .module-demo.on-ash-warm { background: var(--ash-warm); }
     .module-demo.on-lagoon { background: var(--lagoon); }
+    /* The pull-quote ships with a big bookend padding for real articles; tighten it inside a demo card. */
+    .module-demo .pull-quote { padding: 0.75rem 0; }
+    .module-demo .longform > *:first-child { margin-top: 0; }
     .demo-note { font-family: 'Mulish', sans-serif; font-size: 0.82rem; color: var(--muted); margin: 0 0 1rem; font-style: italic; }
     .code-block { position: relative; border-top: 1px solid var(--line); background: #0e2236; }
     .code-block pre { margin: 0; padding: 1.1rem 1.25rem; overflow-x: auto; }
@@ -134,6 +138,10 @@
             <li><a href="#m-chart-bar">Chart: bar</a></li>
             <li><a href="#m-chart-line">Chart: line + toggle</a></li>
             <li><a href="#m-timeline">Timeline</a></li>
+          </ul>
+          <div class="toc-head">Expressive</div>
+          <ul>
+            <li><a href="#m-ascii">ASCII art</a></li>
           </ul>
           <div class="toc-head">Lists + calls</div>
           <ul>
@@ -590,6 +598,80 @@
             </div>
           </article>
 
+          <!-- ASCII ART -->
+          <article class="module-card" id="m-ascii">
+            <div class="module-head">
+              <span class="eyebrow">Expressive</span>
+              <h2>ASCII art <span class="module-tag" style="vertical-align:middle;">New</span></h2>
+              <p>Turn any image into detailed ASCII with <code>scripts/asciify.mjs</code>, then drop it in. The art scales to fit any screen. A tasteful wink, used sparingly.</p>
+              <div class="module-tags"><span class="module-tag">modules.css</span><span class="module-tag">ascii.js</span><span class="module-tag">asciify.mjs</span></div>
+            </div>
+            <div class="module-demo">
+              <p class="demo-note">Generated from a photo with <code>asciify.mjs --cols 90 --figure</code>.</p>
+              <figure class="se-ascii reveal" role="img" aria-label="ASCII portrait, generated from a photo">
+  <pre class="se-ascii-art" aria-hidden="true">
+
+
+                                    .,  ."!+-_[fj.
+                               .^'~jc|XZdbWBM%BBacfl
+                             ..:\_h&amp;8@@M#&amp;BB88BB%B@%Cl
+                             "_{rdB@@%M##*##hoW&amp;W#%@%J}^
+                            .:lfkB%qr_!&lt;]{1}-_--__{XoBZ_
+                             '{u&amp;*/&lt;I;Ili&gt;&gt;&gt;&gt;&gt;&lt;~++-[)U&amp;w-
+                             _[Jh]!l!!!i&gt;&lt;&lt;iii&lt;~~_]}{)cMjI
+                             {(Uz&gt;&lt;&lt;~+&lt;illllIIllIi~-]{(pv-
+                             }[CC(&lt;~&lt;~&lt;illlI;;l!i&lt;~~~-)kc[
+                             ?[vaZ?&lt;i&gt;!I;;;;;::;;l&gt;??])kY}
+                             itLBJ[-?1{|rt-iI:i[uUYx//\O#x!
+                            ')ta%r]txCLOYcXu?I[nzQJvJ1[ck)1.
+                            ![-/o(+_{r(/{)fv_I]\(1[]]_+{c_}'
+                            ^[+_Y}+ii!iii&gt;[1!;__~ilII&gt;~](-[
+                             []_tj[~!;:;l+?-;;&gt;-+il:;i+{[++
+                             '?!?/\[_&gt;![(\|\&gt;I_)|1((&lt;+[t-},
+                              ^_}(t|\[|UYnnu\)|/fjXUj(\t[
+                                 1|\tt[jnc}_&lt;i!i?v\c1j)\,
+                                 ;\j/jnx|1)[??-[)1txcn\&gt;
+                                ;[rjvrnrt\)}{{[]{tjtn['
+                               _vzX\jvXzx\/(?~~[|ftt[
+                              "juj1\(|/fnxuxjnzuttj(X-'
+                             ^|XJXt;_[}}}tn\)[][1//([wJ&lt;.
+                           I)|xCqwUt,:~_+?\})/&lt;}1(1f1;km/:
+                        '&gt;}fruXU0dbztI':ii~+~]?_+?[un,}%p}:
+                     ;-)(rccJzUJCZohxr!".^;&gt;i!li&lt;+|YC,`k#mc&lt;
+                 ^&lt;?{)fuccXYJZUYQmp*pm&lt;;"..':i&lt;+&gt;-nCc?;|kd0}!'
+              ,?}{|jnvzcvvYUUJLZ0Zb*MMY?:,.....'")v]^[+&gt;wLLvt|1-~:
+           ,-]])trfjruvuvzUUUYUYJ00ZkW8hnI.  .  .\?.'"l1OCUYczcx\}1I
+        '++^':?\/fjxnccvuzJYUUYUJUJOqqpM%d)^    .1t:..IfOO0JYYYXXuj|[i
+      .&lt;~``';?/xxxxucvcvcXYYYYXzYJUUU0qpqoWaX]. .I,..:xQbp0JXXzJzccvu\}.
+     '?:{[x/\tnvunvvvvcvvvXYYXYXYXUUUUJ0dpZqhqJi   .`/d8pJLJzzXYccYXXcr-
+    `-^&lt;rnuucXnrczzcvzzcvvczzXXUYzUYYYJCJ0qwQQQO+'.'}OkZJCUXzzcYzvcXXcnj'
+   ']"&gt;ruunvXJzYXuuuvXzzucnvcXYXXvYYUXYJYUUU00UzXl "wJCULJJYzzczvnccccuv?
+   ~;&gt;|rnvncULXzXczcncXvuuuruvcXvzzcUzXYUYYYYJCUXj"{mzXJYzXzXucznncvvccXj'
+  ll[-cXccvXUZLuYCcYJzcXzzvzcvXuccXYUXYzUzYYUCUUXcfJCzUCzcYYzczzvuxunccUvI
+ '?\+nYzzccYJ0mXUQ0cCmvcvXcvvvccvvuccXYXzzYUJYYJYvzqQUJXzXccvcvcvxxunUcQz&lt;
+ -\|[cYUXzYYJLqLYQQLLaczUYXcvnczvcnczvzccXXYczzYzXnLkCYXYYXXzzuvvnuxnYzpc+
+;}n(nXUCzvXCJCpZJmbm0#YzznvzXXccvncccccYvzzzccvXXzYLUzJXXzzczzccuxxrxcmmY&gt;
+''``^^^^^^^^^^","","":^^^^^``^^^```^^````^`^`^^^^^^^``^^^^^``^^^^^```^,^^.
+
+</pre>
+  <figcaption class="se-ascii-caption">ASCII portrait, generated from a photo</figcaption>
+</figure>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code># Generate from any image (more columns = more detail):
+node scripts/asciify.mjs photo.png --cols 110 --figure --label "Portrait" --out art.html
+
+# Paste the markup it produces into your article:
+&lt;figure class="se-ascii" role="img" aria-label="Portrait"&gt;
+  &lt;pre class="se-ascii-art" aria-hidden="true"&gt;...art...&lt;/pre&gt;
+  &lt;figcaption class="se-ascii-caption"&gt;Portrait&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;!-- add: &lt;script src="/assets/js/ascii.js" defer&gt;&lt;/script&gt; --&gt;
+# --invert gives light art for a Lagoon surface; --on-lagoon adds the dark panel.</code></pre>
+            </div>
+          </article>
+
           <!-- FIVE MOVES -->
           <article class="module-card" id="m-moves">
             <div class="module-head">
@@ -735,6 +817,7 @@
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/reveal.js" defer></script>
 <script src="/assets/js/charts.js" defer></script>
+<script src="/assets/js/ascii.js" defer></script>
 
 <!-- Clay web-intent tracking (Claydar). Canonical copy: /_includes/analytics.html. Keep on every page. -->
 <script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>

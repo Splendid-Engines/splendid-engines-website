@@ -43,7 +43,7 @@ public/
 │   └── [slug]/index.html             # each piece, hand-built
 ├── assets/
 │   ├── css/                          # bootstrap.min.css + custom.css + modules.css
-│   ├── js/                           # bootstrap.bundle.min.js, nav.js, reveal.js, talking-head.js, charts.js
+│   ├── js/                           # bootstrap.bundle.min.js, nav.js, reveal.js, talking-head.js, charts.js, ascii.js
 │   └── img/
 └── _includes/
     ├── header.html                   # canonical header (copy into each page)
@@ -100,6 +100,10 @@ per-article edits, because the files are linked, not copied. The interactive
 chart module (`assets/js/charts.js`) is data-driven: the article carries only a
 small JSON block and the shared renderer draws it, so even a behavior change
 propagates everywhere.
+
+Some modules ship a generator in `scripts/`: for example `asciify.mjs` turns any
+image into detailed ASCII art for the `.se-ascii` module
+(`node scripts/asciify.mjs photo.png --cols 110 --figure`).
 
 ## Local preview
 

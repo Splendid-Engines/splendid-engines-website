@@ -8,6 +8,7 @@
     "preview": "node scripts/preview.mjs"
   },
   "devDependencies": {
+    "jimp": "^0.22.12",
     "lucide-static": "^0.469.0"
   }
 }

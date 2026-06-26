@@ -1,5 +1,5 @@
 /*
-  Splendid writing modules — shared styles for the reusable article modules.
+  Splendid writing modules - shared styles for the reusable article modules.
 
   This file is ADDITIVE. It holds the newer, self-contained writing modules
   (interactive charts, the editorial timeline). The older module classes
@@ -8,7 +8,7 @@
   catalogued in writing/MODULES.md. Editing a module here updates every article
   that links this file, because there is no build step and the stylesheet is shared.
 
-  Brand rules that apply to everything here (see our-brand SKILL §5–§8):
+  Brand rules that apply to everything here (see our-brand SKILL §5-§8):
   - Data viz palette: Lagoon primary, Poppy + Lake as accents, Daffodil sparingly.
   - Body in Mulish, display/labels in Big Shoulders Display (Hanley substitute).
   - Reduced motion is always honored: no movement, final state shown immediately.
@@ -18,7 +18,7 @@
 
 /* ============================================================
    Chart module (charts.js)
-   <figure class="se-chart reveal" data-se-chart> + a JSON <script>.
+   <figure class="se-chart" data-se-chart> + a JSON <script>.
    ============================================================ */
 .se-chart {
   margin: 2.25rem 0;
@@ -223,6 +223,45 @@
   line-height: 1.15;
 }
 .longform .se-timeline-item p { margin-bottom: 0; }
+
+/* ============================================================
+   ASCII art module (ascii.js)
+   <figure class="se-ascii"> + <pre class="se-ascii-art"> ; generate with
+   scripts/asciify.mjs. The JS scales the glyphs so the art fits any width.
+   ============================================================ */
+.se-ascii {
+  margin: 2.25rem 0;
+  text-align: center;
+}
+.se-ascii-art {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: var(--op-mono, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
+  font-size: 9px;                 /* a sane base; ascii.js overrides to fit the container */
+  line-height: 1;
+  white-space: pre;
+  overflow-x: auto;               /* if JS is off, wide art scrolls instead of breaking the page */
+  color: var(--lagoon);
+  text-align: left;
+  -webkit-font-smoothing: none;   /* crisper glyph grid */
+}
+.se-ascii-caption {
+  margin-top: 0.85rem;
+  font-family: 'Mulish', sans-serif;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.se-ascii.poppy .se-ascii-art { color: var(--poppy); }
+.se-ascii.lake  .se-ascii-art { color: var(--lake); }
+/* Lagoon surface: pair with `asciify --invert` so the art reads light-on-dark. */
+.se-ascii.on-lagoon {
+  background: var(--lagoon);
+  padding: 2rem 1rem;
+  border-radius: 6px;
+}
+.se-ascii.on-lagoon .se-ascii-art { color: var(--snow); }
+.se-ascii.on-lagoon .se-ascii-caption { color: rgba(255, 255, 255, 0.7); }
 
 /* ============================================================
    Shared helper

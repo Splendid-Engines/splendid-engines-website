@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// preview.mjs — bundle a static page into ONE self-contained HTML file.
+// preview.mjs - bundle a static page into ONE self-contained HTML file.
 //
 // Why: Claude Artifacts render HTML in claude.ai but block every external host
 // (no CDN, no Google Fonts, no tracking pixels, no same-origin asset fetch). This
@@ -84,7 +84,7 @@ function bundle(htmlPath, outPath) {
   let html = fs.readFileSync(htmlPath, 'utf8');
   const notes = [];
 
-  // 1) Drop external <link> (preconnect + Google Fonts) — fonts fall back to system.
+  // 1) Drop external <link> (preconnect + Google Fonts) - fonts fall back to system.
   html = html.replace(/<link\b[^>]*href="https?:\/\/[^"]*"[^>]*>\s*/gi, () => {
     notes.push('removed an external <link> (fonts/preconnect)');
     return '';

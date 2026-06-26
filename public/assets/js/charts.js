@@ -1,4 +1,4 @@
-// Splendid chart module — small, dependency-free SVG charts for writing pieces.
+// Splendid chart module - small, dependency-free SVG charts for writing pieces.
 // A data-driven cousin of talking-head.js: the article carries only the data,
 // this file draws it. Change the look or the motion here and every chart on the
 // site updates at once. One IIFE, no libraries.
@@ -22,7 +22,7 @@
 // Colors are brand-token names (lagoon / poppy / lake / daffodil / mate); the
 // renderer reads the live CSS variable so a palette change in custom.css flows
 // through. Multiple series render as a legend of toggle chips (click to show or
-// hide a series — the "toggleable" charts). Charts animate in on first scroll
+// hide a series - the "toggleable" charts). Charts animate in on first scroll
 // into view and respect prefers-reduced-motion. A visually-hidden data table is
 // always emitted for screen readers, and a <noscript> author fallback is honored
 // if present, so the data is never trapped in JavaScript.
@@ -389,7 +389,7 @@
   }
 
   function label(spec, s, i, v) {
-    var prefix = spec.series.length > 1 ? s.name + ' — ' : '';
+    var prefix = spec.series.length > 1 ? s.name + ' - ' : '';
     return prefix + spec.categories[i] + ': ' + fmt(spec, v);
   }
 

@@ -246,7 +246,7 @@ A 1/2/3 podium with a proportional fill behind each row, set with `--bar-width`.
 </ol>
 ```
 
-### Chart (`charts.js`) — NEW, interactive
+### Chart (`charts.js`) - NEW, interactive
 A data-driven SVG chart: bar, line, or area. Animates in on scroll, supports
 multiple series with a legend of toggle chips (click to show or hide a series),
 and shows a value readout on hover or keyboard focus. A screen-reader data table
@@ -284,7 +284,7 @@ Options: `type` (`bar`|`line`|`area`), `format` (`percent`|`number`), `prefix`,
 (`lagoon`/`poppy`/`lake`/`daffodil`/`mate`) or a hex.
 Needs `<script src="/assets/js/charts.js" defer></script>`.
 
-### Timeline (`.se-timeline`) — NEW
+### Timeline (`.se-timeline`) - NEW
 A vertical, editorial timeline. CSS-only; add `.reveal` to each item for the
 fade-in. No JS beyond `reveal.js`.
 ```html
@@ -302,12 +302,37 @@ fade-in. No JS beyond `reveal.js`.
 
 ---
 
+## Expressive
+
+### ASCII art (`.se-ascii`) - NEW
+Detailed ASCII art from any image, on-brand and scaled to fit any screen. Generate
+it with the helper, then paste the markup it prints.
+
+```
+node scripts/asciify.mjs photo.png --cols 110 --figure --label "Portrait" --out art.html
+```
+
+```html
+<figure class="se-ascii" role="img" aria-label="Portrait">
+  <pre class="se-ascii-art" aria-hidden="true">...art...</pre>
+  <figcaption class="se-ascii-caption">Portrait</figcaption>
+</figure>
+```
+
+`ascii.js` scales the glyphs so the longest line fits the container, so detailed
+(wide) art never overflows or wraps. Generator flags: `--cols N` (more columns =
+more detail), `--ramp short|long`, and `--invert` + `--on-lagoon` for light art on
+a dark Lagoon panel. Use it sparingly: a wink, per the brand's imagery rules.
+Needs `<script src="/assets/js/ascii.js" defer></script>`.
+
+---
+
 ## Animation
 
 Opt in per element. Driven by `reveal.js` (an IntersectionObserver).
-- `.reveal` — subtle fade + rise as the element scrolls into view.
-- `.reveal-stat` — the same, plus a small scale/spring; counts up the first number.
-- `data-reveal-delay="1|2|3"` — stagger siblings.
+- `.reveal` - subtle fade + rise as the element scrolls into view.
+- `.reveal-stat` - the same, plus a small scale/spring; counts up the first number.
+- `data-reveal-delay="1|2|3"` - stagger siblings.
 - All animation is disabled under `prefers-reduced-motion`.
 
 ---
@@ -336,6 +361,7 @@ The gallery at `/our-brand/modules/` is itself a live preview of every module.
 | Talking-head quote | `_template/` | `custom.css` | `talking-head.js` |
 | Chart (NEW) | this file | `modules.css` | `charts.js` |
 | Timeline (NEW) | this file | `modules.css` | (reveal.js) |
+| ASCII art (NEW) | this file | `modules.css` | `ascii.js` (generate with `scripts/asciify.mjs`) |
 
 When you add a new module: add its styles to `modules.css`, its behavior to a new
 `assets/js/<module>.js` (the `data-*` hook + IIFE pattern, like `charts.js`), a
