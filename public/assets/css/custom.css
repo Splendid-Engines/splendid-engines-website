@@ -190,9 +190,15 @@ a:hover { color: var(--lagoon); }
 .section-sm { padding: 3rem 0; }
 .section-lg { padding: 6.5rem 0; }
 
-/* Longform articles: tighter section padding so adjacent same-color sections don't stack */
-.longform .section { padding: 0; }
-.longform .section + .longform .section { margin-top: 0; }
+/* Longform articles: each section is a consistent band. Symmetric padding so the
+   colored sections (Ash / Ash Warm / Lagoon) breathe evenly, with the first/last
+   child margins reset so the padding (not collapsing margins) sets the rhythm. */
+.longform .section,
+.longform .section-sm { padding: 3rem 0; }
+.longform .section > [class*="container"] > :first-child,
+.longform .section-sm > [class*="container"] > :first-child { margin-top: 0; }
+.longform .section > [class*="container"] > :last-child,
+.longform .section-sm > [class*="container"] > :last-child { margin-bottom: 0; }
 
 .bg-snow      { background-color: var(--snow); }
 .bg-ash       { background-color: var(--ash); }
@@ -268,6 +274,9 @@ a:hover { color: var(--lagoon); }
 /* Lagoon hero variant: dark hero with one Poppy-accented word */
 .hero.bg-lagoon .hero-body { color: rgba(255,255,255,0.85); }
 
+/* Blog-article subhead reads as a deck: italic. Scoped to .longform so landing-page heroes are unaffected. */
+.longform .hero-body { font-style: italic; }
+
 /* Article hero image (full-bleed banner between the text hero and the body) */
 .article-hero-image {
   width: 100%;
@@ -285,6 +294,7 @@ a:hover { color: var(--lagoon); }
 .article-fold-sub {
   font-size: 1.2rem;
   line-height: 1.55;
+  font-style: italic;
   color: var(--muted);
   margin-bottom: 1.5rem;
   max-width: 34rem;

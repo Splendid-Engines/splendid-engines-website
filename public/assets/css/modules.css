@@ -242,7 +242,7 @@
   font-size: 9px;                 /* a sane base; ascii.js overrides to fit the container */
   line-height: 1;
   white-space: pre;
-  overflow-x: auto;               /* if JS is off, wide art scrolls instead of breaking the page */
+  overflow: hidden;               /* ascii.js fits the art to the column; clip rather than become a scroll container */
   color: var(--lagoon);
   text-align: left;
   -webkit-font-smoothing: none;   /* crisper glyph grid */

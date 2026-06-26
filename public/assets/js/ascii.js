@@ -32,7 +32,8 @@
       var natural = pre.scrollWidth;                             // unwrapped content width at base
       if (!natural) return;
       var max = parseFloat(pre.getAttribute('data-max')) || 16;
-      var size = Math.max(3.5, Math.min(max, base * (avail / natural)));
+      // Fit a hair under the column so the art never overflows (which would clip or trap scroll).
+      var size = Math.max(3.5, Math.min(max, base * ((avail - 2) / natural)));
       pre.style.fontSize = size.toFixed(2) + 'px';
     }
 
