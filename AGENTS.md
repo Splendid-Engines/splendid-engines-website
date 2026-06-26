@@ -20,5 +20,12 @@ into every page by hand. The canonical copies live in `public/_includes/`.
 - **New writing piece:** copy `public/writing/_template/` (it already carries the
   header, footer, and the analytics tag), fill it in, and link it from
   `public/writing/index.html`.
+- **Build the body from the module library.** Articles are assembled from named,
+  reusable modules (hero, pull-quote, stat band, charts, timeline, talking-head,
+  CTA). The registry is `public/writing/MODULES.md`; the live gallery is
+  `/our-brand/modules/`. A module's look (`assets/css/modules.css`, `custom.css`)
+  and behavior (`assets/js/`) are shared, so editing one updates every article at
+  once. Preview a piece as a Claude Artifact with
+  `node scripts/preview.mjs writing/<slug>`.
 
 See `README.md` for the full repo layout, local preview, and deploy workflow.

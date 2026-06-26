@@ -32,16 +32,18 @@ public/
 │   └── share-your-take/index.html    # Calendly booking page
 ├── our-brand/
 │   ├── index.html                    # brand guidelines (noindex)
+│   ├── modules/index.html            # writing module gallery (noindex)
 │   └── splendid-visual-brand/
 │       ├── SKILL.md                  # machine-readable brand skill
 │       └── icons/v2/                 # icon gallery
 ├── writing/
 │   ├── index.html                    # list of all pieces
+│   ├── MODULES.md                    # the writing module library (registry)
 │   ├── _template/index.html          # reference template for new pieces
 │   └── [slug]/index.html             # each piece, hand-built
 ├── assets/
-│   ├── css/                          # bootstrap.min.css + custom.css
-│   ├── js/                           # bootstrap.bundle.min.js + nav.js
+│   ├── css/                          # bootstrap.min.css + custom.css + modules.css
+│   ├── js/                           # bootstrap.bundle.min.js, nav.js, reveal.js, talking-head.js, charts.js
 │   └── img/
 └── _includes/
     ├── header.html                   # canonical header (copy into each page)
@@ -76,9 +78,28 @@ grep -rl "static.claydar.com" public --include=*.html
 
 1. Copy `public/writing/_template/` to `public/writing/[your-slug]/`
 2. Fill in the title, date, summary, and body
-3. Add a link to it in `public/writing/index.html`
+3. Build the body from the module library (see below)
+4. Add a link to it in `public/writing/index.html`
 
 Each piece can have its own bespoke layout. The template is a starting point, not a straitjacket.
+
+## Writing modules
+
+Articles are built from a shared library of layout modules: hero, pull-quote,
+stat band, ranked bars, charts, timeline, talking-head, CTA, and more. Two
+references stay in sync because the gallery renders the real modules:
+
+- **Registry:** `public/writing/MODULES.md` lists every module with its purpose,
+  exact markup, and brand rules. The shared vocabulary.
+- **Live gallery:** `/our-brand/modules/` renders each module next to a
+  copy-paste snippet. Linked from the brand page.
+
+A module's look (`assets/css/modules.css` and `custom.css`) and behavior
+(`assets/js/`) are shared, so changing one updates every article at once. No
+per-article edits, because the files are linked, not copied. The interactive
+chart module (`assets/js/charts.js`) is data-driven: the article carries only a
+small JSON block and the shared renderer draws it, so even a behavior change
+propagates everywhere.
 
 ## Local preview
 
@@ -89,6 +110,20 @@ cd public && python3 -m http.server 8001
 ```
 
 Then open `http://localhost:8001`. Opening HTML files directly with `file://` mostly works, but absolute asset paths (`/assets/...`) will not resolve, so use a local server.
+
+### Preview a page in Claude
+
+To review a page as a self-contained Claude Artifact, bundle it into one file
+(CSS, JS, and local images inlined; trackers stripped; web fonts fall back to
+system stacks because Artifacts block external hosts):
+
+```
+node scripts/preview.mjs writing/[your-slug]
+```
+
+Add `--fragment` to emit content ready to drop straight into a Claude Artifact.
+The module gallery itself (`/our-brand/modules/`) is also a live preview of every
+module.
 
 ## Deploying
 
