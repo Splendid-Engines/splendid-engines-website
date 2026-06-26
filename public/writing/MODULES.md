@@ -300,6 +300,30 @@ fade-in. No JS beyond `reveal.js`.
 </ol>
 ```
 
+### Framework matrix (`.se-matrix`) - NEW
+A labeled 2-axis grid. Hover, tap, or keyboard-focus a cell to reveal its detail
+in the panel below. Data-driven, like the charts.
+
+```html
+<figure class="se-matrix" data-se-matrix>
+  <figcaption class="se-matrix-title">Every content type, mapped</figcaption>
+  <script type="application/json" class="se-matrix-data">
+  {
+    "xLabel": "Time", "yLabel": "Stance",
+    "columns": ["Past", "Present", "Future"],
+    "rows": ["Analytical", "Opinion"],
+    "cells": [
+      { "row": 0, "col": 0, "title": "Case study", "detail": "What happened, and why it worked." }
+    ]
+  }
+  </script>
+</figure>
+```
+
+`cells` takes the flat `{row, col, title, detail, tag}` form above or a 2D array.
+Each cell needs a `title`; `detail` and `tag` are optional. Needs
+`<script src="/assets/js/matrix.js" defer></script>`.
+
 ---
 
 ## Expressive
@@ -362,6 +386,7 @@ The gallery at `/our-brand/modules/` is itself a live preview of every module.
 | Chart (NEW) | this file | `modules.css` | `charts.js` |
 | Timeline (NEW) | this file | `modules.css` | (reveal.js) |
 | ASCII art (NEW) | this file | `modules.css` | `ascii.js` (generate with `scripts/asciify.mjs`) |
+| Framework matrix (NEW) | this file | `modules.css` | `matrix.js` |
 
 When you add a new module: add its styles to `modules.css`, its behavior to a new
 `assets/js/<module>.js` (the `data-*` hook + IIFE pattern, like `charts.js`), a

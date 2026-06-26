@@ -138,6 +138,7 @@
             <li><a href="#m-chart-bar">Chart: bar</a></li>
             <li><a href="#m-chart-line">Chart: line + toggle</a></li>
             <li><a href="#m-timeline">Timeline</a></li>
+            <li><a href="#m-matrix">Framework matrix</a></li>
           </ul>
           <div class="toc-head">Expressive</div>
           <ul>
@@ -598,6 +599,54 @@
             </div>
           </article>
 
+          <!-- FRAMEWORK MATRIX -->
+          <article class="module-card" id="m-matrix">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Framework matrix <span class="module-tag" style="vertical-align:middle;">New</span></h2>
+              <p>A labeled 2-axis grid. Hover, tap, or keyboard-focus a cell to reveal its detail below. Data-driven, like the charts: the article carries only the config.</p>
+              <div class="module-tags"><span class="module-tag">modules.css</span><span class="module-tag">matrix.js</span></div>
+            </div>
+            <div class="module-demo">
+              <figure class="se-matrix reveal" data-se-matrix>
+                <figcaption class="se-matrix-title">Every content type, mapped</figcaption>
+                <script type="application/json" class="se-matrix-data">
+                {
+                  "xLabel": "Time",
+                  "yLabel": "Stance",
+                  "columns": ["Past", "Present", "Future"],
+                  "rows": ["Analytical", "Opinion"],
+                  "cells": [
+                    { "row": 0, "col": 0, "title": "Case study", "detail": "What happened, and why it worked. Proof, told as a story." },
+                    { "row": 0, "col": 1, "title": "Explainer", "detail": "How the thing works today, in plain terms." },
+                    { "row": 0, "col": 2, "title": "Forecast", "detail": "Where the data says things are heading next." },
+                    { "row": 1, "col": 0, "title": "Retrospective", "detail": "A frank take on what the field got right or wrong." },
+                    { "row": 1, "col": 1, "title": "Perspective", "detail": "A point of view on the current moment." },
+                    { "row": 1, "col": 2, "title": "Prediction", "detail": "A bet on what comes next, and why." }
+                  ]
+                }
+                </script>
+              </figure>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;figure class="se-matrix" data-se-matrix&gt;
+  &lt;figcaption class="se-matrix-title"&gt;Every content type, mapped&lt;/figcaption&gt;
+  &lt;script type="application/json" class="se-matrix-data"&gt;
+  {
+    "xLabel": "Time", "yLabel": "Stance",
+    "columns": ["Past", "Present", "Future"],
+    "rows": ["Analytical", "Opinion"],
+    "cells": [
+      { "row": 0, "col": 0, "title": "Case study", "detail": "What happened, and why it worked." }
+    ]
+  }
+  &lt;/script&gt;
+&lt;/figure&gt;
+&lt;!-- add: &lt;script src="/assets/js/matrix.js" defer&gt;&lt;/script&gt; --&gt;</code></pre>
+            </div>
+          </article>
+
           <!-- ASCII ART -->
           <article class="module-card" id="m-ascii">
             <div class="module-head">
@@ -818,6 +867,7 @@ node scripts/asciify.mjs photo.png --cols 110 --figure --label "Portrait" --out 
 <script src="/assets/js/reveal.js" defer></script>
 <script src="/assets/js/charts.js" defer></script>
 <script src="/assets/js/ascii.js" defer></script>
+<script src="/assets/js/matrix.js" defer></script>
 
 <!-- Clay web-intent tracking (Claydar). Canonical copy: /_includes/analytics.html. Keep on every page. -->
 <script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>
