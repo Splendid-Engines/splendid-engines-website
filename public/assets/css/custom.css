@@ -309,6 +309,13 @@ a:hover { color: var(--lagoon); }
   line-height: 1.1;
 }
 .article-byline-meta { font-size: 0.9rem; color: var(--muted); }
+/* Byline name links to the author page */
+a.article-byline-name { color: var(--lagoon); text-decoration: none; }
+a.article-byline-name:hover { text-decoration: underline; }
+/* Center the byline when it sits inside a centered hero */
+.hero .article-byline { justify-content: center; }
+/* Author page: round portrait at the top of an author roll-up */
+.author-photo { width: 180px; height: 180px; border-radius: 999px; object-fit: cover; }
 @media (max-width: 991.98px) {
   .article-fold { padding: 2.25rem 0 1.5rem; }
   .article-fold-media { margin-top: 1.25rem; }
