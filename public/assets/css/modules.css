@@ -235,6 +235,7 @@
 }
 .se-ascii-art {
   display: block;
+  width: fit-content;             /* shrink to the art so margin auto centers it in the column */
   max-width: 100%;
   margin: 0 auto;
   font-family: var(--op-mono, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
