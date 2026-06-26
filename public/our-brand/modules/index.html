@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Writing modules - Splendid Engines</title>
+  <meta name="description" content="The reusable module library for Splendid Engines writing pieces." />
+  <!-- Internal reference page: not in search, like the brand page. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-splendid.svg" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Mulish:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+  <link rel="stylesheet" href="/assets/css/modules.css" />
+
+  <style>
+    /* Gallery chrome only. Page-scoped on purpose so it never touches the shared
+       module CSS. The live demos below render with the real shared styles. */
+    .gallery-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+    .gallery-layout { display: grid; grid-template-columns: 220px 1fr; gap: 2.5rem; align-items: start; }
+    .gallery-toc { position: sticky; top: 90px; font-family: 'Mulish', sans-serif; }
+    .gallery-toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+    .gallery-toc a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    .gallery-toc a:hover { color: var(--poppy); }
+    .gallery-toc .toc-head {
+      font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase;
+      letter-spacing: 0.14em; font-size: 0.75rem; color: var(--poppy); margin: 1rem 0 0.4rem;
+    }
+    .module-card { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem; background: var(--snow); }
+    .module-head { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--line); }
+    .module-head h2 { font-size: 1.6rem; margin: 0.15rem 0 0.4rem; }
+    .module-head p { font-family: 'Mulish', sans-serif; font-size: 1rem; color: var(--muted); margin: 0; line-height: 1.5; }
+    .module-tags { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .module-tag { font-family: 'Mulish', sans-serif; font-size: 0.75rem; font-weight: 600; color: var(--lagoon); background: var(--ash); border-radius: 999px; padding: 0.15rem 0.6rem; }
+    .module-demo { padding: 1.75rem 1.5rem; }
+    .module-demo.on-ash { background: var(--ash); }
+    .module-demo.on-ash-warm { background: var(--ash-warm); }
+    .module-demo.on-lagoon { background: var(--lagoon); }
+    .demo-note { font-family: 'Mulish', sans-serif; font-size: 0.82rem; color: var(--muted); margin: 0 0 1rem; font-style: italic; }
+    .code-block { position: relative; border-top: 1px solid var(--line); background: #0e2236; }
+    .code-block pre { margin: 0; padding: 1.1rem 1.25rem; overflow-x: auto; }
+    .code-block code { font-family: var(--op-mono, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace); font-size: 0.8rem; line-height: 1.55; color: #d6e6f2; white-space: pre; }
+    .gallery-copy {
+      position: absolute; top: 0.6rem; right: 0.6rem; z-index: 2;
+      font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 0.72rem; font-weight: 700; color: #fff; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer;
+    }
+    .gallery-copy:hover { background: rgba(255,255,255,0.22); }
+    /* Placeholders for image slots so the gallery has no broken images. */
+    .demo-img-ph { background: var(--ash); border: 1px dashed var(--line); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: 'Mulish', sans-serif; font-size: 0.85rem; min-height: 160px; }
+    .demo-avatar-ph { width: 48px; height: 48px; border-radius: 50%; background: var(--mate); flex: none; }
+    @media (max-width: 900px) { .gallery-layout { grid-template-columns: 1fr; } .gallery-toc { position: static; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER (canonical: _includes/header.html) -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/img/favicon-splendid.svg" alt="" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Who we help</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sales/">Sales</a></li>
+            <li><a class="dropdown-item" href="/marketing/">Marketing</a></li>
+            <li><a class="dropdown-item" href="/experts/">Experts</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/tools/content-matrix/">Content Matrix</a></li>
+            <li><a class="dropdown-item" href="/tools/voice-profile/">Voice Profile Builder</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/writing/">Writing</a></li>
+        <li class="nav-item ms-lg-3"><a class="btn-se-primary" href="/contact/">Book a call</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- INTRO -->
+  <section class="section bg-snow">
+    <div class="gallery-wrap">
+      <span class="eyebrow">Brand &middot; Writing</span>
+      <h1 class="hero-headline" style="font-size: clamp(2.5rem, 5vw, 3.75rem);">Writing modules</h1>
+      <p class="thesis" style="max-width: 70ch;">The shared toolbox for building articles. Every block below is a reusable module: a fixed markup shape whose look and behavior come from shared CSS and JS. Copy a snippet, fill it with content, and it renders on-brand. Change a module in one place and every article updates.</p>
+      <p style="font-family: 'Mulish', sans-serif; color: var(--muted); max-width: 70ch;">
+        The full spec lives in <code>writing/MODULES.md</code>. Brand rules come from
+        <a href="/our-brand/">the brand guidelines</a>. New, interactive modules are tagged
+        <span class="module-tag" style="display:inline-block;">New</span>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-sm bg-snow" style="padding-top: 0;">
+    <div class="gallery-wrap">
+      <div class="gallery-layout">
+
+        <!-- TABLE OF CONTENTS -->
+        <nav class="gallery-toc" aria-label="Modules">
+          <div class="toc-head">Foundations</div>
+          <ul>
+            <li><a href="#m-eyebrow">Eyebrow, thesis, highlight</a></li>
+            <li><a href="#m-sections">Sections + containers</a></li>
+          </ul>
+          <div class="toc-head">Hero + quotes</div>
+          <ul>
+            <li><a href="#m-fold">Article fold</a></li>
+            <li><a href="#m-pullquote">Pull quote</a></li>
+            <li><a href="#m-quote">Inline quote</a></li>
+            <li><a href="#m-talkinghead">Talking-head</a></li>
+          </ul>
+          <div class="toc-head">Data viz</div>
+          <ul>
+            <li><a href="#m-stats">Stat band</a></li>
+            <li><a href="#m-rank">Ranked bars</a></li>
+            <li><a href="#m-ratio">Ratio icons</a></li>
+            <li><a href="#m-popviz">Population grid</a></li>
+            <li><a href="#m-chart-bar">Chart: bar</a></li>
+            <li><a href="#m-chart-line">Chart: line + toggle</a></li>
+            <li><a href="#m-timeline">Timeline</a></li>
+          </ul>
+          <div class="toc-head">Lists + calls</div>
+          <ul>
+            <li><a href="#m-moves">Five-moves list</a></li>
+            <li><a href="#m-offer">Offer card</a></li>
+            <li><a href="#m-cta">Closing CTA</a></li>
+          </ul>
+        </nav>
+
+        <!-- MODULES -->
+        <div>
+
+          <!-- EYEBROW / THESIS / HIGHLIGHT -->
+          <article class="module-card" id="m-eyebrow">
+            <div class="module-head">
+              <span class="eyebrow">Foundation</span>
+              <h2>Eyebrow, thesis, highlight</h2>
+              <p>The structural label above every heading, the weightier lead paragraph, and the single-word Daffodil highlighter.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo">
+              <div class="longform">
+                <span class="eyebrow">Part 01 &middot; Vendor distrust</span>
+                <h2 style="margin-top:0;">Peer recommendations beat vendor marketing.</h2>
+                <p class="thesis">Senior buyers trust their peers far more than vendor marketing. That gap changes everything downstream.</p>
+                <p>Use the highlighter on one load-bearing word: it is the <span class="hl">permission</span> that earns the read. Two per page, light surfaces only.</p>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;span class="eyebrow"&gt;Part 01 &amp;middot; Vendor distrust&lt;/span&gt;
+&lt;h2&gt;Peer recommendations beat vendor marketing.&lt;/h2&gt;
+&lt;p class="thesis"&gt;The one-sentence premise of the section.&lt;/p&gt;
+&lt;p&gt;It is the &lt;span class="hl"&gt;permission&lt;/span&gt; that earns the read.&lt;/p&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- SECTIONS + CONTAINERS -->
+          <article class="module-card" id="m-sections">
+            <div class="module-head">
+              <span class="eyebrow">Foundation</span>
+              <h2>Sections + containers</h2>
+              <p>The vertical rhythm wrapper and reading-width containers. Backgrounds set the surface; blog posts stay on light surfaces.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo on-ash">
+              <p class="demo-note">A <code>.section.bg-ash</code> with a <code>.container-narrow</code> inside.</p>
+              <div class="longform"><p style="margin:0;">Reading-width body copy sits in <code>.container-narrow</code>. Stat rows and charts use the wider <code>.container-medium</code>.</p></div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;section class="section bg-snow"&gt;
+  &lt;div class="container container-narrow"&gt;
+    &lt;!-- modules go here --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- backgrounds: bg-snow | bg-ash | bg-ash-warm | bg-lagoon --&gt;
+&lt;!-- widths: container-narrow | container-medium | container --&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- ARTICLE FOLD -->
+          <article class="module-card" id="m-fold">
+            <div class="module-head">
+              <span class="eyebrow">Hero</span>
+              <h2>Article fold</h2>
+              <p>The standard opener: title and byline on the left, feature image on the right.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo">
+              <p class="demo-note">Image slot shown as a placeholder.</p>
+              <div class="article-fold" style="padding: 0;">
+                <div class="row align-items-center g-4">
+                  <div class="col-lg-6 article-fold-text">
+                    <span class="eyebrow">Essay</span>
+                    <h1 class="article-fold-title">Why your best content should reach the fewest people.</h1>
+                    <p class="article-fold-sub">A case for niche over mass in B2B.</p>
+                    <div class="article-byline">
+                      <span class="demo-avatar-ph"></span>
+                      <div>
+                        <div class="article-byline-name">Evan Huston</div>
+                        <div class="article-byline-meta">Co-founder &middot; June 12, 2026</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 article-fold-media"><div class="demo-img-ph">Feature image</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;section class="article-fold bg-snow"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row align-items-center g-4 g-lg-5"&gt;
+      &lt;div class="col-lg-6 article-fold-text"&gt;
+        &lt;span class="eyebrow"&gt;Essay&lt;/span&gt;
+        &lt;h1 class="article-fold-title"&gt;Piece title&lt;/h1&gt;
+        &lt;p class="article-fold-sub"&gt;One-sentence summary.&lt;/p&gt;
+        &lt;div class="article-byline"&gt;
+          &lt;img class="article-byline-avatar" src="..." alt="Author" /&gt;
+          &lt;div&gt;
+            &lt;div class="article-byline-name"&gt;Author name&lt;/div&gt;
+            &lt;div class="article-byline-meta"&gt;Title &amp;middot; Month DD, YYYY&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-6 article-fold-media"&gt;&lt;img src="..." alt="..." /&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- PULL QUOTE -->
+          <article class="module-card" id="m-pullquote">
+            <div class="module-head">
+              <span class="eyebrow">Quote</span>
+              <h2>Pull quote (Lagoon bookend)</h2>
+              <p>The banked line on its own dark surface. One of the few places Lagoon is allowed in a blog post.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo on-lagoon">
+              <div class="longform text-center">
+                <span class="eyebrow">The headline</span>
+                <p class="pull-quote" style="color:#fff; padding-top:1rem;">&ldquo;Adding community-driven data gives a report life. It opens up the voices of real people who buyers know and trust.&rdquo;</p>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;section class="section bg-lagoon"&gt;
+  &lt;div class="container container-narrow text-center"&gt;
+    &lt;span class="eyebrow"&gt;The headline&lt;/span&gt;
+    &lt;p class="pull-quote" style="color:#fff;"&gt;A line worth its own surface.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- INLINE QUOTE -->
+          <article class="module-card" id="m-quote">
+            <div class="module-head">
+              <span class="eyebrow">Quote</span>
+              <h2>Inline quote + attribution</h2>
+              <p>An interview pull-quote within body copy, with a headshot, name, and role beneath it.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo">
+              <div class="longform">
+                <p class="pull-quote">&ldquo;Tell me about my problem. Then tell me how you have seen people solve it, with or without your product.&rdquo;</p>
+                <div class="testimonial-attr d-flex align-items-center mt-3">
+                  <span class="demo-avatar-ph"></span>
+                  <div>
+                    <div class="testimonial-attr-name">Lomit Patel</div>
+                    <div class="testimonial-attr-role">CMO, TYB</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;p class="pull-quote"&gt;&amp;ldquo;The quote.&amp;rdquo;&lt;/p&gt;
+&lt;div class="testimonial-attr d-flex align-items-center mt-3"&gt;
+  &lt;img src="..." alt="Name" loading="lazy" /&gt;
+  &lt;div&gt;
+    &lt;div class="testimonial-attr-name"&gt;Name&lt;/div&gt;
+    &lt;div class="testimonial-attr-role"&gt;Title, Company&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- TALKING HEAD -->
+          <article class="module-card" id="m-talkinghead">
+            <div class="module-head">
+              <span class="eyebrow">Quote</span>
+              <h2>Talking-head quote</h2>
+              <p>A short clip of the person plays on hover or tap while the quote lights up word by word. Data-driven: the article holds the quote text and a word-timings JSON.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">talking-head.js</span></div>
+            </div>
+            <div class="module-demo">
+              <p class="demo-note">Needs a video clip, so it is not rendered here. See the live demo: <a href="/writing/talking-head-demo/">/writing/talking-head-demo/</a>.</p>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;figure class="talking-head" data-th data-timings="/assets/video/&lt;slug&gt;/clip.timings.json"&gt;
+  &lt;div class="th-media"&gt;
+    &lt;video class="th-video" preload="metadata" playsinline muted poster="..." src="...mp4"&gt;&lt;/video&gt;
+    &lt;span class="th-affordance" aria-hidden="true"&gt;Tap for sound&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;blockquote class="th-quote"&gt;
+    &lt;p class="th-text"&gt;The exact quote, as plain readable prose.&lt;/p&gt;
+    &lt;figcaption class="testimonial-attr d-flex align-items-center th-attr"&gt;...name / role...&lt;/figcaption&gt;
+  &lt;/blockquote&gt;
+&lt;/figure&gt;
+&lt;!-- add: &lt;script src="/assets/js/talking-head.js" defer&gt;&lt;/script&gt; --&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- STAT BAND -->
+          <article class="module-card" id="m-stats">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Stat band</h2>
+              <p>Big numbers that count up on scroll. Use a two- or three-column grid. Scroll it into view to see the count-up.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">reveal.js</span></div>
+            </div>
+            <div class="module-demo on-ash">
+              <div class="longform">
+                <div class="row g-4 text-center">
+                  <div class="col-md-4 reveal-stat" data-reveal-delay="1">
+                    <span class="longform stat-feature" style="font-size:clamp(3rem,8vw,5rem);">47<span class="stat-unit">%</span></span>
+                    <p class="text-muted-se">name <strong>industry peers</strong> as most trusted.</p>
+                  </div>
+                  <div class="col-md-4 reveal-stat" data-reveal-delay="2">
+                    <span class="longform stat-feature" style="font-size:clamp(3rem,8vw,5rem);">15<span class="stat-unit">%</span></span>
+                    <p class="text-muted-se">name <strong>vendor content</strong>.</p>
+                  </div>
+                  <div class="col-md-4 reveal-stat" data-reveal-delay="3">
+                    <span class="longform stat-feature" style="font-size:clamp(3rem,8vw,5rem);">13<span class="stat-unit">%</span></span>
+                    <p class="text-muted-se">name <strong>trade journalists</strong>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;div class="row g-4 text-center"&gt;
+  &lt;div class="col-md-4 reveal-stat" data-reveal-delay="1"&gt;
+    &lt;span class="longform stat-feature"&gt;47&lt;span class="stat-unit"&gt;%&lt;/span&gt;&lt;/span&gt;
+    &lt;p class="text-muted-se"&gt;name &lt;strong&gt;industry peers&lt;/strong&gt; as most trusted.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- RANKED BARS -->
+          <article class="module-card" id="m-rank">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Ranked bars</h2>
+              <p>A 1/2/3 podium with a proportional fill behind each row, set with the <code>--bar-width</code> custom property.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">reveal.js</span></div>
+            </div>
+            <div class="module-demo">
+              <ol class="rank-list reveal">
+                <li class="rank-1" style="--bar-width: 100%"><span class="rank-num">1</span><span class="rank-label">Feeling understood</span></li>
+                <li class="rank-2" style="--bar-width: 46%"><span class="rank-num">2</span><span class="rank-label">Pricing &amp; commercial terms</span></li>
+                <li class="rank-3" style="--bar-width: 41%"><span class="rank-num">3</span><span class="rank-label">Feature parity</span></li>
+              </ol>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;ol class="rank-list reveal"&gt;
+  &lt;li class="rank-1" style="--bar-width: 100%"&gt;&lt;span class="rank-num"&gt;1&lt;/span&gt;&lt;span class="rank-label"&gt;Feeling understood&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="rank-2" style="--bar-width: 46%"&gt;&lt;span class="rank-num"&gt;2&lt;/span&gt;&lt;span class="rank-label"&gt;Pricing&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="rank-3" style="--bar-width: 41%"&gt;&lt;span class="rank-num"&gt;3&lt;/span&gt;&lt;span class="rank-label"&gt;Feature parity&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- RATIO ICONS -->
+          <article class="module-card" id="m-ratio">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Ratio icons</h2>
+              <p>An "X to 1" people-icon comparison for a simple, memorable ratio.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo">
+              <div class="ratio-icons" aria-hidden="true">
+                <div class="ratio-group"><span class="ratio-person"></span><span class="ratio-person"></span><span class="ratio-person"></span></div>
+                <span class="ratio-vs">vs.</span>
+                <div class="ratio-group"><span class="ratio-person poppy"></span></div>
+              </div>
+              <p class="ratio-caption">For every one buyer who starts with vendor marketing, three start by asking a peer.</p>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;div class="ratio-icons" aria-hidden="true"&gt;
+  &lt;div class="ratio-group"&gt;&lt;span class="ratio-person"&gt;&lt;/span&gt;&lt;span class="ratio-person"&gt;&lt;/span&gt;&lt;span class="ratio-person"&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;span class="ratio-vs"&gt;vs.&lt;/span&gt;
+  &lt;div class="ratio-group"&gt;&lt;span class="ratio-person poppy"&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class="ratio-caption"&gt;The caption that reads the ratio.&lt;/p&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- POPULATION GRID -->
+          <article class="module-card" id="m-popviz">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Population grid</h2>
+              <p>A waffle grid of dots for "N people, segmented." Below is a 50-dot illustration; the flagship report uses 400.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo text-center">
+              <div class="pop-viz" aria-hidden="true" style="max-width:360px;">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot poppy"></span><span class="dot daffodil"></span><span class="dot daffodil"></span><span class="dot daffodil"></span><span class="dot daffodil"></span><span class="dot daffodil"></span><span class="dot daffodil"></span><span class="dot daffodil"></span>
+              </div>
+              <div class="pop-legend">
+                <span><span class="swatch lagoon"></span>30 &middot; sub-$60k</span>
+                <span><span class="swatch poppy"></span>13 &middot; $60k-$100k</span>
+                <span><span class="swatch daffodil"></span>7 &middot; $100k+</span>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;div class="pop-viz" aria-hidden="true"&gt;
+  &lt;span class="dot"&gt;&lt;/span&gt;          &lt;!-- repeat for the bulk segment --&gt;
+  &lt;span class="dot poppy"&gt;&lt;/span&gt;    &lt;!-- second segment --&gt;
+  &lt;span class="dot daffodil"&gt;&lt;/span&gt; &lt;!-- third segment --&gt;
+&lt;/div&gt;
+&lt;div class="pop-legend"&gt;
+  &lt;span&gt;&lt;span class="swatch lagoon"&gt;&lt;/span&gt;240 &amp;middot; sub-$60k&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- CHART: BAR -->
+          <article class="module-card" id="m-chart-bar">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Chart: bar <span class="module-tag" style="vertical-align:middle;">New</span></h2>
+              <p>A data-driven SVG bar chart. Animates in on scroll, shows a value readout on hover or focus, and emits a screen-reader data table automatically. The article carries only the data.</p>
+              <div class="module-tags"><span class="module-tag">modules.css</span><span class="module-tag">charts.js</span></div>
+            </div>
+            <div class="module-demo">
+              <figure class="se-chart" data-se-chart>
+                <figcaption class="se-chart-title">Most trusted source for upskilling</figcaption>
+                <script type="application/json" class="se-chart-data">
+                {
+                  "type": "bar",
+                  "format": "percent",
+                  "categories": ["Industry peers", "Vendor content", "Trade journalists", "Analysts", "Conferences"],
+                  "series": [
+                    { "name": "All buyers", "color": "lagoon", "values": [47, 15, 13, 12, 13] }
+                  ]
+                }
+                </script>
+              </figure>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;figure class="se-chart" data-se-chart&gt;
+  &lt;figcaption class="se-chart-title"&gt;Most trusted source for upskilling&lt;/figcaption&gt;
+  &lt;script type="application/json" class="se-chart-data"&gt;
+  {
+    "type": "bar",
+    "format": "percent",
+    "categories": ["Industry peers", "Vendor content", "Trade journalists"],
+    "series": [
+      { "name": "All buyers", "color": "lagoon", "values": [47, 15, 13] }
+    ]
+  }
+  &lt;/script&gt;
+&lt;/figure&gt;
+&lt;!-- add: &lt;script src="/assets/js/charts.js" defer&gt;&lt;/script&gt; --&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- CHART: LINE + TOGGLE -->
+          <article class="module-card" id="m-chart-line">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Chart: line + series toggle <span class="module-tag" style="vertical-align:middle;">New</span></h2>
+              <p>Multiple series render as legend chips. Click a chip to show or hide that series. Set <code>"type": "area"</code> for a filled version. Same data shape, same JS.</p>
+              <div class="module-tags"><span class="module-tag">modules.css</span><span class="module-tag">charts.js</span></div>
+            </div>
+            <div class="module-demo">
+              <figure class="se-chart" data-se-chart>
+                <figcaption class="se-chart-title">Peer content matters more as the deal grows</figcaption>
+                <script type="application/json" class="se-chart-data">
+                {
+                  "type": "line",
+                  "format": "percent",
+                  "categories": ["$40-60k", "$60-100k", "$100k+"],
+                  "series": [
+                    { "name": "Peer content builds confidence", "color": "poppy", "values": [56, 60, 68] },
+                    { "name": "Feel the vendor understands them", "color": "lake", "values": [51, 58, 64] }
+                  ]
+                }
+                </script>
+              </figure>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;figure class="se-chart" data-se-chart&gt;
+  &lt;figcaption class="se-chart-title"&gt;Peer content matters more as the deal grows&lt;/figcaption&gt;
+  &lt;script type="application/json" class="se-chart-data"&gt;
+  {
+    "type": "line",
+    "format": "percent",
+    "categories": ["$40-60k", "$60-100k", "$100k+"],
+    "series": [
+      { "name": "Peer content builds confidence", "color": "poppy", "values": [56, 60, 68] },
+      { "name": "Feel the vendor understands them", "color": "lake", "values": [51, 58, 64] }
+    ]
+  }
+  &lt;/script&gt;
+&lt;/figure&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- TIMELINE -->
+          <article class="module-card" id="m-timeline">
+            <div class="module-head">
+              <span class="eyebrow">Data viz</span>
+              <h2>Timeline <span class="module-tag" style="vertical-align:middle;">New</span></h2>
+              <p>A vertical, editorial timeline. CSS only; add <code>.reveal</code> to each item for the fade-in.</p>
+              <div class="module-tags"><span class="module-tag">modules.css</span><span class="module-tag">reveal.js</span></div>
+            </div>
+            <div class="module-demo">
+              <div class="longform">
+                <ol class="se-timeline">
+                  <li class="se-timeline-item reveal">
+                    <span class="se-timeline-marker" aria-hidden="true"></span>
+                    <div class="se-timeline-content">
+                      <span class="se-timeline-date">Step 1</span>
+                      <h3 class="se-timeline-title">Interview the buyer</h3>
+                      <p>The act of being asked does pre-sale work no pitch can.</p>
+                    </div>
+                  </li>
+                  <li class="se-timeline-item reveal" data-reveal-delay="1">
+                    <span class="se-timeline-marker" aria-hidden="true"></span>
+                    <div class="se-timeline-content">
+                      <span class="se-timeline-date">Step 2</span>
+                      <h3 class="se-timeline-title">Publish the peer content</h3>
+                      <p>Today's interviewee becomes tomorrow's warm intro.</p>
+                    </div>
+                  </li>
+                  <li class="se-timeline-item reveal" data-reveal-delay="2">
+                    <span class="se-timeline-marker" aria-hidden="true"></span>
+                    <div class="se-timeline-content">
+                      <span class="se-timeline-date">Step 3</span>
+                      <h3 class="se-timeline-title">Earn the right to teach</h3>
+                      <p>Buyers read your thought leadership after the trust is built.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;ol class="se-timeline"&gt;
+  &lt;li class="se-timeline-item reveal"&gt;
+    &lt;span class="se-timeline-marker" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;div class="se-timeline-content"&gt;
+      &lt;span class="se-timeline-date"&gt;Step 1&lt;/span&gt;
+      &lt;h3 class="se-timeline-title"&gt;What happened&lt;/h3&gt;
+      &lt;p&gt;One or two lines of detail.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- FIVE MOVES -->
+          <article class="module-card" id="m-moves">
+            <div class="module-head">
+              <span class="eyebrow">List</span>
+              <h2>Five-moves list</h2>
+              <p>A list where each item leads with a stroked brand icon (2.5px stroke, square caps, miter joins).</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">reveal.js</span></div>
+            </div>
+            <div class="module-demo">
+              <div class="longform">
+                <ul class="move-list">
+                  <li>
+                    <span class="move-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 21a8 8 0 0 0-16 0" /><circle cx="10" cy="8" r="5" /><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg></span>
+                    <span><strong>Lead with peers, not the product.</strong> The vendor takes the producer role, not the protagonist role.</span>
+                  </li>
+                  <li>
+                    <span class="move-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg></span>
+                    <span><strong>Use peer content to earn the right to teach.</strong> Sequence matters.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;ul class="move-list"&gt;
+  &lt;li&gt;
+    &lt;span class="move-icon" aria-hidden="true"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;!-- paths --&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;span&gt;&lt;strong&gt;Lead with peers.&lt;/strong&gt; The point of the move.&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- OFFER CARD -->
+          <article class="module-card" id="m-offer">
+            <div class="module-head">
+              <span class="eyebrow">Call</span>
+              <h2>Offer card</h2>
+              <p>The article CTA in a bordered card. Carries one Poppy button.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo on-ash">
+              <div class="offer-card">
+                <span class="eyebrow">Free for senior B2B revenue leaders</span>
+                <h2>Get your free Market Map.</h2>
+                <p class="offer-pitch">One 30-minute working session. Walk away with a complete view of your target market.</p>
+                <div class="offer-cta"><a href="/contact/" class="btn-se-primary">Book a call</a></div>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;div class="offer-card"&gt;
+  &lt;span class="eyebrow"&gt;Free for senior B2B revenue leaders&lt;/span&gt;
+  &lt;h2&gt;Get your free Market Map.&lt;/h2&gt;
+  &lt;p class="offer-pitch"&gt;One 30-minute working session...&lt;/p&gt;
+  &lt;div class="offer-cta"&gt;&lt;a href="/contact/" class="btn-se-primary"&gt;Book a call&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <!-- CLOSING CTA -->
+          <article class="module-card" id="m-cta">
+            <div class="module-head">
+              <span class="eyebrow">Call</span>
+              <h2>Closing CTA</h2>
+              <p>End every piece with one Poppy CTA. One per page.</p>
+              <div class="module-tags"><span class="module-tag">custom.css</span><span class="module-tag">no JS</span></div>
+            </div>
+            <div class="module-demo text-center">
+              <div class="longform">
+                <span class="eyebrow">Get in touch</span>
+                <h2 class="display-5 mb-3">Talk to us.</h2>
+                <p class="thesis mb-4">One line that earns the click.</p>
+                <a href="/contact/" class="btn-se-primary">Book a call</a>
+              </div>
+            </div>
+            <div class="code-block">
+              <button class="gallery-copy" type="button">Copy</button>
+              <pre><code>&lt;section class="section bg-snow text-center"&gt;
+  &lt;div class="container container-narrow"&gt;
+    &lt;span class="eyebrow"&gt;Get in touch&lt;/span&gt;
+    &lt;h2 class="display-5 mb-3"&gt;Talk to us.&lt;/h2&gt;
+    &lt;p class="thesis mb-4"&gt;One line that earns the click.&lt;/p&gt;
+    &lt;a href="/contact/" class="btn-se-primary"&gt;Book a call&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (canonical: _includes/footer.html) -->
+<footer class="site-footer py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-4 text-center text-md-start">
+        <a href="/"><img src="/assets/img/logo-splendid.png" alt="Splendid Engines" class="footer-logo mb-2" /></a>
+        <div>
+          <span class="footer-tagline-script">Nice day, isn't it?</span>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item me-3"><a href="/">Home</a></li>
+          <li class="list-inline-item me-3"><a href="/about/">About</a></li>
+          <li class="list-inline-item me-3"><a href="/writing/">Writing</a></li>
+          <li class="list-inline-item me-3"><a href="/contact/">Contact</a></li>
+          <li class="list-inline-item"><a href="/our-brand/">Brand</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 text-center text-md-end footer-meta">
+        &copy; <span id="footer-year">2026</span> Splendid Engines. Operating in Canada and the USA.
+      </div>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<!-- Copy buttons (gallery-only). -->
+<script>
+  document.querySelectorAll('.gallery-copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('code');
+      if (!code) return;
+      var text = code.innerText;
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1400); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(done);
+      } else {
+        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done();
+      }
+    });
+  });
+</script>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/reveal.js" defer></script>
+<script src="/assets/js/charts.js" defer></script>
+
+<!-- Clay web-intent tracking (Claydar). Canonical copy: /_includes/analytics.html. Keep on every page. -->
+<script src="https://static.claydar.com/init.v1.js?id=cWRsely5TB"></script>
+</body>
+</html>
