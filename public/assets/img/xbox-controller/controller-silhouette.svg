@@ -1,43 +1,41 @@
-<svg viewBox="0 0 540 470" xmlns="http://www.w3.org/2000/svg">
-  <rect width="540" height="470" fill="#FFFFFF"/>
-  <!-- body silhouette (front view, modern Xbox) -->
-  <path d="M 270 90
-    C 315 78 350 80 376 98
-    C 398 112 408 130 410 150
-    C 432 150 448 168 450 196
-    C 452 230 442 250 430 268
-    C 448 300 470 340 472 380
-    C 473 410 458 432 430 438
-    C 404 443 384 428 372 404
-    C 360 380 352 360 334 350
-    C 320 343 296 340 270 340
-    C 244 340 220 343 206 350
-    C 188 360 180 380 168 404
-    C 156 428 136 443 110 438
-    C 82 432 67 410 68 380
-    C 70 340 92 300 110 268
-    C 98 250 88 230 90 196
-    C 92 168 108 150 130 150
-    C 132 130 142 112 164 98
-    C 190 80 225 78 270 90 Z" fill="#153047" stroke="#153047" stroke-width="2"/>
+<svg viewBox="0 0 600 470" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="470" fill="#FFFFFF"/>
+  <!-- body: smooth broad top, waist, grips bulge out and hang down -->
+  <path d="M 300 100
+    C 366 92 414 96 444 118
+    C 482 146 499 170 500 202
+    C 501 234 486 252 472 270
+    C 491 297 502 330 498 360
+    C 494 392 474 412 446 412
+    C 418 412 402 392 394 360
+    C 388 336 380 320 356 318
+    C 336 316 320 326 300 326
+    C 280 326 264 316 244 318
+    C 220 320 212 336 206 360
+    C 198 392 178 412 154 412
+    C 126 412 106 392 102 360
+    C 98 330 109 297 128 270
+    C 114 252 99 234 100 202
+    C 101 170 118 146 156 118
+    C 186 96 234 92 300 100 Z" fill="#153047"/>
   <!-- left thumbstick (upper-left) -->
-  <circle cx="165" cy="205" r="30" fill="#FFFFFF"/>
-  <circle cx="165" cy="205" r="12" fill="#153047"/>
-  <!-- d-pad (lower-left): light disc + dark cross -->
-  <circle cx="205" cy="315" r="25" fill="#FFFFFF"/>
-  <rect x="197" y="298" width="16" height="34" fill="#153047"/>
-  <rect x="188" y="307" width="34" height="16" fill="#153047"/>
-  <!-- face buttons ABXY (upper-right) -->
-  <circle cx="375" cy="180" r="13" fill="#FFFFFF"/>
-  <circle cx="351" cy="205" r="13" fill="#FFFFFF"/>
-  <circle cx="399" cy="205" r="13" fill="#FFFFFF"/>
-  <circle cx="375" cy="230" r="13" fill="#FFFFFF"/>
+  <circle cx="202" cy="198" r="38" fill="#FFFFFF"/>
+  <circle cx="202" cy="198" r="15" fill="#153047"/>
+  <!-- d-pad (lower-left): dished disc + cross -->
+  <circle cx="246" cy="286" r="26" fill="#FFFFFF"/>
+  <rect x="238" y="269" width="16" height="34" fill="#153047"/>
+  <rect x="229" y="278" width="34" height="16" fill="#153047"/>
+  <!-- face buttons ABXY (upper-right diamond) -->
+  <circle cx="398" cy="162" r="15" fill="#FFFFFF"/>
+  <circle cx="371" cy="188" r="15" fill="#FFFFFF"/>
+  <circle cx="425" cy="188" r="15" fill="#FFFFFF"/>
+  <circle cx="398" cy="214" r="15" fill="#FFFFFF"/>
   <!-- right thumbstick (lower-right) -->
-  <circle cx="355" cy="315" r="30" fill="#FFFFFF"/>
-  <circle cx="355" cy="315" r="12" fill="#153047"/>
+  <circle cx="360" cy="286" r="38" fill="#FFFFFF"/>
+  <circle cx="360" cy="286" r="15" fill="#153047"/>
   <!-- xbox button (top center) -->
-  <circle cx="270" cy="150" r="15" fill="#FFFFFF"/>
-  <!-- view / menu buttons -->
-  <rect x="236" y="176" width="20" height="11" rx="3" fill="#FFFFFF"/>
-  <rect x="284" y="176" width="20" height="11" rx="3" fill="#FFFFFF"/>
+  <circle cx="300" cy="138" r="16" fill="#FFFFFF"/>
+  <!-- view / menu -->
+  <rect x="276" y="166" width="20" height="11" rx="3" fill="#FFFFFF"/>
+  <rect x="304" y="166" width="20" height="11" rx="3" fill="#FFFFFF"/>
 </svg>
