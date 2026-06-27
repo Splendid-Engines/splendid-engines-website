@@ -349,6 +349,25 @@ more detail), `--ramp short|long`, `--color brand` (tint the glyphs with the bra
 a dark Lagoon panel. Use it sparingly: a wink, per the brand's imagery rules.
 Needs `<script src="/assets/js/ascii.js" defer></script>`.
 
+**Build-on-load reveal (optional).** Add two attributes to the `<figure>` and the
+art animates itself in when it scrolls into view instead of just appearing:
+
+```html
+<figure class="se-ascii" role="img" aria-label="Portrait"
+        data-reveal="typewriter" data-reveal-drift>
+  <pre class="se-ascii-art" aria-hidden="true">...art...</pre>
+</figure>
+```
+
+- `data-reveal="typewriter"` types the art out left to right, line by line, with a
+  cursor sweeping to the bottom. (`"matrix"` rains it in top to bottom; `"decode"`
+  starts scrambled and each character lands on its final glyph.)
+- `data-reveal-drift` keeps it alive after it settles: a few characters quietly
+  shift on a slow loop, so it never looks like a frozen screenshot. Pauses in
+  background tabs.
+- Honors `prefers-reduced-motion`: shows the finished art at once, no drift. The
+  Xbox hero uses `typewriter` + drift.
+
 ---
 
 ## Animation
