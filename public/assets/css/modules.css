@@ -408,6 +408,89 @@
 }
 
 /* ============================================================
+   Subscribe (mailing list) - posts to a HubSpot form
+   ============================================================ */
+.se-subscribe {
+  max-width: 30rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.se-subscribe-eyebrow {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--poppy);
+  margin: 0 0 0.4rem;
+}
+.se-subscribe-title {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+.se-subscribe-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.se-subscribe-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 0.9rem;
+  color: var(--lagoon);
+  background: var(--snow, #fff);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  appearance: none;
+}
+.se-subscribe-input::placeholder { color: var(--muted); }
+.se-subscribe-input:focus-visible {
+  outline: none;
+  border-color: var(--lagoon);
+  box-shadow: 0 0 0 3px rgba(55, 123, 219, 0.25);
+}
+.se-subscribe-btn {
+  flex: 0 0 auto;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: #fff;
+  background: var(--poppy);
+  border: 1.5px solid var(--poppy);
+  border-radius: 8px;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.se-subscribe-btn:hover { filter: brightness(0.94); }
+.se-subscribe-btn:focus-visible { outline: 3px solid var(--lake, #377BDB); outline-offset: 2px; }
+.se-subscribe-btn:disabled { opacity: 0.6; cursor: default; }
+.se-subscribe-msg {
+  margin: 0.7rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+.se-subscribe-msg.is-error { color: var(--poppy); }
+.se-subscribe.is-done .se-subscribe-row { display: none; }
+.se-subscribe.is-done .se-subscribe-msg { font-size: 1.05rem; color: var(--lagoon); }
+
+/* On a dark Lagoon band */
+.se-subscribe.on-lagoon .se-subscribe-title { color: #fff; }
+.se-subscribe.on-lagoon .se-subscribe-input { background: rgba(255,255,255,0.96); border-color: transparent; }
+.se-subscribe.on-lagoon .se-subscribe-msg { color: rgba(255,255,255,0.85); }
+.se-subscribe.on-lagoon.is-done .se-subscribe-msg { color: #fff; }
+
+@media (max-width: 540px) {
+  .se-subscribe-row { flex-direction: column; }
+}
+
+/* ============================================================
    Shared helper
    ============================================================ */
 .se-visually-hidden {

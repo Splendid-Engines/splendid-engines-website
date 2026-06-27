@@ -368,6 +368,34 @@ art animates itself in when it scrolls into view instead of just appearing:
 - Honors `prefers-reduced-motion`: shows the finished art at once, no drift. The
   Xbox hero uses `typewriter` + drift.
 
+### Subscribe / mailing list (`.se-subscribe`) - NEW
+A one-field email capture that posts straight to a HubSpot form, so the address
+lands in HubSpot and fires whatever follow-up or list you set up there. One email
+field, one Subscribe button. Works on a light band, or add `.on-lagoon` for a dark
+Lagoon CTA band. On success the field is swapped for a confirmation line.
+
+```html
+<section class="section bg-lagoon">
+  <div class="container container-narrow">
+    <form class="se-subscribe on-lagoon" data-portal-id="46343543" data-form-guid="PASTE-FORM-ID">
+      <p class="se-subscribe-eyebrow">Newsletter</p>
+      <h2 class="se-subscribe-title">Get new posts in your inbox</h2>
+      <div class="se-subscribe-row">
+        <label class="se-visually-hidden" for="se-sub">Email address</label>
+        <input class="se-subscribe-input" id="se-sub" type="email" name="email" required placeholder="you@company.com" autocomplete="email">
+        <button class="se-subscribe-btn" type="submit">Subscribe</button>
+      </div>
+      <p class="se-subscribe-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+```
+
+**One-time HubSpot setup.** In HubSpot: Marketing > Forms > Create form > Embedded
+form, add a single Email field, publish, then copy the Form ID (a GUID) into
+`data-form-guid`. `data-portal-id` is the Splendid Engines portal (`46343543`).
+Needs `<script src="/assets/js/subscribe.js" defer></script>`.
+
 ---
 
 ## Animation
