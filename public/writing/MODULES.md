@@ -208,6 +208,31 @@ The report or article CTA in a bordered card.
 </div>
 ```
 
+### Prompt block (`.se-prompt`, click-to-copy)
+A ready-to-paste prompt for the reader's own AI assistant: a header label + a
+**Copy** button, the prompt body, and a row of **required / optional** connection
+chips (each a small brand icon). The button copies the `[data-copy-text]` element
+inside the block and flashes "Copied"; it is delegated, so any number of blocks
+work with no per-element wiring. `data-copy-target="#id"` copies a specific
+element instead of the in-block body.
+```html
+<div class="se-prompt" data-se-prompt>
+  <div class="se-prompt-head">
+    <span class="eyebrow">Try it now</span>
+    <button type="button" class="se-prompt-copy" data-copy><span class="se-prompt-copy-label">Copy</span></button>
+  </div>
+  <h2 class="se-prompt-title">Reconnect with one person.</h2>
+  <p class="se-prompt-pitch">Drop this into your AI assistant:</p>
+  <pre class="se-prompt-body" data-copy-text>...the prompt text...</pre>
+  <div class="se-prompt-conn">
+    <span class="se-conn se-conn-req"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/calendar.svg" alt="" />Calendar <em>required</em></span>
+    <span class="se-conn se-conn-opt"><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/contact.svg" alt="" />CRM or contacts <em>optional</em></span>
+    <span class="se-prompt-note">No connections? It runs on your answers.</span>
+  </div>
+</div>
+```
+Needs `<script src="/assets/js/copy.js" defer></script>`.
+
 ### Closing CTA
 End every piece with one Poppy CTA (`.btn-se-primary`). One per page.
 
@@ -380,6 +405,7 @@ Lagoon CTA band. On success the field is swapped for a confirmation line.
     <form class="se-subscribe on-lagoon" data-portal-id="46343543" data-form-guid="PASTE-FORM-ID">
       <p class="se-subscribe-eyebrow">Newsletter</p>
       <h2 class="se-subscribe-title">Get new posts in your inbox</h2>
+      <p class="se-subscribe-sub">No spam, ever.</p>
       <div class="se-subscribe-row">
         <label class="se-visually-hidden" for="se-sub">Email address</label>
         <input class="se-subscribe-input" id="se-sub" type="email" name="email" required placeholder="you@company.com" autocomplete="email">
@@ -390,6 +416,9 @@ Lagoon CTA band. On success the field is swapped for a confirmation line.
   </div>
 </section>
 ```
+
+The optional `.se-subscribe-sub` paragraph sits just under the title for a
+one-line reassurance ("No spam, ever.").
 
 **One-time HubSpot setup.** In HubSpot: Marketing > Forms > Create form > Embedded
 form, add a single Email field, publish, then copy the Form ID (a GUID) into
@@ -434,6 +463,7 @@ The gallery at `/our-brand/modules/` is itself a live preview of every module.
 | Timeline (NEW) | this file | `modules.css` | (reveal.js) |
 | ASCII art (NEW) | this file | `modules.css` | `ascii.js` (generate with `scripts/asciify.mjs`) |
 | Framework matrix (NEW) | this file | `modules.css` | `matrix.js` |
+| Prompt block (NEW) | this file | `modules.css` | `copy.js` |
 
 When you add a new module: add its styles to `modules.css`, its behavior to a new
 `assets/js/<module>.js` (the `data-*` hook + IIFE pattern, like `charts.js`), a

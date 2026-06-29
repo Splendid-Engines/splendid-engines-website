@@ -512,3 +512,131 @@
 .eyebrow-ico { display: inline-flex; align-items: center; gap: 0.5em; }
 .eyebrow-ico img { width: 1.2em; height: 1.2em; flex: none; }
 .ico-inline { width: 1.05em; height: 1.05em; vertical-align: -0.16em; flex: none; }
+
+/* ============================================================
+   Prompt block with click-to-copy (se-prompt) + connection chips
+   A ready-to-paste prompt: a header label + Copy button, the prompt
+   body, and a row of required / optional connection chips. Behavior is
+   in assets/js/copy.js (delegated [data-copy] -> nearest [data-copy-text]).
+   ============================================================ */
+.se-prompt {
+  border: 1px solid var(--line, #D6D8DC);
+  border-radius: 14px;
+  padding: 26px;
+  background: var(--snow, #fff);
+}
+.se-prompt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.se-prompt-head .eyebrow { margin-bottom: 0; }
+.se-prompt-copy {
+  flex: 0 0 auto;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--lagoon, #153047);
+  background: var(--snow, #fff);
+  border: 1.5px solid var(--lagoon, #153047);
+  border-radius: 8px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.se-prompt-copy:hover,
+.se-prompt-copy.is-copied { background: var(--lagoon, #153047); color: #fff; }
+.se-prompt-copy:focus-visible { outline: 3px solid var(--lake, #377BDB); outline-offset: 2px; }
+.se-prompt-title { margin: 16px 0 4px; }
+.se-prompt-pitch { color: var(--muted, #6c757d); margin: 0 0 10px; }
+.se-prompt-body {
+  white-space: pre-wrap;
+  background: #F2F1EC;
+  border-radius: 10px;
+  padding: 18px;
+  font-size: 0.95rem;
+  color: var(--lagoon, #153047);
+  line-height: 1.6;
+  margin: 0;
+}
+.se-prompt-conn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--lagoon, #153047);
+}
+.se-conn { display: inline-flex; align-items: center; gap: 6px; }
+.se-conn img { width: 16px; height: 16px; flex: none; }
+.se-conn em {
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  color: var(--muted, #8C9298);
+}
+.se-conn-opt { color: var(--muted, #8C9298); }
+.se-conn-opt img { opacity: 0.5; }
+.se-prompt-note { color: var(--muted, #8C9298); font-size: 0.8rem; margin-left: auto; }
+@media (max-width: 540px) {
+  .se-prompt-note { margin-left: 0; }
+}
+
+/* ============================================================
+   Fakeability spectrum chips with hover / focus detail
+   ============================================================ */
+.spec-row { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; color: var(--lagoon, #153047); }
+.spec-chip { position: relative; cursor: default; border-bottom: 1px dotted #B7BCC2; }
+.spec-chip:focus-visible { outline: 3px solid var(--lake, #377BDB); outline-offset: 3px; }
+.spec-chip::after {
+  content: attr(data-detail);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 220px;
+  background: var(--lagoon, #153047);
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 5;
+}
+.spec-chip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--lagoon, #153047);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 5;
+}
+.spec-chip:hover::after, .spec-chip:focus::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.spec-chip:hover::before, .spec-chip:focus::before { opacity: 1; }
+
+/* ============================================================
+   Subscribe subtitle (one line under the title)
+   ============================================================ */
+.se-subscribe-sub {
+  margin: -0.5rem 0 1rem;
+  font-size: 0.9rem;
+  color: var(--muted, #6c757d);
+}
+.se-subscribe.on-lagoon .se-subscribe-sub { color: rgba(255, 255, 255, 0.78); }
