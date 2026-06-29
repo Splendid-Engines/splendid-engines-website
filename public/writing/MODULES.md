@@ -370,7 +370,7 @@ node scripts/asciify.mjs photo.png --cols 110 --figure --label "Portrait" --out 
 
 `ascii.js` scales the glyphs so the longest line fits the container, so detailed
 (wide) art never overflows or wraps. Generator flags: `--cols N` (more columns =
-more detail), `--ramp short|long`, `--color brand` (tint the glyphs with the brand palette), and `--invert` + `--on-lagoon` for light art on
+more detail), `--ramp short|long`, `--contrast N` (boost contrast before sampling, -1..1), `--color brand` (tint the glyphs with the brand palette), and `--invert` + `--on-lagoon` for light art on
 a dark Lagoon panel. Use it sparingly: a wink, per the brand's imagery rules.
 Needs `<script src="/assets/js/ascii.js" defer></script>`.
 

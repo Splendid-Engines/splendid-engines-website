@@ -15,6 +15,7 @@
 // Flags:
 //   --cols N      character columns (detail). Default 110.
 //   --ramp long|short   density ramp. Default long (70 levels).
+//   --contrast N  boost (or cut) contrast before sampling, -1..1. Default 0 (off).
 //   --invert      map for light-on-dark (e.g. white art on a Lagoon surface).
 //   --color brand maps each glyph to the nearest Splendid brand color (emits
 //                 colored spans; only meaningful with --figure).
@@ -52,11 +53,12 @@ function nearestBrand(r, g, b) {
 }
 
 function parseArgs(argv) {
-  const a = { cols: 110, ramp: 'long', _: [] };
+  const a = { cols: 110, ramp: 'long', contrast: 0, _: [] };
   for (let i = 0; i < argv.length; i++) {
     const t = argv[i];
     if (t === '--cols') a.cols = Math.max(16, parseInt(argv[++i], 10) || 110);
     else if (t === '--ramp') a.ramp = argv[++i] === 'short' ? 'short' : 'long';
+    else if (t === '--contrast') a.contrast = parseFloat(argv[++i]) || 0;
     else if (t === '--invert') a.invert = true;
     else if (t === '--color') a.color = argv[++i];
     else if (t === '--figure') a.figure = true;
@@ -78,6 +80,7 @@ async function asciify(file, opts) {
   const cols = opts.cols;
   const rows = Math.max(1, Math.round(cols * (h / w) * 0.5));   // chars are ~2x tall
   img.resize(cols, rows);
+  if (opts.contrast) img.contrast(Math.max(-1, Math.min(1, opts.contrast)));
 
   const ramp = RAMPS[opts.ramp];
   const last = ramp.length - 1;
