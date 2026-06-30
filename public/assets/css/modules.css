@@ -533,22 +533,21 @@
 }
 .se-prompt-head .eyebrow { margin-bottom: 0; }
 .se-prompt-copy {
-  flex: 0 0 auto;
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.68rem;
   color: var(--lagoon, #153047);
-  background: var(--snow, #fff);
-  border: 1.5px solid var(--lagoon, #153047);
-  border-radius: 8px;
-  padding: 7px 16px;
-  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line, #D6D8DC);
+  border-radius: 7px; padding: 5px 9px; cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
+.se-prompt-copy img { width: 13px; height: 13px; }
 .se-prompt-copy:hover,
 .se-prompt-copy.is-copied { background: var(--lagoon, #153047); color: #fff; }
+.se-prompt-copy:hover img,
+.se-prompt-copy.is-copied img { filter: brightness(0) invert(1); }
 .se-prompt-copy:focus-visible { outline: 3px solid var(--lake, #377BDB); outline-offset: 2px; }
 .se-prompt-title { margin: 16px 0 4px; }
 .se-prompt-pitch { color: var(--muted, #6c757d); margin: 0 0 10px; }
@@ -715,18 +714,29 @@
 .se-prompt-summary::before { content: "+ "; color: var(--poppy, #DB4937); font-weight: 800; }
 .se-prompt-details[open] .se-prompt-summary::before { content: "\2212  "; }
 .se-prompt-details .se-prompt-body { margin-top: 10px; }
+.se-prompt-cta-lead { margin: 18px 0 8px; font-size: 0.9rem; color: var(--muted, #6c757d); }
 .se-prompt-link {
-  display: inline-block;
-  margin-top: 14px;
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  color: var(--lake, #377BDB);
-  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Big Shoulders Display', sans-serif; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem;
+  color: var(--lake, #377BDB); background: #fff;
+  border: 1.5px solid var(--lake, #377BDB);
+  border-radius: 8px; padding: 9px 16px; text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.se-prompt-link:hover { text-decoration: underline; }
+.se-prompt-link:hover { background: var(--lake, #377BDB); color: #fff; }
+
+/* Requirement lozenges */
+.se-prompt-reqs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.se-lozenge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--line, #D6D8DC); background: #fff;
+  font-size: 0.82rem; color: var(--lagoon, #153047);
+}
+.se-lozenge img { width: 15px; height: 15px; flex: none; }
+.se-lozenge em { font-style: normal; text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.64rem; color: var(--muted, #8C9298); }
+.se-lozenge.opt { border-style: dashed; }
 
 /* ============================================================
    Quadrant plot (se-quadrant) - two axes, points placed by left/bottom %
@@ -751,14 +761,11 @@
 .se-quadrant-plot::before, .se-quadrant-plot::after { content: ""; position: absolute; background: rgba(21, 48, 71, 0.09); }
 .se-quadrant-plot::before { left: 50%; top: 0; bottom: 0; width: 1px; }
 .se-quadrant-plot::after { bottom: 50%; left: 0; right: 0; height: 1px; }
-.se-q-point { position: absolute; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%, 50%); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9); }
-.se-q-point.q-lo { background: var(--muted, #8C9298); }
-.se-q-point.q-mid { background: var(--lagoon, #153047); }
-.se-q-point.q-hi { background: var(--poppy, #DB4937); }
+.se-q-point { position: absolute; width: 22px; height: 22px; transform: translate(-50%, 50%); }
+.se-q-ico { width: 22px; height: 22px; display: block; filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.95)); }
 .se-q-label { position: absolute; top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 0.92rem; line-height: 1; color: var(--lagoon, #153047); }
-.se-q-label.right { left: 18px; }
-.se-q-label.left { right: 18px; }
-.se-q-point.q-lo .se-q-label { color: var(--muted, #8C9298); }
+.se-q-label.right { left: 28px; }
+.se-q-label.left { right: 28px; }
 .se-quadrant-xlab {
   grid-column: 2; grid-row: 2;
   display: flex; justify-content: space-between; align-items: center;
