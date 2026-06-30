@@ -208,30 +208,49 @@ The report or article CTA in a bordered card.
 </div>
 ```
 
-### Prompt block (`.se-prompt`, click-to-copy)
-A ready-to-paste prompt for the reader's own AI assistant: a header label + a
-**Copy** button, the prompt body, and a row of **required / optional** connection
-chips (each a small brand icon). The button copies the `[data-copy-text]` element
-inside the block and flashes "Copied"; it is delegated, so any number of blocks
-work with no per-element wiring. `data-copy-target="#id"` copies a specific
-element instead of the in-block body.
+### Prompt block (`.se-prompt`, copy + expand)
+A ready-to-paste prompt (or full skill) for the reader's own AI assistant. The
+shape, top to bottom: an eyebrow-only head, a title, a row of **requirement
+lozenges**, a one-line pitch, then a clamped **peek window** holding the prompt
+body with an in-box Copy button, an Expand/Collapse toggle, and an optional CTA.
+
+- **Copy** (`.se-prompt-copy[data-copy]`) sits in the top-right corner of the
+  window. It copies the `[data-copy-text]` element's `textContent` (so it grabs
+  the whole prompt even while the window is clamped) and flashes "Copied". It is
+  delegated, so any number of blocks work with no per-element wiring.
+  `data-copy-target="#id"` copies a specific element instead of the in-block body.
+- **Peek window** (`.se-prompt-window[data-prompt-window]`) clamps the body to a
+  few lines with a fade at the bottom. **Expand** (`.se-prompt-expand[data-expand]`)
+  toggles `.is-open` to reveal the rest and flips its own label to "Collapse".
+- **Requirement lozenges** (`.se-prompt-reqs` > `.se-lozenge`): small pills, each
+  with one or two service logos / brand icons, a label, and an `<em>` state.
+  Add `.opt` for a dashed, optional pill.
+- **CTA** (optional): a `.se-prompt-cta-lead` lead-in line + a `.se-prompt-link`
+  outlined button.
+
 ```html
 <div class="se-prompt" data-se-prompt>
   <div class="se-prompt-head">
-    <span class="eyebrow">Try it now</span>
-    <button type="button" class="se-prompt-copy" data-copy><span class="se-prompt-copy-label">Copy</span></button>
+    <span class="eyebrow eyebrow-ico"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/conversation.svg" alt="" />Try it now</span>
   </div>
-  <h2 class="se-prompt-title">Reconnect with one person.</h2>
-  <p class="se-prompt-pitch">Drop this into your AI assistant:</p>
-  <pre class="se-prompt-body" data-copy-text>...the prompt text...</pre>
-  <div class="se-prompt-conn">
-    <span class="se-conn se-conn-req"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/calendar.svg" alt="" />Calendar <em>required</em></span>
-    <span class="se-conn se-conn-opt"><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/contact.svg" alt="" />CRM or contacts <em>optional</em></span>
-    <span class="se-prompt-note">No connections? It runs on your answers.</span>
+  <h2 class="se-prompt-title">Skill: Run 1:1 connection workshop</h2>
+  <div class="se-prompt-reqs">
+    <span class="se-lozenge"><img src="/assets/img/writing/logo-google-calendar.svg" alt="" />Google Calendar <em>required</em></span>
+    <span class="se-lozenge"><img src="/assets/img/writing/logo-hubspot.svg" alt="" /><img src="/assets/img/writing/logo-salesforce.svg" alt="" />CRM connection <em>required</em></span>
+    <span class="se-lozenge opt"><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/globe.svg" alt="" />Web access <em>optional</em></span>
   </div>
+  <p class="se-prompt-pitch">One line on what the reader gets.</p>
+  <div class="se-prompt-window" data-prompt-window>
+    <button type="button" class="se-prompt-copy" data-copy><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/copy.svg" alt="" /><span class="se-prompt-copy-label">Copy</span></button>
+    <pre class="se-prompt-body" data-copy-text>...the prompt or skill text...</pre>
+  </div>
+  <button type="button" class="se-prompt-expand" data-expand aria-expanded="false">Expand</button>
+  <p class="se-prompt-cta-lead">Optional lead-in line.</p>
+  <a class="se-prompt-link" href="/tools/voice-profile/">Build your voice profile &rarr;</a>
 </div>
 ```
-Needs `<script src="/assets/js/copy.js" defer></script>`.
+Needs `<script src="/assets/js/copy.js" defer></script>` (it handles both
+`[data-copy]` and `[data-expand]`).
 
 ### Closing CTA
 End every piece with one Poppy CTA (`.btn-se-primary`). One per page.
@@ -349,6 +368,61 @@ in the panel below. Data-driven, like the charts.
 Each cell needs a `title`; `detail` and `tag` are optional. Needs
 `<script src="/assets/js/matrix.js" defer></script>`.
 
+### Comparison table (`.se-compare`) - NEW
+A two-column "this vs that" table. Each row leads with a dimension label
+(`<th scope="row">`); the two `<td>` hold the contrasting values. The header row
+marks one side negative (`.se-compare-neg`, muted) and one positive
+(`.se-compare-pos`, Poppy), each with an inline brand icon; the positive column
+carries a faint Poppy tint. For a trend / value row, drop a `.se-tbl-arrow` inline
+SVG before the word (red down for falling, green up for rising). CSS-only. Wrap it
+in `.se-compare-wrap` so it scrolls on narrow screens.
+```html
+<div class="se-compare-wrap">
+  <table class="se-compare">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" class="se-compare-neg"><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/engine.svg" alt="" />Personalized</th>
+        <th scope="col" class="se-compare-pos"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/relationship.svg" alt="" />Personal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Humanity</th><td>A machine filled in a variable</td><td>A person spent real time on you</td></tr>
+      <tr>
+        <th scope="row">Value</th>
+        <td><svg class="se-tbl-arrow" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M12 4v15"/><path d="M19 12l-7 7-7-7"/></svg>Falling</td>
+        <td><svg class="se-tbl-arrow" viewBox="0 0 24 24" fill="none" stroke="#1F9E5A" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M12 20V5"/><path d="M5 12l7-7 7 7"/></svg>Rising</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+### Two-axis plot (`.se-quadrant`) - NEW
+A positioning plot (scatter), distinct from the **Framework matrix**: the matrix
+is a labeled grid of cells, this places each item freely on two continuous axes.
+Every marker is a `.se-q-point` positioned by inline `left` / `bottom` percentages,
+carrying a brand icon (`.se-q-ico`) and a label set to one side (`.se-q-label.right`
+or `.left`). Each point is `tabindex="0"` with a `data-detail` string that shows as
+a tooltip on hover or keyboard focus. Optional corner badges (`.se-q-value` +
+`.se-q-value-up` / `.se-q-value-down`) call out the direction of travel. The axes
+are a rotated `.se-quadrant-ylab` and an `.se-quadrant-xlab` whose ends are
+`.se-q-axis-end`. CSS-only (no JS); give the `<figure>` a thorough `aria-label`
+since the placement is the message.
+```html
+<figure class="se-quadrant" role="img" aria-label="Formats plotted by human effort (x) and human evidence (y); cheap, fakeable formats sit low-left, costly human ones high-right.">
+  <div class="se-quadrant-grid">
+    <div class="se-quadrant-ylab">Human evidence</div>
+    <div class="se-quadrant-plot">
+      <span class="se-q-value se-q-value-up" style="top:10px; right:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="#1F9E5A" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 20V5"/><path d="M5 12l7-7 7 7"/></svg>Rising value</span>
+      <span class="se-q-point" tabindex="0" data-detail="Quick to record, but unmistakably your voice." style="left:26%; bottom:66%;"><img class="se-q-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/mic.svg" alt="" /><span class="se-q-label right">Voice memo</span></span>
+      <!-- ...more points... -->
+    </div>
+    <div class="se-quadrant-xlab"><span class="se-q-axis-end">low</span><span>Human effort</span><span class="se-q-axis-end">high</span></div>
+  </div>
+</figure>
+```
+
 ---
 
 ## Expressive
@@ -463,7 +537,9 @@ The gallery at `/our-brand/modules/` is itself a live preview of every module.
 | Timeline (NEW) | this file | `modules.css` | (reveal.js) |
 | ASCII art (NEW) | this file | `modules.css` | `ascii.js` (generate with `scripts/asciify.mjs`) |
 | Framework matrix (NEW) | this file | `modules.css` | `matrix.js` |
-| Prompt block (NEW) | this file | `modules.css` | `copy.js` |
+| Comparison table (NEW) | this file | `modules.css` | (none, CSS-only) |
+| Two-axis plot (NEW) | this file | `modules.css` | (none, CSS-only) |
+| Prompt block (NEW) | this file | `modules.css` | `copy.js` (copy + expand) |
 
 When you add a new module: add its styles to `modules.css`, its behavior to a new
 `assets/js/<module>.js` (the `data-*` hook + IIFE pattern, like `charts.js`), a
