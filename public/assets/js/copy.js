@@ -62,4 +62,18 @@
     e.preventDefault();
     copy(textFor(btn), btn);
   });
+
+  // Expand/collapse a [data-prompt-window] peek window.
+  document.addEventListener('click', function (e) {
+    var ex = e.target.closest ? e.target.closest('[data-expand]') : null;
+    if (!ex) return;
+    e.preventDefault();
+    var root = ex.closest('[data-se-prompt]') || document;
+    var win = root.querySelector('[data-prompt-window]');
+    if (!win) return;
+    var open = win.classList.toggle('is-open');
+    ex.classList.toggle('is-open', open);
+    ex.setAttribute('aria-expanded', open ? 'true' : 'false');
+    ex.textContent = open ? 'Collapse' : 'Expand';
+  });
 })();

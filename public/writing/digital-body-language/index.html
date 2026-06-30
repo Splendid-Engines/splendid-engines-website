@@ -223,24 +223,48 @@ _+&gt;!II:;:^``...                                                              
           <span class="eyebrow eyebrow-ico"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/conversation.svg" alt="" />Try it now</span>
           <button type="button" class="se-prompt-copy" data-copy><span class="se-prompt-copy-label">Copy Prompt</span></button>
         </div>
-        <h2 class="se-prompt-title">A customer-appreciation prompt</h2>
-        <p class="se-prompt-pitch">Paste it into your AI assistant. It finds one customer worth thanking, digs up something genuine to acknowledge, and drafts a personal note in your voice.</p>
-        <details class="se-prompt-details">
-          <summary class="se-prompt-summary">Show the prompt</summary>
-          <pre class="se-prompt-body" data-copy-text>Help me show genuine appreciation to one customer, for real, not at scale.
-
-1. In my calendar next week, find a free 30-minute block and title it "Customer appreciation."
-2. In my CRM (HubSpot or Salesforce), find one contact with a lifecycle stage of Customer who has a mailing address on file. Prefer someone with no logged activity in the last 60 days. Show me the record (name, company, last activity) and let me confirm before continuing.
-3. Research that person for something genuine to acknowledge: a recent promotion, a work anniversary, a launch, an award, a personal milestone. If you find nothing on the person, fall back to the latest news from their company.
-4. Choose the format that fits how I can reach them and costs me a little: a mailing address means a handwritten note, a phone number means a call or voice note, otherwise a short personal email.
-5. Draft it in my voice. Specific to them and to what they are celebrating, warm, and with no pitch or ask.
-6. Give me the exact next step to send it, and log the touch back to the CRM record.</pre>
-        </details>
+        <h2 class="se-prompt-title">The 1:1 connection workshop</h2>
         <div class="se-prompt-conn">
           <span class="se-conn se-conn-req"><img src="/assets/img/writing/logo-google-calendar.svg" alt="Google Calendar" />Google Calendar <em>required</em></span>
           <span class="se-conn se-conn-req"><img src="/assets/img/writing/logo-hubspot.svg" alt="HubSpot" />HubSpot or Salesforce <em>required</em></span>
           <span class="se-prompt-note">Web access helps the research step.</span>
         </div>
+        <p class="se-prompt-pitch">A paste-in skill that runs you through a focused hour and helps you send as many genuine, one-to-one messages as you can fit, each one specific to the person.</p>
+        <div class="se-prompt-window" data-prompt-window>
+          <pre class="se-prompt-body" data-copy-text># Skill: The 1:1 Connection Workshop
+
+You are my facilitator for a focused, one-hour session. Move me through sending as many genuine, one-to-one messages as we can fit in the hour, each one specific to the person receiving it. Quality first: if a message could go to anyone, it does not go out.
+
+## Objective
+By the end of the hour I have personally reached several real people (customers I have not spoken to lately) with messages that are specific, warm, and free of any ask. Keep me moving so I finish several, not one.
+
+## Context to gather first
+1. My voice. Load my Splendid voice profile and write everything in it. If I do not have one, tell me to build one at https://splendidengines.com/tools/voice-profile/ and, until I do, keep the voice warm, plain, and free of corporate filler.
+2. My hour. Confirm a free 60-minute block on my calendar this week and title it "1:1 connection."
+3. My people. From my CRM (HubSpot or Salesforce), pull 8 to 12 contacts with a lifecycle stage of Customer and a reachable address (email, phone, or mailing), favoring those with no logged activity in 60+ days. Show me the shortlist and let me triage who is in.
+4. A reason for each. For every person I keep, find one true, specific thing to acknowledge: a promotion, a work anniversary, a launch, an award, a personal milestone. Pull it from web research or their CRM notes. If nothing turns up on the person, use their company's latest news. A simple, honest check-in is always a valid reason.
+
+## Instructions: run these phases
+- Phase 1, Setup (~5 min): confirm my voice profile and the time block.
+- Phase 2, Shortlist (~10 min): present the candidates and let me pick who is in.
+- Phase 3, The loop (rest of the hour), one person at a time:
+  a. Offer me two or three topics drawn from the research or CRM notes.
+  b. Recommend the format that fits how I can reach them and the effort I want to spend: a handwritten note, a voice memo, a live call, or a short personal message.
+  c. Draft the message in my voice.
+  d. Give me the exact next step to send it, then log the touch back to the CRM record.
+- Phase 4, Wrap (~5 min): tally who I reached, queue who is next, and book the next session.
+
+## Rules
+- One person at a time. Never batch, template, or merge-field.
+- Every message names a specific, true detail about the recipient. No generic praise.
+- No pitch, no ask, no call to action. This is appreciation, not outreach.
+- Match my voice profile exactly. Never invent facts; if you are unsure of a detail, ask me or leave it out.
+- Protect the clock. Timebox each person so I finish several.
+
+## Output, each round
+The person, the chosen format, the topic you used, the full draft in my voice, the exact send step, and a one-line CRM log entry. At the end of the hour, return a tally of messages drafted and a short queue for next time.</pre>
+        </div>
+        <button type="button" class="se-prompt-expand" data-expand aria-expanded="false">Expand</button>
         <a class="se-prompt-link" href="/tools/voice-profile/">Need a voice profile? Build one &rarr;</a>
       </div>
 
@@ -251,24 +275,23 @@ _+&gt;!II:;:^``...                                                              
   <section class="section bg-ash-warm">
     <div class="container container-narrow">
       <span class="eyebrow eyebrow-ico"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/signal.svg" alt="" />The fakeability spectrum</span>
-      <p>Not every format costs the same to produce. They line up by how hard they are to fake: from the ones a machine can flood for free to the ones only a person can pull off. The further toward the human end you go, the more your time itself is the message.</p>
-      <div class="se-spectrum">
-        <div class="se-spectrum-ends">
-          <span class="se-spectrum-end neg"><img src="/our-brand/splendid-visual-brand/icons/v2/lagoon/engine.svg" alt="" />AI</span>
-          <span class="se-spectrum-end pos"><img src="/our-brand/splendid-visual-brand/icons/v2/poppy/relationship.svg" alt="" />Human</span>
+      <p>Not every format costs the same. Plot them by the two things that are actually expensive to spend, your time and your effort per message, and they spread out. The cheap corner, low on both, is where AI lives. The far corner, high on both, is the part it cannot fake.</p>
+      <figure class="se-quadrant" role="img" aria-label="Communication formats plotted by time per message (left to right) and effort (bottom to top). The low-low corner holds auto-post, mass email, and generic DM. Voice memo sits low on time but higher on effort. Personal email is near the middle. Live call is high on time, mid on effort. Real letter and handwritten note sit in the high-high corner.">
+        <div class="se-quadrant-grid">
+          <div class="se-quadrant-ylab">Effort</div>
+          <div class="se-quadrant-plot">
+            <span class="se-q-point q-lo" style="left:8%; bottom:10%;"><span class="se-q-label right">Auto-post</span></span>
+            <span class="se-q-point q-lo" style="left:24%; bottom:20%;"><span class="se-q-label right">Mass email</span></span>
+            <span class="se-q-point q-lo" style="left:11%; bottom:33%;"><span class="se-q-label right">Generic DM</span></span>
+            <span class="se-q-point q-mid" style="left:45%; bottom:46%;"><span class="se-q-label right">Personal email</span></span>
+            <span class="se-q-point q-mid" style="left:29%; bottom:65%;"><span class="se-q-label right">Voice memo</span></span>
+            <span class="se-q-point q-mid" style="left:87%; bottom:50%;"><span class="se-q-label left">Live call</span></span>
+            <span class="se-q-point q-hi" style="left:67%; bottom:77%;"><span class="se-q-label left">Real letter</span></span>
+            <span class="se-q-point q-hi" style="left:55%; bottom:92%;"><span class="se-q-label left">Handwritten note</span></span>
+          </div>
+          <div class="se-quadrant-xlab"><span class="se-q-axis-end">low</span><span>Time per message</span><span class="se-q-axis-end">high</span></div>
         </div>
-        <div class="se-spectrum-bar"></div>
-        <div class="se-spectrum-grid">
-          <span class="spec-chip" tabindex="0" data-detail="Posted by a scheduler. Zero marginal effort, and no person behind it."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/post.svg" alt="" />Auto-post</span>
-          <span class="spec-chip" tabindex="0" data-detail="One message, many inboxes. The variables get filled, the attention does not."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/conversation.svg" alt="" />Generic DM</span>
-          <span class="spec-chip" tabindex="0" data-detail="A blast dressed up as a note. Cheap to send, easy to spot."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/at-sign.svg" alt="" />Mass email</span>
-          <span class="spec-chip" tabindex="0" data-detail="Written to one person, but still just text on a screen."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/at-sign.svg" alt="" />Personal email</span>
-          <span class="spec-chip" tabindex="0" data-detail="Your actual voice. Hard to fake, and quick to record."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/mic.svg" alt="" />Voice memo</span>
-          <span class="spec-chip" tabindex="0" data-detail="Real time, both directions. You cannot automate showing up."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/phone.svg" alt="" />Live call</span>
-          <span class="spec-chip" tabindex="0" data-detail="Physical, posted, days in transit. The effort is the message."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/mail.svg" alt="" />Real letter</span>
-          <span class="spec-chip" tabindex="0" data-detail="Your hand on the page. About as hard to fake as it gets."><img class="spec-chip-ico" src="/our-brand/splendid-visual-brand/icons/v2/lagoon/pen-line.svg" alt="" />Handwritten note</span>
-        </div>
-      </div>
+      </figure>
       <p class="mt-4">AI can flood the cheap end. It cannot counterfeit the expensive end, because the expense is the point.</p>
     </div>
   </section>
