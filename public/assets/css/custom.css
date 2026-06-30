@@ -1135,6 +1135,10 @@ hr.section-divider {
   }
   .entry-with-image .entry-image { max-width: 320px; }
 }
+/* Index entries: tighter eyebrow-to-title rhythm (the list eyebrow sits closer
+   to its heading than a full section eyebrow does). */
+.entry-with-image .eyebrow { margin-bottom: 0.35rem; }
+.entry-with-image h2 { margin-top: 0.1rem !important; }
 
 /* Five-moves list with brand-consistent inline icons */
 .move-list {
