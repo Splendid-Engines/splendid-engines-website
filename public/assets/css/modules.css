@@ -802,6 +802,19 @@
 .se-q-value-down { color: #C0392B; }
 
 /* ============================================================
+   Brand watermark - a subtle, non-interactive Splendid mark for any
+   data graphic (chart / matrix / plot). Drop <img class="se-watermark"
+   src="/assets/img/watermark-splendid.svg" alt="" aria-hidden="true">
+   into a position:relative graphic; it tucks into the lower-right and
+   sits behind the data.
+   ============================================================ */
+.se-watermark {
+  position: absolute; right: 14px; bottom: 12px;
+  width: 74px; max-width: 22%; height: auto;
+  opacity: 0.08; pointer-events: none; user-select: none; z-index: 0;
+}
+
+/* ============================================================
    Prompt peek window - truncated preview + expand toggle
    ============================================================ */
 .se-prompt-window { position: relative; max-height: 13em; overflow: hidden; border-radius: 10px; margin-top: 4px; }

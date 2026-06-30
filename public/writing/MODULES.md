@@ -262,6 +262,22 @@ End every piece with one Poppy CTA (`.btn-se-primary`). One per page.
 The brand palette for data viz: **Lagoon primary, Poppy and Lake as accents,
 Daffodil sparingly.** Color names below map to those tokens.
 
+### Brand watermark (`.se-watermark`) - standard on every graphic
+Every original graphic we make - a chart, a matrix, a two-axis plot, any figure
+that reads as a Splendid-built visual - carries a **subtle brand watermark**: the
+Splendid mark, very low opacity, tucked into a corner so it marks the work without
+competing with it. Treat it as part of finishing a graphic, not an extra.
+
+Drop this into the graphic's `position: relative` canvas (the plot area for
+`.se-quadrant`, the `figure` for `.se-chart` / `.se-matrix`). It is
+non-interactive and sits behind the data:
+```html
+<img class="se-watermark" src="/assets/img/watermark-splendid.svg" alt="" aria-hidden="true" />
+```
+`watermark-splendid.svg` is the mark glyph in Lagoon on a transparent ground (not
+the filled poppy badge, which muddies at low opacity). Tune placement or size per
+graphic if a corner is busy; the default is lower-right at ~8% opacity.
+
 ### Stat band (`reveal.js` count-up)
 Big numbers that count up on scroll. Use a 2- or 3-column grid.
 ```html
