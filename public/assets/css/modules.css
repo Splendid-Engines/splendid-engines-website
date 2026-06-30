@@ -549,8 +549,8 @@
 .se-prompt-copy:hover img,
 .se-prompt-copy.is-copied img { filter: brightness(0) invert(1); }
 .se-prompt-copy:focus-visible { outline: 3px solid var(--lake, #377BDB); outline-offset: 2px; }
-.se-prompt-title { margin: 16px 0 4px; }
-.se-prompt-pitch { color: var(--muted, #6c757d); margin: 0 0 10px; }
+.se-prompt-title { margin: 2px 0 4px; }
+.se-prompt-pitch { color: var(--muted, #6c757d); margin: 16px 0 10px; }
 .se-prompt-body {
   white-space: pre-wrap;
   background: #F2F1EC;
@@ -675,6 +675,7 @@
 .se-compare td:nth-child(3) { color: var(--lagoon, #153047); }
 .se-compare th:last-child, .se-compare td:last-child { background: rgba(219, 73, 55, 0.04); }
 .se-compare tbody tr:last-child th, .se-compare tbody tr:last-child td { border-bottom: 0; }
+.se-tbl-arrow { width: 1.05em; height: 1.05em; vertical-align: -0.18em; margin-right: 0.35em; }
 
 /* ============================================================
    Fakeability spectrum (se-spectrum) - even grid + per-format icons
