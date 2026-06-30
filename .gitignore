@@ -7,6 +7,10 @@ node_modules/
 .claude/worktrees/
 "package 2.json"
 
+# generated preview bundles (scripts/preview.mjs)
+*.preview.html
+*.fragment.html
+
 # wrangler files
 .wrangler
 .dev.vars*
