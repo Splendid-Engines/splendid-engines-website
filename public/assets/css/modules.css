@@ -640,3 +640,90 @@
   color: var(--muted, #6c757d);
 }
 .se-subscribe.on-lagoon .se-subscribe-sub { color: rgba(255, 255, 255, 0.78); }
+
+/* ============================================================
+   Comparison table (se-compare) - two columns, labeled rows
+   ============================================================ */
+.se-compare-wrap { overflow-x: auto; margin: 18px 0 4px; }
+.se-compare { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.se-compare th, .se-compare td {
+  padding: 13px 16px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line, #D6D8DC);
+}
+.se-compare thead th {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+.se-compare thead .se-compare-neg { color: var(--muted, #8C9298); }
+.se-compare thead .se-compare-pos { color: var(--poppy, #DB4937); }
+.se-compare thead th img { width: 1.05em; height: 1.05em; vertical-align: -0.16em; margin-right: 0.35em; }
+.se-compare tbody th[scope="row"] {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  color: var(--poppy, #DB4937);
+  white-space: nowrap;
+  width: 1%;
+}
+.se-compare td:nth-child(2) { color: var(--muted, #6c757d); }
+.se-compare td:nth-child(3) { color: var(--lagoon, #153047); }
+.se-compare th:last-child, .se-compare td:last-child { background: rgba(219, 73, 55, 0.04); }
+.se-compare tbody tr:last-child th, .se-compare tbody tr:last-child td { border-bottom: 0; }
+
+/* ============================================================
+   Fakeability spectrum (se-spectrum) - even grid + per-format icons
+   ============================================================ */
+.se-spectrum { border: 1px solid var(--line, #D6D8DC); border-radius: 14px; padding: 24px; background: var(--snow, #fff); margin-top: 14px; }
+.se-spectrum-ends { display: flex; justify-content: space-between; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
+.se-spectrum-end { display: inline-flex; align-items: center; gap: 0.4em; }
+.se-spectrum-end img { width: 1.05em; height: 1.05em; }
+.se-spectrum-end.neg { color: var(--muted, #8C9298); }
+.se-spectrum-end.neg img { opacity: 0.5; }
+.se-spectrum-end.pos { color: var(--poppy, #DB4937); }
+.se-spectrum-bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, #D6D8DC, #DB4937); margin: 12px 0 18px; }
+.se-spectrum-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 12px; }
+@media (max-width: 640px) { .se-spectrum-grid { grid-template-columns: repeat(2, 1fr); } }
+.spec-chip { display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.9rem; color: var(--lagoon, #153047); border-bottom: 0; }
+.spec-chip-ico { width: 1.05em; height: 1.05em; flex: none; }
+
+/* ============================================================
+   Prompt module extras - collapsible body + voice-profile link
+   ============================================================ */
+.se-prompt-details { margin-top: 4px; }
+.se-prompt-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  cursor: pointer;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  color: var(--lagoon, #153047);
+  list-style: none;
+  padding: 6px 0;
+}
+.se-prompt-summary::-webkit-details-marker { display: none; }
+.se-prompt-summary::before { content: "+ "; color: var(--poppy, #DB4937); font-weight: 800; }
+.se-prompt-details[open] .se-prompt-summary::before { content: "\2212  "; }
+.se-prompt-details .se-prompt-body { margin-top: 10px; }
+.se-prompt-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  color: var(--lake, #377BDB);
+  text-decoration: none;
+}
+.se-prompt-link:hover { text-decoration: underline; }

@@ -11,11 +11,11 @@
     var sel = btn.getAttribute('data-copy-target');
     if (sel) {
       var el = document.querySelector(sel);
-      return el ? el.innerText : '';
+      return el ? el.textContent : '';
     }
     var root = btn.closest('[data-se-prompt]') || document;
     var src = root.querySelector('[data-copy-text]');
-    return src ? src.innerText : '';
+    return src ? src.textContent : '';
   }
 
   function flash(btn) {
