@@ -430,6 +430,7 @@ hr.section-divider {
   border-left: 3px solid var(--poppy);
   height: 100%;
 }
+.criterion .splendid-icon { width: 36px; height: 36px; margin-bottom: 0.75rem; }
 .criterion h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
 .criterion p { color: var(--muted); margin-bottom: 0; font-family: 'Mulish', sans-serif; text-transform: none; letter-spacing: 0; font-weight: 400; }
 
