@@ -7,6 +7,27 @@ auto-deploys from `main`. All public files live under `public/`.
 Because there is no build step, anything that must appear on every page is copied
 into every page by hand. The canonical copies live in `public/_includes/`.
 
+## Always run skills from the latest repo version
+
+Whenever the user asks to run, load, invoke, or use a skill — named, as `/name`, or
+"run the X skill" — use the version in the **`splendid-skills`** repo, and always its
+**most recent committed** version. Never run a claude.ai account-level skill of the same
+name (they drift from the repo); never trust a stale local checkout.
+
+Before reading any skill, every time:
+1. `git fetch origin` in the `splendid-skills` checkout (sibling repo, e.g.
+   `/home/user/splendid-skills`; retry with backoff on network errors).
+2. Read the skill from the freshest source:
+   `git -C <splendid-skills> show origin/<default-branch>:skills/<skill-name>/SKILL.md`
+   (default branch is usually `main`) — unless the user is actively developing that skill
+   on a branch, in which case use the working copy.
+3. Load each `references/*` file the same way, at the phase that needs it.
+
+Applies to **all skills, every time**. If a requested skill isn't in `splendid-skills`,
+say so before falling back to anything else.
+
+---
+
 ## Hard rules
 
 - **Every page must include the analytics / tracking tag right before `</body>`.**
